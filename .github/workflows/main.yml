@@ -1,4 +1,4 @@
-name: 세모이 자동배포
+name: saemoi ci/cd - secret add
 on:
   push:
     branches:
@@ -18,7 +18,6 @@ jobs:
         script: |
           sudo su
           cd saemoi
-          node -e "console.log('Running Node.js ' + process.version)"
           sudo git pull
           npm i
           npm run build
