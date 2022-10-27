@@ -1,4 +1,4 @@
-name: saemoi ci/cd
+name: saemoi ci/cd - secret add
 on:
   push:
     branches:
