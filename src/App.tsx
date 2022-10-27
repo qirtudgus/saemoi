@@ -18,6 +18,7 @@ function App() {
         zzz
       </button>
       <p>{test}</p>
+      <p>자동배포가 되었느냐</p>
     </>
   );
 }
