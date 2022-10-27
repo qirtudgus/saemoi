@@ -1,0 +1,52 @@
+name: 세모이 자동배포
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: pull repo
+    runs-on: ubuntu-latest
+    steps:
+    - name: git pull repository
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo su
+          cd saemoi
+          node -e "console.log('Running Node.js ' + process.version)"
+          sudo git pull
+          npm i
+          npm run build
+    
+    - name: nginx, mysql restart
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo su
+          cd saemoi
+          sudo systemctl stop nginx
+          sudo systemctl stop mysqld
+          sudo systemctl start nginx
+          sudo systemctl start mysqld
+          
+    - name: on pm2 server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          sudo su
+          cd saemoi
+          npx pm2 stop saemoi_server
+          npx pm2 start server/saemoi_server.ts
