@@ -18,6 +18,13 @@ setInterval(() => {
   });
 }, 3600000);
 
+app.post('/api/test', (req, res) => {
+  console.log(req.body);
+  db.query('SELECT * FROM users', [], (err, result) => {
+    res.status(200).json(result);
+  });
+});
+
 app.listen(SERVER_PORT, () => {
   console.log(`
     🛡️  Server listening on port: ${SERVER_PORT}
