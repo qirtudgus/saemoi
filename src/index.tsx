@@ -3,12 +3,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
-import GlobalStyles from './layout/GlobalStyles';
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <BrowserRouter>
-    <GlobalStyles />
     <App />
   </BrowserRouter>,
 );
