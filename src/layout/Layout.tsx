@@ -28,7 +28,6 @@ const HeaderDiv = styled.div`
 
 const HeaderLogo = styled.div`
   width: 150px;
-
   & img {
     width: auto;
   }
@@ -36,14 +35,55 @@ const HeaderLogo = styled.div`
 
 const FooterWrap = styled.footer`
   width: 100%;
-  height: 100px;
+  height: 200px;
   background: #e4e4fc;
   border-top: 1px solid #e5e7eb;
 `;
 
 const MainWrap = styled.main`
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 260px);
 `;
+
+const HeaderUl = styled.ul`
+  width: 70%;
+  ${({ theme }) => theme.common.flexCenter};
+  justify-content: flex-start;
+`;
+const HeaderLi = styled.li`
+  cursor: pointer;
+  width: auto;
+  margin: 0px 20px;
+  &:nth-child(1) {
+    margin-left: 50px;
+  }
+`;
+
+const LoginBtnWrap = styled.div`
+  width: 300px;
+  height: 100%;
+  position: relative;
+  ${({ theme }) => theme.common.flexCenter};
+`;
+
+const LoginBtn = styled.div`
+  width: 90px;
+  height: 35px;
+  border-radius: 40px;
+  background: ${({ theme }) => theme.colors.main};
+  ${({ theme }) => theme.common.flexCenter};
+  color: #fff;
+  margin-right: 30px;
+`;
+const RegisterBtn = styled.div`
+  width: 90px;
+  height: 35px;
+  border-radius: 40px;
+  border: 2px solid ${({ theme }) => theme.colors.main};
+  ${({ theme }) => theme.common.flexCenter};
+  color: ${({ theme }) => theme.colors.main};
+`;
+
+const menuList = ['메뉴', '메뉴23', '메뉴42432', '메뉴4243212'];
 
 const Layout = () => {
   return (
@@ -56,7 +96,16 @@ const Layout = () => {
                 src={로고}
                 alt='logo'
               ></img>
-            </HeaderLogo>
+            </HeaderLogo>{' '}
+            <HeaderUl>
+              {menuList.map((i) => (
+                <HeaderLi key={i}>{i}</HeaderLi>
+              ))}
+            </HeaderUl>
+            <LoginBtnWrap>
+              <LoginBtn>로그인</LoginBtn>
+              <RegisterBtn>회원가입</RegisterBtn>
+            </LoginBtnWrap>
           </HeaderDiv>
         </HeaderWrap>
         <MainWrap>
