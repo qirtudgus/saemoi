@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
+import 햄버거메뉴 from '../img/menu_black.svg';
 
 const HeaderWrap = styled.header`
   position: sticky;
@@ -19,17 +20,25 @@ const HeaderWrap = styled.header`
   align-items: center; */
 `;
 const HeaderDiv = styled.div`
-  max-width: 1280px;
+  max-width: 1260px;
+  padding: 0px 10px;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const HeaderLogo = styled.div`
   width: 150px;
   & img {
     width: auto;
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    & img {
+      width: auto;
+      max-width: 130px;
+    }
   }
 `;
 
@@ -48,6 +57,9 @@ const HeaderUl = styled.ul`
   width: 70%;
   ${({ theme }) => theme.common.flexCenter};
   justify-content: flex-start;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 const HeaderLi = styled.li`
   cursor: pointer;
@@ -63,6 +75,9 @@ const LoginBtnWrap = styled.div`
   height: 100%;
   position: relative;
   ${({ theme }) => theme.common.flexCenter};
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const LoginBtn = styled.div`
@@ -83,6 +98,18 @@ const RegisterBtn = styled.div`
   color: ${({ theme }) => theme.colors.main};
 `;
 
+const MenuBtn = styled.div`
+  width: 50px;
+  height: 100%;
+  display: none;
+  & img {
+    width: 45px;
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    ${({ theme }) => theme.common.flexCenter};
+  }
+`;
+
 const menuList = ['메뉴', '메뉴23', '메뉴42432', '메뉴4243212'];
 
 const Layout = () => {
@@ -96,12 +123,18 @@ const Layout = () => {
                 src={로고}
                 alt='logo'
               ></img>
-            </HeaderLogo>{' '}
+            </HeaderLogo>
             <HeaderUl>
               {menuList.map((i) => (
                 <HeaderLi key={i}>{i}</HeaderLi>
               ))}
             </HeaderUl>
+            <MenuBtn>
+              <img
+                src={햄버거메뉴}
+                alt='메뉴'
+              ></img>
+            </MenuBtn>
             <LoginBtnWrap>
               <LoginBtn>로그인</LoginBtn>
               <RegisterBtn>회원가입</RegisterBtn>
