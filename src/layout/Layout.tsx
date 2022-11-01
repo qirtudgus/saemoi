@@ -37,7 +37,7 @@ const HeaderLogo = styled.div`
   @media ${({ theme }) => theme.device.tablet} {
     & img {
       width: auto;
-      max-width: 130px;
+      max-width: 100px;
     }
   }
 `;
@@ -106,6 +106,10 @@ const MenuBtn = styled.div`
     width: 45px;
   }
   @media ${({ theme }) => theme.device.tablet} {
+    width: 40px;
+    & img {
+      width: 35px;
+    }
     ${({ theme }) => theme.common.flexCenter};
   }
 `;
