@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
-import React from 'react';
+import React, { useState } from 'react';
 
 const HeaderWrap = styled.header`
   position: sticky;
@@ -75,6 +75,9 @@ const HeaderLi = styled.li`
   cursor: pointer;
   width: auto;
   margin: 0px 20px;
+  &.active {
+    color: ${({ theme }) => theme.colors.main};
+  }
   &:hover {
     color: ${({ theme }) => theme.colors.main};
     font-weight: bold;
@@ -138,6 +141,7 @@ const menuList2 = [
 
 const Layout = () => {
   const navigate = useNavigate();
+  const [tabNum, setTabNum] = useState<number | null>(null);
 
   return (
     <div>
@@ -158,7 +162,9 @@ const Layout = () => {
               {menuList2.map((i, index) => (
                 <HeaderLi
                   key={index}
+                  className={tabNum === index ? 'active' : ''}
                   onClick={() => {
+                    setTabNum(index);
                     navigate(`${i.link}`);
                   }}
                 >
