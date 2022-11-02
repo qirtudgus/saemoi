@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
+import React from 'react';
 
 const HeaderWrap = styled.header`
   position: sticky;
@@ -20,17 +21,22 @@ const HeaderWrap = styled.header`
   align-items: center; */
 `;
 const HeaderDiv = styled.div`
-  max-width: 1260px;
-  padding: 0px 10px;
+  max-width: 1280px;
+
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    padding: 0px 10px;
+  }
 `;
 
 const HeaderLogo = styled.div`
   width: 150px;
+  cursor: pointer;
   & img {
     width: auto;
   }
@@ -51,6 +57,9 @@ const FooterWrap = styled.footer`
 
 const MainWrap = styled.main`
   min-height: calc(100vh - 260px);
+  width: 95%;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
 const HeaderUl = styled.ul`
@@ -61,10 +70,15 @@ const HeaderUl = styled.ul`
     display: none;
   }
 `;
+
 const HeaderLi = styled.li`
   cursor: pointer;
   width: auto;
   margin: 0px 20px;
+  &:hover {
+    color: ${({ theme }) => theme.colors.main};
+    font-weight: bold;
+  }
   &:nth-child(1) {
     margin-left: 50px;
   }
@@ -74,10 +88,12 @@ const LoginBtnWrap = styled.div`
   width: 300px;
   height: 100%;
   position: relative;
+
   ${({ theme }) => theme.common.flexCenter};
   @media ${({ theme }) => theme.device.tablet} {
     display: none;
   }
+  justify-content: flex-end;
 `;
 
 const LoginBtn = styled.div`
@@ -114,23 +130,40 @@ const MenuBtn = styled.div`
   }
 `;
 
-const menuList = ['메뉴', '메뉴23', '메뉴42432', '메뉴4243212'];
+const menuList2 = [
+  { name: '의류', link: '/clother' },
+  { name: '화장품', link: '/clother' },
+  { name: '식품', link: '/clother' },
+];
 
 const Layout = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <HeaderWrap>
           <HeaderDiv>
-            <HeaderLogo>
+            <HeaderLogo
+              onClick={() => {
+                navigate('/');
+              }}
+            >
               <img
                 src={로고}
                 alt='logo'
               ></img>
             </HeaderLogo>
             <HeaderUl>
-              {menuList.map((i) => (
-                <HeaderLi key={i}>{i}</HeaderLi>
+              {menuList2.map((i, index) => (
+                <HeaderLi
+                  key={index}
+                  onClick={() => {
+                    navigate(`${i.link}`);
+                  }}
+                >
+                  {i.name}
+                </HeaderLi>
               ))}
             </HeaderUl>
             <MenuBtn>
