@@ -4,6 +4,9 @@ import Home from './page/Home';
 import Layout from './layout/Layout';
 import GlobalStyles from './layout/GlobalStyles';
 import Clother from './layout/Clother';
+import Cosmetic from './layout/Cosmetic';
+import Food from './layout/Food';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -18,6 +21,18 @@ function App() {
           <Route
             path='/clother'
             element={<Clother />}
+          />
+          <Route
+            path='/cosmetic'
+            element={<Cosmetic />}
+          />
+          <Route
+            path='/food'
+            element={<Food />}
+          />
+          <Route
+            path='/login'
+            element={<Login />}
           />
         </Route>
       </Routes>
