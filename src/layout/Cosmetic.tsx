@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import EventList from '../components/EventList';
 
-const Clother = () => {
+const Cosmetic = () => {
   return (
     <>
       <EventList></EventList>
@@ -14,4 +14,4 @@ const Clother = () => {
   );
 };
 
-export default Clother;
+export default Cosmetic;
