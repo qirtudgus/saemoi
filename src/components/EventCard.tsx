@@ -11,10 +11,6 @@ const EventCardWrap = styled.div`
   align-items: center;
   flex-direction: column;
   overflow: hidden;
-  margin-right: 30px;
-  &:last-child {
-    margin-right: 0px;
-  }
 `;
 
 const EventCardImgWrap = styled.div`
@@ -45,14 +41,14 @@ const EventCardDday = styled.p`
   padding: 5px 0;
 `;
 
-const EventCard = () => {
+const EventCard = (props: any) => {
   return (
     <>
       <EventCardWrap>
         <EventCardImgWrap></EventCardImgWrap>
         <EventCardTextWrap>
-          <EventCardTitle>이번달 생일인 올리브라면?🎂</EventCardTitle>
-          <EventCardDate>2022.12.12 - 2022.01.01</EventCardDate>
+          <EventCardTitle>{props.title}</EventCardTitle>
+          <EventCardDate>{props.date}</EventCardDate>
           <EventCardDday>{1}일 남음</EventCardDday>
         </EventCardTextWrap>
       </EventCardWrap>
