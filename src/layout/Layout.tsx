@@ -4,7 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const HeaderWrap = styled.header`
   position: sticky;
@@ -13,6 +14,7 @@ const HeaderWrap = styled.header`
   width: 100%;
   height: 60px;
   background: #fff;
+  z-index: 100;
   border-bottom: 1px solid #e5e7eb;
   box-sizing: border-box;
   ${({ theme }) => theme.common.flexCenter};
@@ -51,12 +53,13 @@ const HeaderLogo = styled.div`
 const FooterWrap = styled.footer`
   width: 100%;
   height: 200px;
+  margin-top: 50px;
   background: #e4e4fc;
   border-top: 1px solid #e5e7eb;
 `;
 
 const MainWrap = styled.main`
-  min-height: calc(100vh - 260px);
+  min-height: calc(100vh - 310px);
   width: 95%;
   max-width: 1280px;
   margin: 0 auto;
@@ -75,10 +78,13 @@ const HeaderLi = styled.li`
   cursor: pointer;
   width: auto;
   margin: 0px 20px;
-  &.active {
+  & > a:visited {
+    color: #000;
+  }
+  & > a.active {
     color: ${({ theme }) => theme.colors.main};
   }
-  &:hover {
+  & > a:hover {
     color: ${({ theme }) => theme.colors.main};
     font-weight: bold;
   }
@@ -135,13 +141,12 @@ const MenuBtn = styled.div`
 
 const menuList2 = [
   { name: '의류', link: '/clother' },
-  { name: '화장품', link: '/clother' },
-  { name: '식품', link: '/clother' },
+  { name: '화장품', link: '/cosmetic' },
+  { name: '식품', link: '/food' },
 ];
 
 const Layout = () => {
   const navigate = useNavigate();
-  const [tabNum, setTabNum] = useState<number | null>(null);
 
   return (
     <div>
@@ -160,15 +165,13 @@ const Layout = () => {
             </HeaderLogo>
             <HeaderUl>
               {menuList2.map((i, index) => (
-                <HeaderLi
-                  key={index}
-                  className={tabNum === index ? 'active' : ''}
-                  onClick={() => {
-                    setTabNum(index);
-                    navigate(`${i.link}`);
-                  }}
-                >
-                  {i.name}
+                <HeaderLi key={index}>
+                  <NavLink
+                    to={`${i.link}`}
+                    className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  >
+                    {i.name}
+                  </NavLink>
                 </HeaderLi>
               ))}
             </HeaderUl>
@@ -179,7 +182,13 @@ const Layout = () => {
               ></img>
             </MenuBtn>
             <LoginBtnWrap>
-              <LoginBtn>로그인</LoginBtn>
+              <LoginBtn
+                onClick={() => {
+                  navigate('/login');
+                }}
+              >
+                로그인
+              </LoginBtn>
               <RegisterBtn>회원가입</RegisterBtn>
             </LoginBtnWrap>
           </HeaderDiv>
