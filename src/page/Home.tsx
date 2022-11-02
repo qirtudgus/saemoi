@@ -1,5 +1,4 @@
 import customAxios from '../util/customAxios';
-import styled from 'styled-components';
 
 const Home = () => {
   return (
