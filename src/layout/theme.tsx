@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 //참고사이트
 // https://wonit.tistory.com/366
 
