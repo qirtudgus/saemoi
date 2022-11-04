@@ -189,7 +189,13 @@ const Layout = () => {
               >
                 로그인
               </LoginBtn>
-              <RegisterBtn>회원가입</RegisterBtn>
+              <RegisterBtn
+                onClick={() => {
+                  navigate('/register');
+                }}
+              >
+                회원가입
+              </RegisterBtn>
             </LoginBtnWrap>
           </HeaderDiv>
         </HeaderWrap>
