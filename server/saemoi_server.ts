@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { db } from './saemoi_db.js';
+import { registerRouter } from './router/register.js';
 const SERVER_PORT = 3002;
 const app = express();
 app.use(cors());
@@ -17,6 +18,9 @@ setInterval(() => {
     console.log('커넥션 끊김방지 쿼리');
   });
 }, 3600000);
+
+//회원가입 라우터
+app.use('/api/register', registerRouter);
 
 app.post('/api/test', (req, res) => {
   console.log(req.body);
