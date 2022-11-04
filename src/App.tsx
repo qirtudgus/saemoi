@@ -7,6 +7,7 @@ import Clother from './layout/Clother';
 import Cosmetic from './layout/Cosmetic';
 import Food from './layout/Food';
 import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
           <Route
             path='/login'
             element={<Login />}
+          />
+          <Route
+            path='/register'
+            element={<Register />}
           />
         </Route>
       </Routes>
