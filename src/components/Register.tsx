@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 import customAxios from '../util/customAxios';
@@ -64,9 +64,27 @@ const Register = () => {
   };
 
   const join = () => {
+    registerInfoCheck();
+
     customAxios('post', '/register/join', { id, nickname, password, confirmPassword }).then((res) =>
       console.log(res.data),
     );
+  };
+
+  //비밀번호 양식
+  const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,20}$/;
+  //공백체크 표현식
+  const spaceCheck = /\s/;
+
+  const registerInfoCheck = () => {
+    if (spaceCheck.test(password)) {
+      alert('공백은 사용할 수 없습니다.');
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      alert('5~20자의 영문,숫자,특수문자만 사용하세요.');
+      return;
+    }
   };
 
   return (
@@ -74,19 +92,19 @@ const Register = () => {
       <RegisterWrap>
         <InputDiv>
           <InputTitle>아이디</InputTitle>
-          <Input onChange={(e) => inputChange(e, setId)}></Input>
+          <Input onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setId)}></Input>
         </InputDiv>
         <InputDiv>
           <InputTitle>닉네임</InputTitle>
-          <Input onChange={(e) => inputChange(e, setNickname)}></Input>
+          <Input onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setNickname)}></Input>
         </InputDiv>
         <InputDiv>
           <InputTitle>비밀번호</InputTitle>
-          <Input onChange={(e) => inputChange(e, setPassword)}></Input>
+          <Input onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setPassword)}></Input>
         </InputDiv>
         <InputDiv>
           <InputTitle>비밀번호 확인</InputTitle>
-          <Input onChange={(e) => inputChange(e, setConfirmPassword)}></Input>
+          <Input onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setConfirmPassword)}></Input>
         </InputDiv>
         <Button onClick={join}>가입!</Button>
       </RegisterWrap>
