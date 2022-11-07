@@ -47,8 +47,15 @@ const device = {
   laptop: `screen and (max-width: ${deviceSizes.laptop})`,
 };
 
+interface ThemeInterface {
+  fontSizes: any;
+  colors: any;
+  common: any;
+  device: any;
+}
+
 // theme 객체에 감싸서 반환한다.
-const theme = {
+const theme: ThemeInterface = {
   fontSizes,
   colors,
   common,
