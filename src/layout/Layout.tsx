@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const HeaderWrap = styled.header`
@@ -139,6 +139,52 @@ const MenuBtn = styled.div`
   }
 `;
 
+interface SlideInterface {
+  visible?: boolean;
+  ref: any;
+}
+
+const SlideWrap = styled.div<SlideInterface>`
+  height: 0px;
+  z-index: 10;
+  width: 100%;
+  background-color: #fff;
+  display: block;
+  position: absolute;
+  top: 60px;
+  /* ${(props) =>
+    props.visible &&
+    css`
+      display: block;
+    `} */
+  &.active {
+    transition: height 0.45s;
+
+    height: 300px;
+    box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
+  }
+  overflow: hidden;
+`;
+
+const SlideUl = styled.ul`
+  position: relative;
+  top: 60px;
+  z-index: 20;
+`;
+const SlideLi = styled.li`
+  height: 50px;
+  position: relative;
+  z-index: 20;
+  cursor: pointer;
+  & > a:visited {
+    color: #000;
+  }
+  & > a {
+    display: inline-block;
+    width: 100%;
+  }
+`;
+
 const menuList2 = [
   { name: '의류', link: '/clother' },
   { name: '화장품', link: '/cosmetic' },
@@ -147,7 +193,8 @@ const menuList2 = [
 
 const Layout = () => {
   const navigate = useNavigate();
-
+  const [visible, setVisible] = useState(false);
+  const menu = useRef() as React.RefObject<HTMLDivElement>;
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -175,7 +222,16 @@ const Layout = () => {
                 </HeaderLi>
               ))}
             </HeaderUl>
-            <MenuBtn>
+            <MenuBtn
+              onClick={() => {
+                console.log(menu.current);
+                if (menu != null) {
+                  menu.current!.classList.toggle('active');
+                } else {
+                  return;
+                }
+              }}
+            >
               <img
                 src={햄버거메뉴}
                 alt='메뉴'
@@ -199,6 +255,25 @@ const Layout = () => {
             </LoginBtnWrap>
           </HeaderDiv>
         </HeaderWrap>
+        <SlideWrap ref={menu}>
+          <SlideUl>
+            {menuList2.map((i, index) => {
+              return (
+                <SlideLi key={index}>
+                  <NavLink
+                    onClick={(e) => {
+                      menu.current!.classList.toggle('active');
+                    }}
+                    to={`${i.link}`}
+                    className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  >
+                    {i.name}
+                  </NavLink>
+                </SlideLi>
+              );
+            })}
+          </SlideUl>
+        </SlideWrap>
         <MainWrap>
           <Outlet />
         </MainWrap>
