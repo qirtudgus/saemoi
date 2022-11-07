@@ -7,6 +7,14 @@ import 햄버거메뉴 from '../img/menu_black.svg';
 import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+const menuList2 = [
+  { name: '홈', link: '/' },
+  { name: '의류', link: '/clother' },
+  { name: '화장품', link: '/cosmetic' },
+  { name: '식품', link: '/food' },
+  { name: '게시판', link: '/' },
+];
+
 const HeaderWrap = styled.header`
   position: sticky;
   top: 0px;
@@ -18,9 +26,6 @@ const HeaderWrap = styled.header`
   border-bottom: 1px solid #e5e7eb;
   box-sizing: border-box;
   ${({ theme }) => theme.common.flexCenter};
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 `;
 const HeaderDiv = styled.div`
   max-width: 1280px;
@@ -148,30 +153,26 @@ const SlideWrap = styled.div<SlideInterface>`
   height: 0px;
   z-index: 10;
   width: 100%;
+  ${({ theme }) => theme.common.flexCenterColumn};
   background-color: #fff;
-  display: block;
-  position: absolute;
+  position: fixed;
   top: 60px;
-  /* ${(props) =>
-    props.visible &&
-    css`
-      display: block;
-    `} */
   &.active {
-    transition: height 0.45s;
-
-    height: 300px;
+    transition: height 0.4s;
+    height: ${menuList2.length * 50}px;
     box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
   }
+  transition: height 0.15s;
   overflow: hidden;
 `;
 
 const SlideUl = styled.ul`
   position: relative;
-  top: 60px;
+  width: 95%;
   z-index: 20;
 `;
 const SlideLi = styled.li`
+  ${({ theme }) => theme.common.flexCenterColumn};
   height: 50px;
   position: relative;
   z-index: 20;
@@ -185,15 +186,8 @@ const SlideLi = styled.li`
   }
 `;
 
-const menuList2 = [
-  { name: '의류', link: '/clother' },
-  { name: '화장품', link: '/cosmetic' },
-  { name: '식품', link: '/food' },
-];
-
 const Layout = () => {
   const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
   const menu = useRef() as React.RefObject<HTMLDivElement>;
   return (
     <div>
