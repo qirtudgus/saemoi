@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const menuList2 = [
@@ -164,6 +164,13 @@ const SlideWrap = styled.div<SlideInterface>`
   }
   transition: height 0.15s;
   overflow: hidden;
+  display: none;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: block;
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    display: block;
+  }
 `;
 
 const SlideUl = styled.ul`
@@ -189,6 +196,7 @@ const SlideLi = styled.li`
 const Layout = () => {
   const navigate = useNavigate();
   const menu = useRef() as React.RefObject<HTMLDivElement>;
+
   return (
     <div>
       <ThemeProvider theme={theme}>
