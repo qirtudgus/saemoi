@@ -218,7 +218,6 @@ const Layout = () => {
             </HeaderUl>
             <MenuBtn
               onClick={() => {
-                console.log(menu.current);
                 if (menu != null) {
                   menu.current!.classList.toggle('active');
                 } else {
