@@ -8,6 +8,7 @@ console.log(process.env.local_DB_host);
 console.log(process.env.local_DB_user);
 console.log(process.env.local_DB_password);
 console.log(process.env.local_DB);
+
 export const db = mysql.createConnection({
   host: process.env.local_DB_host,
   port: 3306,
