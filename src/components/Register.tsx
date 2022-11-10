@@ -191,6 +191,7 @@ const Register = () => {
             비밀번호 <InputWarning>{pwWarning}</InputWarning>
           </InputTitle>
           <Input
+            type={'password'}
             ref={passwordRef}
             // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setPassword)}
           ></Input>
@@ -200,6 +201,7 @@ const Register = () => {
             비밀번호 확인 <InputWarning>{cpwWarning}</InputWarning>
           </InputTitle>
           <Input
+            type={'password'}
             ref={confirmPasswordRef}
             // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setConfirmPassword)}
           ></Input>
