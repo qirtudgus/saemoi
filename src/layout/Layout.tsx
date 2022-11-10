@@ -166,10 +166,10 @@ const SlideWrap = styled.div<SlideInterface>`
   overflow: hidden;
   display: none;
   @media ${({ theme }) => theme.device.tablet} {
-    display: block;
+    display: flex;
   }
   @media ${({ theme }) => theme.device.mobile} {
-    display: block;
+    display: flex;
   }
 `;
 
