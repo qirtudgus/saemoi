@@ -1,8 +1,12 @@
+import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
 
 const Home = () => {
+  const nickname = useAppSelector((state) => state.user.nickname);
+
   return (
     <div>
+      <h1>당신의 닉네임 {nickname}</h1>
       <button
         onClick={() => {
           customAxios('post', '/test', { test: '프론트에서 보내는 테스트값' }).then((res) => {
