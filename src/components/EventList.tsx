@@ -48,9 +48,8 @@ const EventList = (props: any) => {
         }}
       >
         {props.eventList.map((i: any, index: number) => (
-          <SwiperSlide>
+          <SwiperSlide key={index}>
             <EventCard
-              key={index}
               title={i.title}
               date={i.date}
             ></EventCard>
