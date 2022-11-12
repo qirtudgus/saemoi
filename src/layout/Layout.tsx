@@ -14,7 +14,7 @@ const menuList2 = [
   { name: '의류', link: '/clother' },
   { name: '화장품', link: '/cosmetic' },
   { name: '식품', link: '/food' },
-  { name: '게시판', link: '/' },
+  { name: '게시판', link: '/board' },
 ];
 
 const HeaderWrap = styled.header`
@@ -203,11 +203,6 @@ const Layout = () => {
   const dispatch = useAppDispatch();
   const menu = useRef() as React.RefObject<HTMLDivElement>;
   const { isLogin } = useAppSelector((state) => state.user);
-
-  console.log('레이아웃컴포넌트의 이즈로그인값');
-  console.log(isLogin);
-
-  useEffect(() => {}, [isLogin]);
 
   return (
     <div>
