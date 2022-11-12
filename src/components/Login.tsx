@@ -4,12 +4,13 @@ import { useAppSelector, useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { RootState } from '../store/store';
-import { changeNickname, UserService } from '../store/userSlice';
+import { UserService } from '../store/userSlice';
 import customAxios from '../util/customAxios';
+import { resolveSoa } from 'dns';
+import TitleText from './TitleText';
 
 const RegisterWrap = styled.div`
   width: 100%;
-  margin-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,8 +94,20 @@ const Login = () => {
     let id = idRef.current.value;
     let pw = passwordRef.current.value;
     console.log(id);
-    dispatch(UserService.getUser({ id, pw })).then(() => {
-      navigate('/');
+    dispatch(UserService.getUser({ id, pw })).then((res) => {
+      console.log(res);
+      console.log(res.payload);
+      console.log(res.payload.errorcode);
+      if (res.payload.errorcode === 100) {
+        setIdWarning(res.payload.error);
+      }
+      if (res.payload.errorcode === 101) {
+        setIdWarning('');
+        setPwWarning(res.payload.error);
+      }
+      if (res.payload.errorcode === undefined) {
+        navigate('/');
+      }
     });
   };
 
@@ -109,6 +122,7 @@ const Login = () => {
 
   return (
     <RegisterWrap>
+      <TitleText text='로그인'></TitleText>
       <InputDiv>
         <InputTitle>
           아이디 <InputWarning>{idWarning}</InputWarning>
