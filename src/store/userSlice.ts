@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import customAxios from '../util/customAxios';
+import { Cookies } from 'react-cookie';
+const cookies = new Cookies();
 //비동기함수
 export const UserService = {
   /**
@@ -48,6 +50,12 @@ const user = createSlice({
     },
     logout(state: UserStateInterface) {
       state.isLogin = false;
+      state.id = '';
+      state.nickname = '';
+      cookies.remove('AT');
+      cookies.remove('RT');
+      cookies.remove('id');
+      cookies.remove('nickname');
       localStorage.removeItem('AT');
       localStorage.removeItem('RT');
     },
