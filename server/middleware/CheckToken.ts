@@ -8,9 +8,6 @@ export const jwtCheck = (req: Request, res: Response, next: NextFunction) => {
   let id = req.cookies.id;
   let AT = req.cookies.AT;
   let RT = req.cookies.RT;
-  console.log(id);
-  console.log(AT);
-  console.log(RT);
   //액세스토큰이 아예 없다면 에러 반환
   if (AT === undefined) return res.status(401).json({ error: '액세스 토큰이 없습니다.' });
   let ATverifyResult = verifyToken(AT); // 만료 시 null 이 할당된다.
