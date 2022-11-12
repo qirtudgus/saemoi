@@ -3,10 +3,20 @@ import cors from 'cors';
 import { db } from './saemoi_db.js';
 import { registerRouter } from './router/register.js';
 import { loginRouter } from './router/login.js';
+import { jwtCheck } from './middleware/CheckToken.js';
+import cookieParser from 'cookie-parser';
+
 const SERVER_PORT = 3002;
 const app = express();
-app.use(cors());
+//https://www.zerocho.com/category/NodeJS/post/5e9bf5b18dcb9c001f36b275
+app.use(
+  cors({
+    origin: true, // 출처 허용 옵션
+    credentials: true, // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
+  }),
+);
 app.use(express.json());
+app.use(cookieParser());
 
 db.connect((err: any) => {
   if (err) console.log('MySQL 연결 실패 : ', err);
@@ -20,6 +30,16 @@ setInterval(() => {
   });
 }, 3600000);
 
+//express req 속성 추가
+declare module 'express-serve-static-core' {
+  interface Request {
+    decoded?: any;
+  }
+}
+
+// app.use(jwtCheck);
+//해당 주소에 들어오는것에만 미들웨어를 체크할 수 있다.
+app.use('/api/test', jwtCheck);
 //회원가입 라우터
 app.use('/api/register', registerRouter);
 //로그인 라우터
