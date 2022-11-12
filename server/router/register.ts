@@ -21,7 +21,8 @@ registerRouter.post('/join', (req, res) => {
         if (rows[0] === undefined) {
           console.log('사용가능한 닉네임');
           //아이디와 닉네임 모두 사용 가능할 시
-          db.query(joinQuery, [id, hashPassword, salt, nick], () => {
+          db.query(joinQuery, [id, hashPassword, salt, nick], (err, rows) => {
+            console.log('회원가입 완료');
             res.status(200).json({ errorCode: 0 });
           });
         } else if (rows[0]) {
