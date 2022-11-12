@@ -13,14 +13,14 @@ loginRouter.post('/', async (req, res, next) => {
   db.query(findUserQuery, [id], (err, result) => {
     if (result[0] === undefined) {
       console.log('없는 아이디야');
-      res.status(200).json({ error: '없는 아이디야.' });
+      res.status(200).json({ errorcode: 100, error: '존재하지 않는 아이디입니다.' });
     } else {
       console.log('있는 아이디네 비밀번호 체크하자');
       let hashResult = checkHashPassword(pw, result[0].password, result[0].salt);
       console.log(`비밀번호 확인 결과 ${hashResult}`);
       if (hashResult === false) {
         console.log('비밀번호가 틀렸어.');
-        res.status(200).json({ error: '틀린 비밀번호야.' });
+        res.status(200).json({ errorcode: 101, error: '비밀번호가 틀렸습니다.' });
       } else {
         let nickname = result[0].nickname;
 
@@ -48,13 +48,7 @@ loginRouter.post('/', async (req, res, next) => {
 });
 
 loginRouter.post('/autologin', async (req, res, next) => {
-  const { AT } = req.body;
-  console.log('자동로그인이 받아온 AT');
-  console.log(AT);
   console.log('자동로그인이 받아온 쿠키의 토큰');
-  console.log(req.cookies.AT);
-  console.log(req.cookies.id);
-
   let ATresult = verifyToken(req.cookies.AT);
   let RTresult = verifyToken(req.cookies.RT);
   console.log('자동 로그인 토큰 만료 유무');
@@ -65,15 +59,17 @@ loginRouter.post('/autologin', async (req, res, next) => {
       res.clearCookie('AT');
       res.clearCookie('RT');
       res.clearCookie('nickname');
-      res.status(401).json({ id: '', AT: '', RT: '', isLogin: false, nickname: '' });
+      res.status(401).json({
+        id: '',
+        isLogin: false,
+        nickname: '',
+      });
     } else {
       const newAT = createAccessToken(req.cookies.id) as string;
       res.cookie('AT', newAT);
       req.cookies.AT = newAT;
       res.status(200).json({
         id: req.cookies.id,
-        AT: req.cookies.AT,
-        RT: req.cookies.RT,
         isLogin: true,
         nickname: req.cookies.nickname,
       });
@@ -81,8 +77,6 @@ loginRouter.post('/autologin', async (req, res, next) => {
   } else {
     res.status(200).json({
       id: req.cookies.id,
-      AT: req.cookies.AT,
-      RT: req.cookies.RT,
       isLogin: true,
       nickname: req.cookies.nickname,
     });
