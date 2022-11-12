@@ -6,9 +6,11 @@ import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../store/store';
+import { logout } from '../store/userSlice';
 
 const menuList2 = [
-  { name: '홈', link: '/' },
+  // { name: '홈', link: '/' },
   { name: '의류', link: '/clother' },
   { name: '화장품', link: '/cosmetic' },
   { name: '식품', link: '/food' },
@@ -147,6 +149,7 @@ const MenuBtn = styled.div`
 interface SlideInterface {
   visible?: boolean;
   ref: any;
+  isLogin: boolean;
 }
 
 const SlideWrap = styled.div<SlideInterface>`
@@ -159,7 +162,7 @@ const SlideWrap = styled.div<SlideInterface>`
   top: 60px;
   &.active {
     transition: height 0.4s;
-    height: ${menuList2.length * 50}px;
+    height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px);
     box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
   }
   transition: height 0.15s;
@@ -180,22 +183,31 @@ const SlideUl = styled.ul`
 `;
 const SlideLi = styled.li`
   ${({ theme }) => theme.common.flexCenterColumn};
+  align-items: flex-start;
   height: 50px;
   position: relative;
   z-index: 20;
+  width: 100%;
   cursor: pointer;
   & > a:visited {
     color: #000;
   }
   & > a {
-    display: inline-block;
     width: 100%;
+    display: inline-block;
   }
 `;
 
 const Layout = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const menu = useRef() as React.RefObject<HTMLDivElement>;
+  const { isLogin } = useAppSelector((state) => state.user);
+
+  console.log('레이아웃컴포넌트의 이즈로그인값');
+  console.log(isLogin);
+
+  useEffect(() => {}, [isLogin]);
 
   return (
     <div>
@@ -238,25 +250,41 @@ const Layout = () => {
                 alt='메뉴'
               ></img>
             </MenuBtn>
-            <LoginBtnWrap>
-              <LoginBtn
-                onClick={() => {
-                  navigate('/login');
-                }}
-              >
-                로그인
-              </LoginBtn>
-              <RegisterBtn
-                onClick={() => {
-                  navigate('/register');
-                }}
-              >
-                회원가입
-              </RegisterBtn>
-            </LoginBtnWrap>
+            {isLogin ? (
+              <LoginBtnWrap>
+                <LoginBtn
+                  onClick={() => {
+                    console.log('로그아웃 시도');
+                    dispatch(logout());
+                  }}
+                >
+                  로그아웃
+                </LoginBtn>
+              </LoginBtnWrap>
+            ) : (
+              <LoginBtnWrap>
+                <LoginBtn
+                  onClick={() => {
+                    navigate('/login');
+                  }}
+                >
+                  로그인
+                </LoginBtn>
+                <RegisterBtn
+                  onClick={() => {
+                    navigate('/register');
+                  }}
+                >
+                  회원가입
+                </RegisterBtn>
+              </LoginBtnWrap>
+            )}
           </HeaderDiv>
         </HeaderWrap>
-        <SlideWrap ref={menu}>
+        <SlideWrap
+          isLogin={isLogin}
+          ref={menu}
+        >
           <SlideUl>
             {menuList2.map((i, index) => {
               return (
@@ -273,6 +301,35 @@ const Layout = () => {
                 </SlideLi>
               );
             })}
+            {isLogin ? (
+              <SlideLi
+                onClick={() => {
+                  console.log('로그아웃 시도');
+                  dispatch(logout());
+                }}
+              >
+                로그아웃
+              </SlideLi>
+            ) : (
+              <>
+                <SlideLi
+                  onClick={() => {
+                    menu.current!.classList.toggle('active');
+                    navigate('/login');
+                  }}
+                >
+                  로그인
+                </SlideLi>
+                <SlideLi
+                  onClick={() => {
+                    menu.current!.classList.toggle('active');
+                    navigate('/register');
+                  }}
+                >
+                  회원가입
+                </SlideLi>
+              </>
+            )}
           </SlideUl>
         </SlideWrap>
         <MainWrap>
@@ -284,4 +341,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default React.memo(Layout);
