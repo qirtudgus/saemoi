@@ -4,10 +4,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 import customAxios from '../util/customAxios';
 import { errorCode } from '../util/errorCode';
+import TitleText from './TitleText';
 
 const RegisterWrap = styled.div`
   width: 100%;
-  margin-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,6 +168,8 @@ const Register = () => {
   return (
     <ThemeProvider theme={theme}>
       <RegisterWrap>
+        <TitleText text='회원 가입'></TitleText>
+
         <InputDiv>
           <InputTitle>
             아이디 <InputWarning>{idWarning}</InputWarning>
