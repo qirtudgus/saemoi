@@ -1,6 +1,10 @@
-import { MutableRefObject, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import { RootState } from '../store/store';
+import { changeNickname, UserService } from '../store/userSlice';
 import customAxios from '../util/customAxios';
 
 const RegisterWrap = styled.div`
@@ -78,17 +82,30 @@ const Button = styled.button`
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   const idRef = useRef() as MutableRefObject<HTMLInputElement>;
   const passwordRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const isLogin = useAppSelector((state) => state.user.isLogin);
   const [idWarning, setIdWarning] = useState('');
   const [pwWarning, setPwWarning] = useState('');
 
   const login = () => {
     let id = idRef.current.value;
     let pw = passwordRef.current.value;
-    customAxios('post', '/login', { id, pw });
+    console.log(id);
+    dispatch(UserService.getUser({ id, pw })).then(() => {
+      navigate('/');
+    });
   };
+
+  console.log(isLogin);
+
+  useEffect(() => {
+    if (isLogin === true) {
+      alert('이미 로그인중입니다.');
+      navigate('/');
+    }
+  }, []);
 
   return (
     <RegisterWrap>
