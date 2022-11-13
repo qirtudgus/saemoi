@@ -140,6 +140,15 @@ table {
         background-color:#fff;
         color: #000;
     }
+    //토스트에디터 팝업창 위치 조정
+    @media only screen and (max-width: 480px) {
+  .toastui-editor-popup {
+    position: absolute;
+    max-width: 300px;
+    margin-left: 0px !important;
+  }
+}
+
 `;
 
 export default GlobalStyles;
