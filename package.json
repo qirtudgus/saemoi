@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@toast-ui/editor": "^3.2.1",
+    "@toast-ui/react-editor": "^3.2.2",
     "@types/jest": "^27.5.2",
     "@types/mysql": "^2.15.21",
     "@types/node": "^16.18.2",
