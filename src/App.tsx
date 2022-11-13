@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import Home from './page/Home';
 import Layout from './layout/Layout';
 import GlobalStyles from './layout/GlobalStyles';
@@ -9,6 +9,8 @@ import Food from './layout/Food';
 import Login from './components/Login';
 import Register from './components/Register';
 import Board from './page/Board';
+import Write from './page/Write';
+import View from './page/View';
 
 function App() {
   return (
@@ -43,6 +45,14 @@ function App() {
           <Route
             path='/board'
             element={<Board />}
+          />
+          <Route
+            path='/write'
+            element={<Write />}
+          />
+          <Route
+            path='/view/:number'
+            element={<View />}
           />
         </Route>
       </Routes>
