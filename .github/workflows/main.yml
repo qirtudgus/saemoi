@@ -48,5 +48,4 @@ jobs:
           sudo su
           cd saemoi
           npx pm2 stop saemoi_server
-          npx pm2 install typescript
           npx pm2 start server/saemoi_server.ts
