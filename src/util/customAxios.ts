@@ -12,8 +12,10 @@ export const customAxios = async (method: string, url: string, data?: any): Prom
     console.log(err.response);
     console.log(err.response.data);
     console.log(err.response.status);
-    alert('토큰이 만료되었습니다. 로그인 후 이용해주세요!');
-    window.location.replace('/login');
+    if (err.response.status === 401) {
+      alert('토큰이 만료되었습니다. 로그인 후 이용해주세요!');
+      window.location.replace('/login');
+    }
   });
 };
 export default customAxios;
