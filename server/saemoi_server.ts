@@ -5,6 +5,7 @@ import { registerRouter } from './router/register.js';
 import { loginRouter } from './router/login.js';
 import { jwtCheck } from './middleware/CheckToken.js';
 import cookieParser from 'cookie-parser';
+import { boardRouter } from './router/board.js';
 
 const SERVER_PORT = 3002;
 const app = express();
@@ -44,6 +45,8 @@ app.use('/api/test', jwtCheck);
 app.use('/api/register', registerRouter);
 //로그인 라우터
 app.use('/api/login', loginRouter);
+//게시판 라우터
+app.use('/api/board', boardRouter);
 
 app.post('/api/test', (req, res) => {
   console.log(req.body);
