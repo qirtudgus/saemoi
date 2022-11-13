@@ -13,13 +13,13 @@ export const BoardViewService = {
   }),
 };
 
-interface UserStateInterface {
+interface BoardInterface {
   index: string;
   title: string;
   content: string;
 }
 
-let initialState: UserStateInterface = {
+let initialState: BoardInterface = {
   index: '',
   title: '',
   content: '',
