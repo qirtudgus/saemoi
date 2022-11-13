@@ -4,7 +4,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
-import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { UserServiceAutoLogin } from './store/userSlice';
 
@@ -15,14 +14,6 @@ function loadUser() {
   console.log(cookies.get('AT'));
   let AT = cookies.get('AT');
   store.dispatch(UserServiceAutoLogin.getUserAutoLogin(AT));
-  // try {
-  //   let user: string | null = localStorage.getItem('token');
-  //   if (!user) return;
-  //   axios.defaults.headers.common['Authorization'] = user;
-  //   store.dispatch();
-  // } catch (e) {
-  //   console.log(e);
-  // }
 }
 loadUser();
 
