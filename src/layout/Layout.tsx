@@ -154,7 +154,7 @@ interface SlideInterface {
 
 const SlideWrap = styled.div<SlideInterface>`
   height: 0px;
-  z-index: 10;
+  z-index: 10000;
   width: 100%;
   ${({ theme }) => theme.common.flexCenterColumn};
   background-color: #fff;
