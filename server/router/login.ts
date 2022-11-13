@@ -35,9 +35,6 @@ loginRouter.post('/', async (req, res, next) => {
         res.cookie('RT', RT);
         res.cookie('nickname', nickname);
         console.log(req.cookies);
-        console.log(req.cookies.AT);
-        console.log(req.cookies.RT);
-        console.log(req.cookies.nickname);
 
         db.query(insertTokenQuery, [RT, id]);
         res.status(200).json({ id, AT, RT, isLogin: true, nickname });
