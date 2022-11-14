@@ -20,7 +20,8 @@ jobs:
           sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
           sudo git pull
-          npm i @toast-ui/react-editor --save --legacy-peer-deps 
+          npm i @toast-ui/react-editor --save --legacy-peer-deps
+          npm i
 
     - name: npm run build
       uses: appleboy/ssh-action@master
@@ -33,7 +34,6 @@ jobs:
           sudo su
           sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
-          npm i
           npm run build          
     
     - name: nginx, mysql restart
@@ -45,10 +45,8 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          sudo systemctl stop nginx
-          sudo systemctl stop mysqld
-          sudo systemctl start nginx
-          sudo systemctl start mysqld
+          sudo systemctl restart nginx
+          sudo systemctl restart mysqld
           
     - name: on pm2 server
       uses: appleboy/ssh-action@master
