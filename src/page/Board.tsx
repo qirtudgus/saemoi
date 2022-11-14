@@ -11,6 +11,8 @@ const Board = () => {
     {
       index: '',
       title: '',
+      nickname: '',
+      date: '',
     },
   ]);
 
@@ -37,12 +39,15 @@ const Board = () => {
             <li
               onClick={() => {
                 //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
-                dispatch(BoardViewService.getBoard({ number: i.index }));
+                //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
+                // dispatch(BoardViewService.getBoard({ number: i.index }))
                 navigate(`/view/${i.index}`);
               }}
             >
               <h1>{i.index}</h1>
               <h1>{i.title}</h1>
+              <span>{i.nickname}</span>
+              <span>{i.date}</span>
             </li>
           </React.Fragment>
         );

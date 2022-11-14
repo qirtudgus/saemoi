@@ -1,18 +1,39 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // Toast-UI Viewer 임포트
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
 const View = () => {
-  const board = useAppSelector((state) => state.board);
   const navigate = useNavigate();
+  let { number } = useParams();
+  interface BoardInterface {
+    title: string;
+    content: string;
+    date: string;
+    nickname: string;
+  }
+  const [content, setContent] = useState<BoardInterface>({
+    title: '',
+    content: '',
+    date: '',
+    nickname: '',
+  });
+
+  useEffect(() => {
+    customAxios('get', `/board/view?number=${number}`, {}).then((res) => {
+      console.log(res.data);
+      setContent(res.data);
+    });
+  }, [number]);
 
   return (
     <>
       <div>
-        <p>{board.title}</p>
-        <Viewer initialValue={board.content} />
+        <p>{content.date}</p>
+        <p>{content.nickname}</p>
+        <p>{content.title}</p>
+        {content.title === '' ? null : <Viewer initialValue={content.content} />}
       </div>
     </>
   );
