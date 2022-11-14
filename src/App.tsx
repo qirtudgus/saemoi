@@ -11,6 +11,7 @@ import Register from './components/Register';
 import Board from './page/Board';
 import Write from './page/Write';
 import View from './page/View';
+import PostEdit from './page/PostEdit';
 
 function App() {
   return (
@@ -43,16 +44,20 @@ function App() {
             element={<Register />}
           />
           <Route
-            path='/board'
+            path='/board/list'
             element={<Board />}
           />
           <Route
-            path='/write'
+            path='/board/write'
             element={<Write />}
           />
           <Route
-            path='/view/:number'
+            path='/board/posts/:number'
             element={<View />}
+          />
+          <Route
+            path='/board/edit/:number'
+            element={<PostEdit />}
           />
         </Route>
       </Routes>
