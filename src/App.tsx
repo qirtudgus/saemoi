@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './page/Home';
 import Layout from './layout/Layout';
 import GlobalStyles from './layout/GlobalStyles';

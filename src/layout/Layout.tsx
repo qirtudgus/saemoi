@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import 로고 from '../img/saemoiSVG2.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout } from '../store/userSlice';
