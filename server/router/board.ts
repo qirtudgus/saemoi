@@ -4,7 +4,7 @@ export const boardRouter = express.Router();
 
 //게시물 리스트 불러오기
 boardRouter.get('/', (req, res) => {
-  let board = 'SELECT (`index`), title, date, nickname FROM board';
+  let board = 'SELECT (`index`), title, date, nickname,commentCount FROM board';
   db.query(board, [], (err, rows) => {
     console.log(err);
     console.log(rows);
@@ -21,6 +21,46 @@ boardRouter.post('/', (req, res) => {
     console.log(err);
     console.log(rows);
     res.status(200).json('등록완료');
+  });
+});
+
+//게시물보기
+//댓글도 같이 응답해줘야한다..
+boardRouter.get('/posts', (req, res) => {
+  let board = 'SELECT * FROM board WHERE (`index` = ?)';
+  let boardNumber = req.query.number;
+  interface BoardInterface {
+    title: string;
+    content: string;
+    date: string;
+    nickname: string;
+    id: string;
+    index: string;
+    latestEditDate: string;
+    comment: CommentInterface[];
+  }
+  interface CommentInterface {
+    index: string;
+    content: string;
+    nickname: string;
+    id: string;
+    date: string;
+  }
+  db.query(board, [boardNumber], (err, rows) => {
+    console.log(err);
+    console.log('게시물 보기 결과');
+    console.log(rows[0]);
+    let contentResult: BoardInterface = rows[0];
+    if (rows[0] === undefined) {
+      res.status(201).json({ errorCode: 3 });
+    } else {
+      //댓글 불러오기
+      let commentQuery = 'SELECT (`index`), id, nickname, content, date FROM commentTable WHERE board_index = ?';
+      db.query(commentQuery, [boardNumber], (err, rows) => {
+        contentResult.comment = rows;
+        res.status(200).json(contentResult);
+      });
+    }
   });
 });
 
@@ -50,24 +90,5 @@ boardRouter.put('/edit', (req, res) => {
     } else {
       res.status(200).json({ text: '게시물이 수정되었습니다.' });
     }
-  });
-});
-
-//게시물보기
-boardRouter.get('/posts', (req, res) => {
-  let board = 'SELECT * FROM board WHERE (`index` = ?)';
-  let boardNumber = req.query.number;
-  interface BoardInterface {
-    title: string;
-    content: string;
-    nickname: string;
-    date: string;
-    id: string;
-  }
-  db.query(board, [boardNumber], (err, rows) => {
-    console.log(err);
-    console.log(rows[0]);
-    let contentResult: BoardInterface = rows[0];
-    res.send(contentResult);
   });
 });
