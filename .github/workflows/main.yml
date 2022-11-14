@@ -17,7 +17,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          chmod 711 /home
+          sudo chown -R ec2-user /home
           cd saemoi
           sudo git pull
           npm i @toast-ui/react-editor --save --legacy-peer-deps 
