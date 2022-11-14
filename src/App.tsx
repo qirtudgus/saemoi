@@ -12,6 +12,7 @@ import Board from './page/Board';
 import Write from './page/Write';
 import View from './page/View';
 import PostEdit from './page/PostEdit';
+import ErrorPage from './page/ErrorPage';
 
 function App() {
   return (
@@ -59,6 +60,10 @@ function App() {
             path='/board/edit/:number'
             element={<PostEdit />}
           />
+          <Route
+            path='*'
+            element={<ErrorPage />}
+          ></Route>
         </Route>
       </Routes>
     </>
