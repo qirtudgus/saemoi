@@ -5,6 +5,7 @@ import customAxios from '../util/customAxios';
 import { useNavigate } from 'react-router-dom';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { useAppSelector } from '../store/store';
+import { returnTodayString } from '../util/returnTodayString';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -15,16 +16,7 @@ const Write = () => {
 
   // 등록 버튼 핸들러
   const handleRegisterButton = () => {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = ('0' + (today.getMonth() + 1)).slice(-2);
-    let day = ('0' + today.getDate()).slice(-2);
-    let dateString = year + '.' + month + '.' + day;
-    let hours = ('0' + today.getHours()).slice(-2);
-    let minutes = ('0' + today.getMinutes()).slice(-2);
-
-    let timeString = hours + ':' + minutes;
-    let date = dateString + ' ' + timeString;
+    let date = returnTodayString();
     // 입력창에 입력한 내용을 HTML 태그 형태로 취득
     console.log(editorRef!.current!.getInstance().getHTML());
     // 입력창에 입력한 내용을 MarkDown 형태로 취득
