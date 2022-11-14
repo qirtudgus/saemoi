@@ -43,7 +43,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo systemctl restart nginx
+          sudo systemctl stop nginx
+          sudo systemctl start nginx
           sudo systemctl restart mysqld
           
     - name: on pm2 server
