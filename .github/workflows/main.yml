@@ -16,7 +16,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo chown -R ec2-user /home/ec2-user/saemoi
+          sudo chown -R ec2-user ./saemoi
           cd saemoi
           sudo git pull
           npm i @toast-ui/react-editor --save --legacy-peer-deps
@@ -30,7 +30,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo chown -R ec2-user /home/ec2-user/saemoi
+          sudo chown -R ec2-user ./saemoi
           cd saemoi
           npm i
           npm run build          
@@ -43,8 +43,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          sudo systemctl stop nginx
-          sudo systemctl start nginx
+          sudo systemctl restart nginx
           sudo systemctl restart mysqld
           
     - name: on pm2 server
