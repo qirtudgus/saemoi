@@ -9,6 +9,7 @@ import { useAppSelector } from '../store/store';
 const Write = () => {
   const navigate = useNavigate();
   const nickname = useAppSelector((state) => state.user.nickname);
+  const id = useAppSelector((state) => state.user.id);
   const editorRef = useRef() as RefObject<Editor>;
   const titleRef = useRef() as RefObject<HTMLInputElement>;
 
@@ -32,12 +33,12 @@ const Write = () => {
     console.log(titleRef!.current!.value);
     let title = titleRef!.current!.value;
     let content = editorRef!.current!.getInstance().getHTML();
-    customAxios('post', '/board', { title, content, date, nickname }).then((res) => {
+    customAxios('post', '/board', { title, content, date, nickname, id }).then((res) => {
       console.log(res.data);
       console.log(res.status);
       if (res.status === 200) {
         alert('게시물이 등록되었습니다!');
-        navigate('/board');
+        navigate('/board/list');
       }
     });
   };
