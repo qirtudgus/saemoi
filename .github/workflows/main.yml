@@ -58,8 +58,5 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          sudo chown -R ec2-user /home/ec2-user/saemoi
-          cd saemoi
           npx pm2 stop saemoi_server
-          npx pm2 install typescript
-          npx pm2 start server/saemoi_server.ts
+          npx pm2 start saemoi.json
