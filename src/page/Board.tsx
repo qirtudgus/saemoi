@@ -10,6 +10,7 @@ const Board = () => {
       title: '',
       nickname: '',
       date: '',
+      commentCount: '',
     },
   ]);
 
@@ -45,6 +46,9 @@ const Board = () => {
               <h1>{i.title}</h1>
               <span>{i.nickname}</span>
               <span>{i.date}</span>
+              <p>
+                댓글 갯수 : <span>{i.commentCount}</span>
+              </p>
             </li>
           </React.Fragment>
         );
