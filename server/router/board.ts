@@ -15,8 +15,8 @@ boardRouter.get('/', (req, res) => {
 //게시물 작성하기
 boardRouter.post('/', (req, res) => {
   let { title, content, date, nickname, id } = req.body;
-  let insertQuery = 'INSERT INTO board (title,content,date,nickname, id) VALUES (?,?,?,?,?)';
-  db.query(insertQuery, [title, content, date, nickname, id], (err, rows) => {
+  let insertQuery = 'INSERT INTO board (title,content,date,nickname, id, latestEditDate) VALUES (?,?,?,?,?,?)';
+  db.query(insertQuery, [title, content, date, nickname, id, ''], (err, rows) => {
     console.log('게시물 등록 완료');
     console.log(err);
     console.log(rows);
