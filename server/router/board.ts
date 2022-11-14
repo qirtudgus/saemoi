@@ -4,7 +4,7 @@ export const boardRouter = express.Router();
 
 //게시물 리스트 불러오기
 boardRouter.get('/', (req, res) => {
-  let board = 'SELECT (`index`), title, date, nickname,id FROM board';
+  let board = 'SELECT (`index`), title, date, nickname FROM board';
   db.query(board, [], (err, rows) => {
     console.log(err);
     console.log(rows);
