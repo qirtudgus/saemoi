@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BoardViewService } from '../store/boardSlice';
-import { useAppDispatch } from '../store/store';
 import customAxios from '../util/customAxios';
 
 const Board = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [list, setList] = useState([
     {
       index: '',
@@ -28,7 +25,7 @@ const Board = () => {
       <h1>게시판</h1>
       <button
         onClick={() => {
-          navigate('/write');
+          navigate('/board/write');
         }}
       >
         작성하기
@@ -41,7 +38,7 @@ const Board = () => {
                 //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
                 //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
                 // dispatch(BoardViewService.getBoard({ number: i.index }))
-                navigate(`/view/${i.index}`);
+                navigate(`/board/posts/${i.index}`);
               }}
             >
               <h1>{i.index}</h1>
