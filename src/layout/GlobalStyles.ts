@@ -148,7 +148,16 @@ table {
     margin-left: 0px !important;
   }
 }
-
+  //토스트에디터 텍스트뷰어 텍스트 마진 조절
+  .toastui-editor-contents p,
+.toastui-editor-contents h1,
+.toastui-editor-contents h2,
+.toastui-editor-contents h3,
+.toastui-editor-contents h4,
+.toastui-editor-contents h5,
+.toastui-editor-contents h6 {
+  margin: 0px !important;
+}
 `;
 
 export default GlobalStyles;
