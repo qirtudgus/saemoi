@@ -21,7 +21,7 @@ jobs:
           cd saemoi
           sudo git pull
           npm i @toast-ui/react-editor --save --legacy-peer-deps
-          npm i
+          
 
     - name: npm run build
       uses: appleboy/ssh-action@master
@@ -34,6 +34,7 @@ jobs:
           sudo su
           sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
+          npm i
           npm run build          
     
     - name: nginx, mysql restart
