@@ -19,6 +19,7 @@ jobs:
           sudo su
           cd saemoi
           sudo git pull
+          npm i @toast-ui/react-editor --save --legacy-peer-deps 
           npm i
           npm run build
     
