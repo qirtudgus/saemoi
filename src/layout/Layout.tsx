@@ -14,7 +14,7 @@ const menuList2 = [
   { name: '의류', link: '/clother' },
   { name: '화장품', link: '/cosmetic' },
   { name: '식품', link: '/food' },
-  { name: '게시판', link: '/board' },
+  { name: '게시판', link: '/board/list' },
 ];
 
 const HeaderWrap = styled.header`
