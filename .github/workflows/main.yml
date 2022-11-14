@@ -17,7 +17,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          sudo chown -R ec2-user /home
+          sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
           sudo git pull
           npm i @toast-ui/react-editor --save --legacy-peer-deps 
@@ -31,7 +31,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          sudo chown -R ec2-user /home
+          sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
           npm i
           npm run build          
@@ -45,7 +45,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
-          cd saemoi
           sudo systemctl stop nginx
           sudo systemctl stop mysqld
           sudo systemctl start nginx
@@ -60,6 +59,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su
+          sudo chown -R ec2-user /home/ec2-user/saemoi
           cd saemoi
           npx pm2 stop saemoi_server
           npx pm2 install typescript
