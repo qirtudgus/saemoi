@@ -11,6 +11,8 @@ const Board = () => {
       nickname: '',
       date: '',
       commentCount: '',
+      view: '',
+      likes: '',
     },
   ]);
 
@@ -39,6 +41,7 @@ const Board = () => {
                 //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
                 //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
                 // dispatch(BoardViewService.getBoard({ number: i.index }))
+                customAxios('put', `/board/view?number=${i.index}`);
                 navigate(`/board/posts/${i.index}`);
               }}
             >
@@ -48,6 +51,12 @@ const Board = () => {
               <span>{i.date}</span>
               <p>
                 댓글 갯수 : <span>{i.commentCount}</span>
+              </p>
+              <p>
+                조회수 : <span>{i.view}</span>
+              </p>
+              <p>
+                좋아요 : <span>{i.likes}</span>
               </p>
             </li>
           </React.Fragment>
