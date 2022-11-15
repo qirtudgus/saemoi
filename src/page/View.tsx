@@ -8,6 +8,7 @@ import { useAppSelector } from '../store/store';
 import ErrorPage from './ErrorPage';
 import styled from 'styled-components';
 import { returnTodayString } from '../util/returnTodayString';
+import TitleText from '../components/TitleText';
 
 const CommentWrap = styled.div`
   position: relative;
@@ -30,16 +31,23 @@ const CommentLikeWrap = styled.div``;
 
 const CommentList = styled.div`
   white-space: pre;
+
+  & button {
+    margin: 10px;
+    padding: 10px;
+  }
 `;
 
 const View = () => {
   const navigate = useNavigate();
   const [undifinedContent, setUndifinedContent] = useState(false);
+  const [clickCommentIndex, setClickCommentIndex] = useState<number>(-1);
   const [writeCommentAfterRendering, setWriteCommentAfterRendering] = useState(false);
   let { number } = useParams();
   const id = useAppSelector((state) => state.user.id);
   const nickname = useAppSelector((state) => state.user.nickname);
   const commentRef = useRef() as RefObject<HTMLTextAreaElement>;
+  const nestedCommentRef = useRef() as RefObject<HTMLTextAreaElement>;
 
   interface BoardInterface {
     title: string;
@@ -60,6 +68,9 @@ const View = () => {
     nickname: string;
     id: string;
     date: string;
+    order: string;
+    depth: string;
+    isDeleted: string;
   }
 
   const [content, setContent] = useState<BoardInterface>({
@@ -72,7 +83,18 @@ const View = () => {
     latestEditDate: '',
     likes: '',
     likeUserList: '',
-    comment: [{ index: '', content: '', nickname: '', id: '', date: '' }],
+    comment: [
+      {
+        index: '',
+        content: '',
+        nickname: '',
+        id: '',
+        date: '',
+        order: '',
+        depth: '',
+        isDeleted: 'false',
+      },
+    ],
   });
 
   const postDeleteSumbit = () => {
@@ -167,34 +189,107 @@ const View = () => {
               <p>댓글이 없습니다.</p>
             ) : (
               <>
-                {content.comment.map((i) => {
+                {content.comment.map((i, index) => {
                   return (
                     <React.Fragment key={i.index}>
-                      <p>
-                        댓글 작성자 : <span>{i.nickname}</span>
-                      </p>
-                      <p>
-                        댓글 내용 : <span>{i.content}</span>
-                      </p>
-                      <p>
-                        댓글 작성시간 : <span>{i.date}</span>
-                      </p>
-                      {i.id === id && (
+                      {i.depth === '0' ? (
                         <>
-                          <button>수정</button>
+                          <TitleText text='댓글'></TitleText>
+                          <p>
+                            <span>{i.nickname}</span>
+                          </p>
+                          <p>
+                            <span>{i.content}</span>
+                          </p>
+                          <p>
+                            <span>{i.date}</span>
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          {i.isDeleted === 'true' ? (
+                            <p>삭제된 댓글입니다.</p>
+                          ) : (
+                            <>
+                              <TitleText text='대댓글'></TitleText>
+                              <p>
+                                <span>{i.nickname}</span>
+                              </p>
+                              <p>
+                                <span>{i.content}</span>
+                              </p>
+                              <p>
+                                <span>{i.date}</span>
+                              </p>
+                            </>
+                          )}
+                        </>
+                      )}
+
+                      {/* 대댓글 컴포넌트 */}
+                      {clickCommentIndex === index ? (
+                        <>
+                          <CommentWrap>
+                            <CommentArea
+                              ref={nestedCommentRef}
+                              cols={40}
+                              rows={5}
+                            ></CommentArea>
+                          </CommentWrap>
+                          <button
+                            onClick={() => {
+                              console.log(nestedCommentRef.current?.value);
+                              //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
+                              //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
+                              // let content = commentRef.current?.value.replaceAll('\n', '<br>');
+                              let content = nestedCommentRef.current?.value;
+                              let date = returnTodayString();
+                              customAxios('post', '/comment/write/nested', {
+                                board_index: number,
+                                comment_index: i.index,
+                                content,
+                                date,
+                                id,
+                                nickname,
+                              }).then((res) => {
+                                if (res.status === 200) {
+                                  alert('대댓글이 등록되었습니다!');
+                                  setWriteCommentAfterRendering((prev) => !prev);
+                                  //대댓글 등록 후 대댓글컴포넌트 제거
+                                  setClickCommentIndex(-1);
+                                  console.log(res.data);
+                                }
+                              });
+                            }}
+                          >
+                            대댓글등록
+                          </button>
+                        </>
+                      ) : null}
+                      {i.depth === '0' && (
+                        <button
+                          onClick={() => {
+                            setClickCommentIndex(index);
+                            console.log(clickCommentIndex);
+                          }}
+                        >
+                          대댓글
+                        </button>
+                      )}
+                      {/* 사용자가 같으며, 댓글이 삭제되지않은 상태일때만 삭제버튼 렌더링 */}
+                      {i.id === id && i.isDeleted === 'false' && (
+                        <>
                           <button
                             onClick={() => {
                               console.log(`${i.index}번 댓글 삭제 시도`);
                               if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
-                                customAxios(
-                                  'delete',
-                                  `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
-                                  {},
-                                ).then((res) => {
-                                  if (res.status === 200) {
-                                    setWriteCommentAfterRendering((prev) => !prev);
-                                  }
-                                });
+                                customAxios('put', `/comment?commentNumber=${i.index}&&boardNumber=${number}`, {}).then(
+                                  (res) => {
+                                    if (res.status === 200) {
+                                      setWriteCommentAfterRendering((prev) => !prev);
+                                    }
+                                  },
+                                );
                               }
                             }}
                           >
