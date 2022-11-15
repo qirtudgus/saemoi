@@ -26,6 +26,8 @@ const CommentArea = styled.textarea`
   }
 `;
 
+const CommentLikeWrap = styled.div``;
+
 const CommentList = styled.div`
   white-space: pre;
 `;
@@ -46,7 +48,9 @@ const View = () => {
     nickname: string;
     id: string;
     index: string;
+    likes: '';
     latestEditDate: string;
+    likeUserList: string;
     comment: CommentInterface[];
   }
 
@@ -66,6 +70,8 @@ const View = () => {
     id: '',
     index: '',
     latestEditDate: '',
+    likes: '',
+    likeUserList: '',
     comment: [{ index: '', content: '', nickname: '', id: '', date: '' }],
   });
 
@@ -128,6 +134,34 @@ const View = () => {
               </>
             ) : null}
           </div>
+
+          <CommentLikeWrap>
+            <p>추천수 : {content.likes}</p>
+            {content.likeUserList.includes(id + ',') ? (
+              <button
+                onClick={() => {
+                  customAxios('put', `/board/like?number=${number}&&behavior=0&&id=${id}`).then((res) => {
+                    console.log('싫어요 시도');
+                    setWriteCommentAfterRendering((prev) => !prev);
+                  });
+                }}
+              >
+                추천취소
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  customAxios('put', `/board/like?number=${number}&&behavior=1&&id=${id}`).then((res) => {
+                    console.log('좋아요 시도');
+                    setWriteCommentAfterRendering((prev) => !prev);
+                  });
+                }}
+              >
+                추천
+              </button>
+            )}
+          </CommentLikeWrap>
+
           <CommentList>
             {content.comment.length === 0 ? (
               <p>댓글이 없습니다.</p>
