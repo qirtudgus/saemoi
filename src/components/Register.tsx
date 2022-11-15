@@ -101,7 +101,18 @@ const Register = () => {
     let nick = nicknameRef.current.value;
     let pw = passwordRef.current.value;
     let cpw = confirmPasswordRef.current.value;
-    console.log(nick);
+
+    //아이디 양식
+    const idCheckRegex = /^[a-zA-Z0-9]{2,10}$/;
+
+    //특수문자 체크
+    const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/i;
+
+    //비밀번호 양식
+    const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,20}$/;
+    //공백체크 표현식
+    const spaceCheck = /\s/;
+
     //아이디
     if (id === '' || spaceCheck.test(id) || special_pattern.test(id) || !idCheckRegex.test(id)) {
       setIdWarning('2~10자 영문,숫자만 사용 가능합니다.');
@@ -153,17 +164,6 @@ const Register = () => {
       });
     }
   };
-
-  //아이디 양식
-  const idCheckRegex = /^[a-zA-Z0-9]{2,10}$/;
-
-  //특수문자 체크
-  const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/i;
-
-  //비밀번호 양식
-  const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,20}$/;
-  //공백체크 표현식
-  const spaceCheck = /\s/;
 
   return (
     <ThemeProvider theme={theme}>
