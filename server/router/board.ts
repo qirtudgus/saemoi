@@ -2,9 +2,47 @@ import express, { Request, Response, NextFunction } from 'express';
 import { db } from '../saemoi_db.js';
 export const boardRouter = express.Router();
 
+//게시물 좋아요
+boardRouter.put('/like', (req, res) => {
+  let likeQuery =
+    'UPDATE board SET likes = likes +1, likeUserList = CONCAT_WS("",likeUserList, ? ",") WHERE (`index` =   ?  )';
+  let unlikeQuery =
+    'UPDATE board SET likes = likes -1, likeUserList = replace(likeUserList, ? , "" ) WHERE (`index` =   ?  )';
+
+  let boardNumber = req.query.number;
+  let id = req.query.id;
+  let behavior = req.query.behavior;
+  let id2 = id + ',';
+  console.log(id2);
+
+  //쿼리스트링의 behavior값이 1이면  추천, 0이면 추천취소
+  if (behavior === '1') {
+    db.query(likeQuery, [id, boardNumber], (err, rows) => {
+      console.log(err);
+      console.log(rows);
+      res.status(201).json('추천 완료');
+    });
+  } else {
+    db.query(unlikeQuery, [id2, boardNumber], (err, rows) => {
+      console.log(err);
+      console.log(rows);
+      res.status(201).json('추천취소 완료');
+    });
+  }
+});
+
+//게시물 조회수 증가
+boardRouter.put('/view', (req, res) => {
+  let boardNumber = req.query.number;
+  let viewUpdate = 'UPDATE board SET view = view +1 WHERE (`index`=?)';
+  db.query(viewUpdate, [boardNumber], (err, rows) => {
+    res.send(200);
+  });
+});
+
 //게시물 리스트 불러오기
 boardRouter.get('/', (req, res) => {
-  let board = 'SELECT (`index`), title, date, nickname,commentCount FROM board';
+  let board = 'SELECT (`index`), title, date, nickname,commentCount,view,likes FROM board';
   db.query(board, [], (err, rows) => {
     console.log(err);
     console.log(rows);
