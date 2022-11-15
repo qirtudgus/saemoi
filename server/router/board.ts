@@ -46,7 +46,7 @@ boardRouter.get('/', (req, res) => {
   db.query(board, [], (err, rows) => {
     console.log(err);
     console.log(rows);
-    res.send(rows);
+    res.status(200).json(rows);
   });
 });
 
