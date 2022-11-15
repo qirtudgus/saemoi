@@ -192,7 +192,6 @@ const View = () => {
                                   {},
                                 ).then((res) => {
                                   if (res.status === 200) {
-                                    alert('댓글이 삭제되었습니다.');
                                     setWriteCommentAfterRendering((prev) => !prev);
                                   }
                                 });
