@@ -64,6 +64,7 @@ boardRouter.post('/', (req, res) => {
 
 //게시물보기
 //댓글도 같이 응답해줘야한다..
+//대댓글도 같이 응답해줘야한다..
 boardRouter.get('/posts', (req, res) => {
   let board = 'SELECT * FROM board WHERE (`index` = ?)';
   let boardNumber = req.query.number;
@@ -85,17 +86,29 @@ boardRouter.get('/posts', (req, res) => {
     date: string;
   }
   db.query(board, [boardNumber], (err, rows) => {
-    console.log(err);
-    console.log('게시물 보기 결과');
-    console.log(rows[0]);
+    // console.log(err);
+    // console.log('게시물 보기 결과');
+    // console.log(rows[0]);
     let contentResult: BoardInterface = rows[0];
     if (rows[0] === undefined) {
       res.status(201).json({ errorCode: 3 });
     } else {
       //댓글 불러오기
-      let commentQuery = 'SELECT (`index`), id, nickname, content, date FROM commentTable WHERE board_index = ?';
+      let commentQuery =
+        'SELECT (`index`), id, nickname, content, date, orders, depth, comment_index, isDeleted FROM commentTable WHERE board_index = ?';
       db.query(commentQuery, [boardNumber], (err, rows) => {
-        contentResult.comment = rows;
+        //이제 nestedCommentTable에서 comment의 index와 동일한 row만 뽑아온다.
+        // 댓글 정렬 뒤 할당
+        let 댓글정렬 = rows.sort((c: any, d: any) => {
+          return c.comment_index < d.comment_index ? -1 : 1;
+        });
+        // 정렬한 댓글에서 삭제된 콘텐츠 필터링
+        let 삭제된댓글 = 댓글정렬.map((i: any) => {
+          return i.isDeleted === 'true' ? { ...i, content: '삭제된 댓글입니다.' } : { ...i };
+        });
+
+        contentResult.comment = 삭제된댓글;
+
         res.status(200).json(contentResult);
       });
     }
