@@ -49,7 +49,7 @@ const Input = styled.input`
   height: 40px;
   padding: 10px;
   margin-bottom: 30px;
-  border: 1px solid#aaa;
+  border: 1px solid#dadde6;
   border-radius: 5px;
   &:focus {
     background-color: #dfe3ff;
