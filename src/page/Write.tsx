@@ -8,13 +8,14 @@ import { useAppSelector } from '../store/store';
 import { returnTodayString } from '../util/returnTodayString';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import styled from 'styled-components';
+import TitleText from '../components/TitleText';
 const InputWrap = styled.div`
-  margin: 30px 0;
+  margin-bottom: 20px;
   width: 100%;
 `;
 
 const ContentLabel = styled.label`
-  margin: 10px 0;
+  margin-bottom: 15px;
   display: block;
 `;
 
@@ -61,6 +62,7 @@ const Write = () => {
   return (
     <>
       <div>
+        <TitleText text='게시글 작성'></TitleText>
         <InputWrap>
           <ContentLabel htmlFor='title'>제목</ContentLabel>
           <TitleInput
@@ -97,7 +99,11 @@ const Write = () => {
         <SolidButton
           ClassName={'ml_10'}
           text='등록'
-          OnClick={handleRegisterButton}
+          OnClick={() => {
+            if (window.confirm('게시글을 등록하시겠습니까?')) {
+              handleRegisterButton();
+            }
+          }}
         ></SolidButton>
       </ButtonWrap>
     </>
