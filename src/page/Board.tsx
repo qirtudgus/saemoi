@@ -46,6 +46,12 @@ const BoardLi = styled.li`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  @media ${({ theme }) => theme.device.tablet} {
+    & .title > span {
+      width: 100%;
+    }
+  }
+
   & .topInfo {
     width: 100%;
     height: 30px;
