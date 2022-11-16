@@ -8,6 +8,7 @@ import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout } from '../store/userSlice';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
@@ -247,31 +248,30 @@ const Layout = () => {
             </MenuBtn>
             {isLogin ? (
               <LoginBtnWrap>
-                <LoginBtn
-                  onClick={() => {
+                <SolidButton
+                  text='로그아웃'
+                  OnClick={() => {
                     console.log('로그아웃 시도');
                     dispatch(logout());
                   }}
-                >
-                  로그아웃
-                </LoginBtn>
+                ></SolidButton>
               </LoginBtnWrap>
             ) : (
               <LoginBtnWrap>
-                <LoginBtn
-                  onClick={() => {
+                <SolidButton
+                  ClassName={'ml_10 mr_10'}
+                  text='로그인'
+                  OnClick={() => {
                     navigate('/login');
                   }}
-                >
-                  로그인
-                </LoginBtn>
-                <RegisterBtn
-                  onClick={() => {
+                ></SolidButton>
+                <BasicButton
+                  ClassName={'ml_10'}
+                  text='회원가입'
+                  OnClick={() => {
                     navigate('/register');
                   }}
-                >
-                  회원가입
-                </RegisterBtn>
+                ></BasicButton>
               </LoginBtnWrap>
             )}
           </HeaderDiv>
