@@ -158,6 +158,11 @@ table {
 .toastui-editor-contents h6 {
   margin: 0px !important;
 }
+
+//토스트 에디터 뷰어 폰트사이즈 조절
+.toastui-editor-contents p {
+  font-size: 15px;
+}
 `;
 
 export default GlobalStyles;
