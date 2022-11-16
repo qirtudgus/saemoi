@@ -10,7 +10,7 @@ registerRouter.post('/join', (req, res) => {
   console.log(id, pw, nick);
   const idCheck = 'SELECT * FROM users WHERE id = ?';
   const nicknameCheck = 'SELECT * FROM users WHERE nickname = ?';
-  const joinQuery = 'INSERT INTO users (id,password,salt,nickname) VALUES (?,?,?,?)';
+  const joinQuery = 'INSERT INTO users (id,password,salt,nickname, refreshToken) VALUES (?,?,?,?,"")';
 
   //아이디 중복검사
   db.query(idCheck, [id], function (err, rows, fields) {
