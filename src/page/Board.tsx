@@ -50,6 +50,9 @@ const BoardLi = styled.li`
     & .title > span {
       width: 100%;
     }
+    & .title {
+      width: 100%;
+    }
   }
 
   & .topInfo {
