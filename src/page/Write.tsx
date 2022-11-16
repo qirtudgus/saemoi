@@ -6,6 +6,29 @@ import { useNavigate } from 'react-router-dom';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { useAppSelector } from '../store/store';
 import { returnTodayString } from '../util/returnTodayString';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
+import styled from 'styled-components';
+const InputWrap = styled.div`
+  margin: 30px 0;
+  width: 100%;
+`;
+
+const ContentLabel = styled.label`
+  margin: 10px 0;
+  display: block;
+`;
+
+const TitleInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid#dadde6;
+`;
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
 
 const Write = () => {
   const navigate = useNavigate();
@@ -38,22 +61,45 @@ const Write = () => {
   return (
     <>
       <div>
-        <input ref={titleRef}></input>
-        <Editor
-          ref={editorRef} // DOM 선택용 useRef
-          placeholder='내용을 입력해주세요.'
-          previewStyle='vertical' // 미리보기 스타일 지정
-          height='350px' // 에디터 창 높이
-          initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
-          hideModeSwitch={true}
-          language='ko-KR'
-          toolbarItems={[
-            // 툴바 옵션 설정
-            ['image', 'link'],
-          ]}
-        ></Editor>
+        <InputWrap>
+          <ContentLabel htmlFor='title'>제목</ContentLabel>
+          <TitleInput
+            id='title'
+            type={'text'}
+            ref={titleRef}
+            placeholder='제목을 입력해주세요.'
+          ></TitleInput>
+        </InputWrap>
+        <InputWrap>
+          <ContentLabel>내용</ContentLabel>
+          <Editor
+            ref={editorRef} // DOM 선택용 useRef
+            placeholder='내용을 입력해주세요.'
+            previewStyle='vertical' // 미리보기 스타일 지정
+            height='350px' // 에디터 창 높이
+            initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
+            hideModeSwitch={true}
+            language='ko-KR'
+            toolbarItems={[
+              // 툴바 옵션 설정
+              ['image', 'link'],
+            ]}
+          ></Editor>
+        </InputWrap>
       </div>
-      <button onClick={handleRegisterButton}>등록</button>
+      <ButtonWrap>
+        <BasicButton
+          text='취소'
+          OnClick={() => {
+            navigate(-1);
+          }}
+        ></BasicButton>
+        <SolidButton
+          ClassName={'ml_10'}
+          text='등록'
+          OnClick={handleRegisterButton}
+        ></SolidButton>
+      </ButtonWrap>
     </>
   );
 };
