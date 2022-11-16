@@ -1,52 +1,115 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
 import customAxios from '../util/customAxios';
-
+import comment_img from '../img/commentLine_img.svg';
+import add_like from '../img/add_like.svg';
+import { elapsedTime } from '../util/returnTodayString';
 const BoardWrap = styled.div`
   width: 100%;
-
-  height: calc(100vh - 310px);
+  height: auto;
+  min-height: calc(100vh - 310px);
+  /* height: calc(100vh - 310px); */
 `;
 
 const BoardLi = styled.li`
-  cursor: pointer;
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px 15px 10px;
+
+  border-bottom: 1px solid#dadde6;
 
   width: 100%;
-  height: 40px;
   justify-content: space-around;
 
-  &:hover {
-    background-color: #eee;
-  }
-  &:hover .title {
+  & .title > span:hover {
     font-weight: bold;
   }
 
   & .title {
-    width: 300px;
+    width: 90%;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  & .title > span {
+    font-size: 1.1em;
+    display: block;
+    height: 20px;
+    cursor: pointer;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  & .topInfo {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9em;
+  }
+
+  & .frontInfo {
+    display: flex;
+    align-items: center;
+  }
+
+  & .nickname {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  & .secondInfo {
+    display: flex;
+    align-items: center;
+  }
   & .date {
-    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   & .comment {
-    width: 100px;
+    display: flex;
+    align-items: center;
+  }
+  & .like {
+    display: flex;
+    align-items: center;
+  }
+  & .comment img {
+    width: 20px;
+  }
+  & .like img {
+    width: 20px;
+  }
+  & .comment span {
+    margin-left: 5px;
+  }
+  & .like span {
+    margin-left: 5px;
+  }
+
+  & .line {
+    display: inline-block;
+    border-left: 1px solid #dadde6;
+    margin: 0 10px;
+    height: 15px;
   }
 `;
 const WriteButton = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  & button {
-    cursor: pointer;
-  }
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid#dadde6;
 `;
 
 const Board = () => {
@@ -72,46 +135,61 @@ const Board = () => {
 
   return (
     <BoardWrap>
-      <TitleText text='게시판'></TitleText>
-
+      <WriteButton>
+        <TitleText text='게시판'></TitleText>
+        <SolidButton
+          ClassName='ml_10'
+          text='작성하기'
+          OnClick={() => {
+            navigate('/board/write');
+          }}
+        ></SolidButton>
+      </WriteButton>
       {list.map((i) => {
         return (
           <React.Fragment key={i.index}>
-            <BoardLi
-              onClick={() => {
-                //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
-                //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
-                // dispatch(BoardViewService.getBoard({ number: i.index }))
-                customAxios('put', `/board/view?number=${i.index}`);
-                navigate(`/board/posts/${i.index}`);
-              }}
-            >
-              <h1>{i.index}</h1>
-              <span className='title'>{i.title}</span>
-              <span>{i.nickname}</span>
-              <span className='date'>{i.date.slice(0, 10)}</span>
-              <p className='comment'>
-                댓글 <span>{i.commentCount}</span>
-              </p>
-              {/* <p>
-                조회수<span>{i.view}</span>
-              </p> */}
-              <p>
-                좋아요<span>{i.likes}</span>
+            <BoardLi>
+              <div className='topInfo'>
+                <div className='frontInfo'>
+                  <span className='nickname'>{i.nickname}</span>
+                  <div className='line'></div>
+                  <span className='date'>{elapsedTime(i.date)}</span>
+                </div>
+                <div className='secondInfo'>
+                  <div className='comment'>
+                    <img
+                      src={comment_img}
+                      alt='댓글'
+                    />
+                    <span>{i.commentCount}</span>
+                  </div>
+                  <div className='line'></div>
+                  <div className='like'>
+                    <img
+                      src={add_like}
+                      alt='좋아요'
+                    />
+                    <span>{i.likes}</span>
+                  </div>
+                </div>
+              </div>
+              <p className='title'>
+                <span
+                  onClick={() => {
+                    //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
+                    //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
+                    // dispatch(BoardViewService.getBoard({ number: i.index }))
+                    customAxios('put', `/board/view?number=${i.index}`);
+                    navigate(`/board/posts/${i.index}`);
+                  }}
+                >
+                  {i.title}
+                </span>
               </p>
             </BoardLi>
           </React.Fragment>
         );
       })}
-      <WriteButton>
-        <button
-          onClick={() => {
-            navigate('/board/write');
-          }}
-        >
-          작성하기
-        </button>
-      </WriteButton>
     </BoardWrap>
   );
 };
