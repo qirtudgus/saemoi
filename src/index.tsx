@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { Cookies } from 'react-cookie';
 import { UserServiceAutoLogin } from './store/userSlice';
+import ScrollToTop from './components/pageMoveTopScroll';
 
 const cookies = new Cookies();
 
@@ -21,6 +22,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   </Provider>,
