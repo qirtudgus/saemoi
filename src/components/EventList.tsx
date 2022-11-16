@@ -3,6 +3,7 @@ import EventCard from '../components/EventCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css/bundle';
+import TitleText from './TitleText';
 
 const EventTitle = styled.h1`
   font-size: 2em;
@@ -13,7 +14,7 @@ const EventTitle = styled.h1`
 const EventList = (props: any) => {
   return (
     <>
-      <EventTitle>{props.title}</EventTitle>
+      <TitleText text={props.title}></TitleText>
       <Swiper
         slidesPerView={4}
         spaceBetween={0}
