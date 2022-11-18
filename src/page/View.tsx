@@ -147,7 +147,7 @@ const CommentContent = styled.div`
 const MoreButtonGroup = styled.div`
   width: auto;
   cursor: pointer;
-
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   z-index: 2;
   width: 20px;
   height: 20px;
