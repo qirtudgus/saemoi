@@ -53,7 +53,6 @@ const Write = () => {
       console.log(res.data);
       console.log(res.status);
       if (res.status === 200) {
-        alert('게시물이 등록되었습니다!');
         navigate('/board/list');
       }
     });
