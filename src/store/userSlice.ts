@@ -13,6 +13,11 @@ export const UserService = {
     console.log(data);
     return data;
   }),
+  logoutUser: createAsyncThunk('user/logoutUser', async (thunkApi) => {
+    const { data } = await customAxios('post', '/login/logout');
+    console.log(data);
+    return data;
+  }),
 };
 
 export const UserServiceAutoLogin = {
@@ -54,6 +59,12 @@ const user = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(UserService.logoutUser.fulfilled, (state, actions) => {
+        console.log('로그아웃 시도');
+        state.isLogin = actions.payload.isLogin;
+        state.id = actions.payload.id;
+        state.nickname = actions.payload.nickname;
+      })
       .addCase(UserService.getUser.pending, (state, actions) => {
         console.log('getUser가 펜딩중');
       })
