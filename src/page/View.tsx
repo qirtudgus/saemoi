@@ -686,22 +686,27 @@ const View = () => {
                 <span>건강한 댓글을 달면 모두가 건강해져요!</span>
                 <SolidButton
                   OnClick={() => {
-                    console.log(commentRef.current?.value);
-                    //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
-                    //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
-                    // let content = commentRef.current?.value.replaceAll('\n', '<br>');
-                    let content2 = commentRef.current?.value;
-                    let date = returnTodayString();
-                    customAxios('post', '/comment/write', { board_index: number, content2, date, id, nickname }).then(
-                      (res) => {
-                        if (res.status === 200) {
-                          alert('댓글이 등록되었습니다!');
-                          setWriteCommentAfterRendering((prev) => !prev);
-                          commentRef.current!.value = '';
-                          console.log(res.data);
-                        }
-                      },
-                    );
+                    if (isLogin) {
+                      console.log(commentRef.current?.value);
+                      //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
+                      //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
+                      // let content = commentRef.current?.value.replaceAll('\n', '<br>');
+                      let content2 = commentRef.current?.value;
+                      let date = returnTodayString();
+                      customAxios('post', '/comment/write', { board_index: number, content2, date, id, nickname }).then(
+                        (res) => {
+                          if (res.status === 200) {
+                            alert('댓글이 등록되었습니다!');
+                            setWriteCommentAfterRendering((prev) => !prev);
+                            commentRef.current!.value = '';
+                            console.log(res.data);
+                          }
+                        },
+                      );
+                    } else {
+                      alert('로그인 후 이용 가능합니다!');
+                      return;
+                    }
                   }}
                 >
                   댓글 등록
