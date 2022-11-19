@@ -6,7 +6,9 @@ import TitleText from '../components/TitleText';
 import customAxios from '../util/customAxios';
 import comment_img from '../img/commentLine_img.svg';
 import add_like from '../img/add_like.svg';
+import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import { elapsedTime } from '../util/returnTodayString';
+import { useAppSelector } from '../store/store';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
@@ -123,6 +125,7 @@ const WriteButton = styled.div`
 
 const Board = () => {
   const navigate = useNavigate();
+  const isLogin = useAppSelector((state) => state.user.isLogin);
   const [list, setList] = useState([
     {
       index: '',
@@ -150,9 +153,20 @@ const Board = () => {
           ClassName='ml_10'
           text='작성하기'
           OnClick={() => {
-            navigate('/board/write');
+            if (isLogin) {
+              navigate('/board/write');
+            } else {
+              alert('로그인 후 이용 가능합니다!');
+              return;
+            }
           }}
-        ></SolidButton>
+        >
+          <img
+            src={edit_document_white_24dp}
+            alt='작성하기'
+          />
+          작성하기
+        </SolidButton>
       </WriteButton>
       {list.map((i) => {
         return (
