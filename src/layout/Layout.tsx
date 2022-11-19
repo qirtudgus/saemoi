@@ -7,7 +7,7 @@ import 햄버거메뉴 from '../img/menu_black.svg';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { logout } from '../store/userSlice';
+import { logout, UserService } from '../store/userSlice';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 
 const menuList2 = [
@@ -111,24 +111,6 @@ const LoginBtnWrap = styled.div`
     display: none;
   }
   justify-content: flex-end;
-`;
-
-const LoginBtn = styled.div`
-  width: 90px;
-  height: 35px;
-  border-radius: 40px;
-  background: ${({ theme }) => theme.colors.main};
-  ${({ theme }) => theme.common.flexCenter};
-  color: #fff;
-  margin-right: 30px;
-`;
-const RegisterBtn = styled.div`
-  width: 90px;
-  height: 35px;
-  border-radius: 40px;
-  border: 2px solid ${({ theme }) => theme.colors.main};
-  ${({ theme }) => theme.common.flexCenter};
-  color: ${({ theme }) => theme.colors.main};
 `;
 
 const MenuBtn = styled.div`
@@ -249,29 +231,33 @@ const Layout = () => {
             {isLogin ? (
               <LoginBtnWrap>
                 <SolidButton
-                  text='로그아웃'
                   OnClick={() => {
                     console.log('로그아웃 시도');
-                    dispatch(logout());
+
+                    dispatch(UserService.logoutUser());
                   }}
-                ></SolidButton>
+                >
+                  로그아웃
+                </SolidButton>
               </LoginBtnWrap>
             ) : (
               <LoginBtnWrap>
                 <SolidButton
                   ClassName={'ml_10 mr_10'}
-                  text='로그인'
                   OnClick={() => {
                     navigate('/login');
                   }}
-                ></SolidButton>
+                >
+                  로그인
+                </SolidButton>
                 <BasicButton
                   ClassName={'ml_10'}
-                  text='회원가입'
                   OnClick={() => {
                     navigate('/register');
                   }}
-                ></BasicButton>
+                >
+                  회원가입
+                </BasicButton>
               </LoginBtnWrap>
             )}
           </HeaderDiv>
