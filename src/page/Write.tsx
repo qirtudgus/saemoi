@@ -90,20 +90,22 @@ const Write = () => {
       </div>
       <ButtonWrap>
         <BasicButton
-          text='취소'
           OnClick={() => {
             navigate(-1);
           }}
-        ></BasicButton>
+        >
+          취소
+        </BasicButton>
         <SolidButton
           ClassName={'ml_10'}
-          text='등록'
           OnClick={() => {
             if (window.confirm('게시글을 등록하시겠습니까?')) {
               handleRegisterButton();
             }
           }}
-        ></SolidButton>
+        >
+          등록
+        </SolidButton>
       </ButtonWrap>
     </>
   );
