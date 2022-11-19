@@ -13,9 +13,12 @@ const ButtonWrap = styled.button<ButtonInterface>`
   height: 40px;
   padding: 5px;
   border-radius: 10px;
-  font-weight: 600;
+  font-weight: bold;
   background-color: ${(props) => (props.ButtonBG ? props.ButtonBG : '#eee')};
   color: ${(props) => (props.ButtonTextColor ? props.ButtonTextColor : '#000')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     opacity: 0.8;
   }
@@ -31,30 +34,35 @@ const ButtonWrap = styled.button<ButtonInterface>`
   &.mb_10 {
     margin-bottom: 10px;
   }
+  & img {
+    max-width: 20px;
+    margin: 2px;
+  }
 `;
 
 // type ButtonClassNameType = 'mr_10' | 'ml_10' | 'mt_10' | 'mb_10';
 
 interface ButtonPropsInterface {
-  text: string;
+  text?: string;
   ClassName?: string;
   OnClick: () => void;
+  children?: any;
 }
 
-export const BasicButton = ({ text, ClassName, OnClick }: ButtonPropsInterface): JSX.Element => {
+export const BasicButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <ButtonWrap
         className={ClassName}
         onClick={OnClick}
       >
-        {text}
+        {children}
       </ButtonWrap>
     </ThemeProvider>
   );
 };
 
-export const SolidButton = ({ text, ClassName, OnClick }: ButtonPropsInterface): JSX.Element => {
+export const SolidButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <ButtonWrap
@@ -63,7 +71,7 @@ export const SolidButton = ({ text, ClassName, OnClick }: ButtonPropsInterface):
         ButtonBG={theme.colors.main}
         ButtonTextColor='#fff'
       >
-        {text}
+        {children}
       </ButtonWrap>
     </ThemeProvider>
   );
