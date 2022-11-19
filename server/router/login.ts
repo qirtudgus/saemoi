@@ -79,3 +79,15 @@ loginRouter.post('/autologin', async (req, res, next) => {
     });
   }
 });
+
+loginRouter.post('/logout', async (req, res, next) => {
+  res.clearCookie('id');
+  res.clearCookie('AT');
+  res.clearCookie('RT');
+  res.clearCookie('nickname');
+  res.status(401).json({
+    id: '',
+    isLogin: false,
+    nickname: '',
+  });
+});
