@@ -6,12 +6,15 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import customAxios from '../util/customAxios';
 import { useAppSelector } from '../store/store';
 import ErrorPage from './ErrorPage';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, keyframes, ThemeProvider } from 'styled-components';
 import { elapsedTime, returnTodayString } from '../util/returnTodayString';
 import TitleText from '../components/TitleText';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import theme from '../layout/theme';
 import more_horiz from '../img/more_horiz.svg';
+import nestedCommentArrow from '../img/nestedCommentArrow.svg';
+import add_like from '../img/add_like2.svg';
+import remove_like from '../img/remove_like.svg';
 
 const ViewWrap = styled.div`
   height: auto;
@@ -113,7 +116,15 @@ const VerticalLine = styled.div`
   height: 15px;
 `;
 
-const CommentLikeWrap = styled.div``;
+const CommentLikeWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  & p {
+    padding: 0px 10px;
+  }
+`;
 
 const CommentList = styled.div`
   white-space: pre;
@@ -123,10 +134,23 @@ const CommentList = styled.div`
     padding: 10px;
   }
 `;
-
 const MainComment = styled.div`
   padding: 15px;
   border-bottom: 1px solid#dadde6;
+`;
+
+const NestedCommentWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const NestedComment = styled.div`
+  width: 100%;
+  padding: 15px 15px 15px 40px;
+  border-bottom: 1px solid#dadde6;
+  background: #fafafa;
 `;
 
 const CommentUserInfo = styled.div`
@@ -136,12 +160,19 @@ const CommentUserInfo = styled.div`
 `;
 
 const NicknameAndTime = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
+  & img {
+    opacity: 0.5;
+    width: 20px;
+    position: absolute;
+    left: -29px;
+  }
 `;
 
 const CommentContent = styled.div`
-  padding: 5px 0 10px 0;
+  padding: 25px 0;
 `;
 
 const MoreButtonGroup = styled.div`
@@ -155,6 +186,7 @@ const MoreButtonGroup = styled.div`
   position: relative;
   align-items: center;
   & img {
+    opacity: 0.6;
     position: relative;
     z-index: 1;
     width: 20px;
@@ -196,6 +228,34 @@ const MoreButtonGroup = styled.div`
   }
 `;
 
+interface LikeMove {
+  isLike: boolean;
+}
+
+const LikeButtonBox = styled.button<LikeMove>`
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid ${({ theme }) => theme.colors.main};
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  background-color: #fff;
+  ${(props) =>
+    props.isLike &&
+    css`
+      background-color: ${({ theme }) => theme.colors.main};
+    `}
+
+  & img {
+    width: 25px;
+  }
+`;
+
 const View = () => {
   const navigate = useNavigate();
   const [undifinedContent, setUndifinedContent] = useState(false);
@@ -205,6 +265,7 @@ const View = () => {
   let { number } = useParams();
   const id = useAppSelector((state) => state.user.id);
   const nickname = useAppSelector((state) => state.user.nickname);
+  const isLogin = useAppSelector((state) => state.user.isLogin);
   const commentRef = useRef() as RefObject<HTMLTextAreaElement>;
   const nestedCommentRef = useRef() as RefObject<HTMLTextAreaElement>;
 
@@ -325,21 +386,57 @@ const View = () => {
               {content.id === id ? (
                 <>
                   <BasicButton
-                    text='수정'
                     OnClick={() => {
                       navigate(`/board/edit/${number}`);
                     }}
-                  />
+                  >
+                    수정
+                  </BasicButton>
                   <BasicButton
                     ClassName='ml_10'
-                    text='삭제'
                     OnClick={postDeleteSumbit}
-                  />
+                  >
+                    삭제
+                  </BasicButton>
                 </>
               ) : null}
             </div>
             <CommentLikeWrap>
-              <p>추천수 : {content.likes}</p>
+              <LikeButtonBox
+                title={content.likeUserList.includes(id + ',') ? '추천 취소' : '추천'}
+                onClick={
+                  content.likeUserList.includes(id + ',')
+                    ? () => {
+                        if (isLogin) {
+                          customAxios('put', `/board/like?number=${number}&&behavior=0&&id=${id}`).then((res) => {
+                            console.log('싫어요 시도');
+                            setWriteCommentAfterRendering((prev) => !prev);
+                          });
+                        } else {
+                          alert('로그인 후 이용 가능합니다!');
+                          return;
+                        }
+                      }
+                    : () => {
+                        if (isLogin) {
+                          customAxios('put', `/board/like?number=${number}&&behavior=1&&id=${id}`).then((res) => {
+                            console.log('좋아요 시도');
+                            setWriteCommentAfterRendering((prev) => !prev);
+                          });
+                        } else {
+                          alert('로그인 후 이용 가능합니다!');
+                          return;
+                        }
+                      }
+                }
+                isLike={content.likeUserList.includes(id + ',')}
+              >
+                {content.likeUserList.includes(id + ',') ? <img src={add_like} /> : <img src={remove_like}></img>}
+              </LikeButtonBox>
+              <p>{content.likes}</p>
+            </CommentLikeWrap>
+            {/* <CommentLikeWrap>
+              <p>추천수 : </p>
               {content.likeUserList.includes(id + ',') ? (
                 <button
                   onClick={() => {
@@ -363,7 +460,7 @@ const View = () => {
                   추천
                 </button>
               )}
-            </CommentLikeWrap>
+            </CommentLikeWrap> */}
             <BorderLine />
 
             <CommentList>
@@ -382,54 +479,56 @@ const View = () => {
                                 <VerticalLine />
                                 <span>{elapsedTime(i.date)}</span>
                               </NicknameAndTime>
-                              <MoreButtonGroup
-                                className='ulList'
-                                onClick={(e) => {
-                                  if (e.currentTarget.className.includes('ulList active')) {
-                                    e.currentTarget.classList.remove('active');
-                                  } else {
-                                    document.querySelectorAll('.ulList').forEach((i) => {
-                                      i.classList.remove('active');
-                                    });
-                                    e.currentTarget.classList.toggle('active');
-                                  }
-                                }}
-                              >
-                                <img
-                                  src={more_horiz}
-                                  alt='더보기'
-                                />
-                                <ul>
-                                  <li
-                                    onClick={() => {
-                                      alert('수정하시겠습니가?');
-                                    }}
-                                  >
-                                    수정하기
-                                  </li>
-                                  <li
-                                    onClick={() => {
-                                      console.log(`${i.index}번 댓글 삭제 시도`);
-                                      if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
-                                        customAxios(
-                                          'put',
-                                          `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
-                                          {},
-                                        ).then((res) => {
-                                          if (res.status === 200) {
-                                            setWriteCommentAfterRendering((prev) => !prev);
-                                            document.querySelectorAll('.ulList').forEach((i) => {
-                                              i.classList.remove('active');
-                                            });
-                                          }
-                                        });
-                                      }
-                                    }}
-                                  >
-                                    삭제하기
-                                  </li>
-                                </ul>
-                              </MoreButtonGroup>
+                              {content.id === id ? (
+                                <MoreButtonGroup
+                                  className='ulList'
+                                  onClick={(e) => {
+                                    if (e.currentTarget.className.includes('ulList active')) {
+                                      e.currentTarget.classList.remove('active');
+                                    } else {
+                                      document.querySelectorAll('.ulList').forEach((i) => {
+                                        i.classList.remove('active');
+                                      });
+                                      e.currentTarget.classList.toggle('active');
+                                    }
+                                  }}
+                                >
+                                  <img
+                                    src={more_horiz}
+                                    alt='더보기'
+                                  />
+                                  <ul>
+                                    <li
+                                      onClick={() => {
+                                        alert('수정하시겠습니가?');
+                                      }}
+                                    >
+                                      수정하기
+                                    </li>
+                                    <li
+                                      onClick={() => {
+                                        console.log(`${i.index}번 댓글 삭제 시도`);
+                                        if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
+                                          customAxios(
+                                            'put',
+                                            `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
+                                            {},
+                                          ).then((res) => {
+                                            if (res.status === 200) {
+                                              setWriteCommentAfterRendering((prev) => !prev);
+                                              document.querySelectorAll('.ulList').forEach((i) => {
+                                                i.classList.remove('active');
+                                              });
+                                            }
+                                          });
+                                        }
+                                      }}
+                                    >
+                                      삭제하기
+                                    </li>
+                                  </ul>
+                                </MoreButtonGroup>
+                              ) : null}
                             </CommentUserInfo>
                             <CommentContent>
                               <span>{i.content}</span>
@@ -449,41 +548,82 @@ const View = () => {
                                 답글
                               </span>
                             )}
-
-                            {/* 사용자가 같으며, 댓글이 삭제되지않은 상태일때만 삭제버튼 렌더링 */}
-                            {i.id === id && i.isDeleted === 'false' && (
-                              <>
-                                <button
-                                  onClick={() => {
-                                    console.log(`${i.index}번 댓글 삭제 시도`);
-                                    if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
-                                      customAxios(
-                                        'put',
-                                        `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
-                                        {},
-                                      ).then((res) => {
-                                        if (res.status === 200) {
-                                          setWriteCommentAfterRendering((prev) => !prev);
-                                        }
-                                      });
-                                    }
-                                  }}
-                                >
-                                  삭제
-                                </button>
-                              </>
-                            )}
                           </MainComment>
                         ) : (
                           <>
                             {i.isDeleted === 'true' ? (
                               <p>삭제된 댓글입니다.</p>
                             ) : (
+                              //대댓글 컴포넌트 제작
                               <>
-                                <TitleText text='대댓글'></TitleText>
-                                <p>{i.nickname}</p>
-                                <p>{i.content}</p>
-                                <p>{i.date}</p>
+                                <NestedCommentWrap>
+                                  <NestedComment>
+                                    <CommentUserInfo>
+                                      <NicknameAndTime>
+                                        <img
+                                          src={nestedCommentArrow}
+                                          alt='nestedCommentArrow'
+                                        ></img>
+                                        <span>{i.nickname}</span>
+                                        <VerticalLine />
+                                        <span>{elapsedTime(i.date)}</span>
+                                      </NicknameAndTime>
+                                      {content.id === id ? (
+                                        <MoreButtonGroup
+                                          className='ulList'
+                                          onClick={(e) => {
+                                            if (e.currentTarget.className.includes('ulList active')) {
+                                              e.currentTarget.classList.remove('active');
+                                            } else {
+                                              document.querySelectorAll('.ulList').forEach((i) => {
+                                                i.classList.remove('active');
+                                              });
+                                              e.currentTarget.classList.toggle('active');
+                                            }
+                                          }}
+                                        >
+                                          <img
+                                            src={more_horiz}
+                                            alt='더보기'
+                                          />
+                                          <ul>
+                                            <li
+                                              onClick={() => {
+                                                alert('수정하시겠습니가?');
+                                              }}
+                                            >
+                                              수정하기
+                                            </li>
+                                            <li
+                                              onClick={() => {
+                                                console.log(`${i.index}번 댓글 삭제 시도`);
+                                                if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
+                                                  customAxios(
+                                                    'put',
+                                                    `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
+                                                    {},
+                                                  ).then((res) => {
+                                                    if (res.status === 200) {
+                                                      setWriteCommentAfterRendering((prev) => !prev);
+                                                      document.querySelectorAll('.ulList').forEach((i) => {
+                                                        i.classList.remove('active');
+                                                      });
+                                                    }
+                                                  });
+                                                }
+                                              }}
+                                            >
+                                              삭제하기
+                                            </li>
+                                          </ul>
+                                        </MoreButtonGroup>
+                                      ) : null}
+                                    </CommentUserInfo>
+                                    <CommentContent>
+                                      <span>{i.content}</span>
+                                    </CommentContent>
+                                  </NestedComment>
+                                </NestedCommentWrap>
                               </>
                             )}
                           </>
@@ -545,7 +685,6 @@ const View = () => {
               <SolidButtonWrap>
                 <span>건강한 댓글을 달면 모두가 건강해져요!</span>
                 <SolidButton
-                  text='댓글 등록'
                   OnClick={() => {
                     console.log(commentRef.current?.value);
                     //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
@@ -564,7 +703,9 @@ const View = () => {
                       },
                     );
                   }}
-                ></SolidButton>
+                >
+                  댓글 등록
+                </SolidButton>
               </SolidButtonWrap>
             </CommentWrap>
           </>
