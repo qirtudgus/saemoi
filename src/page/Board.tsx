@@ -145,6 +145,9 @@ const Board = () => {
     });
   }, []);
 
+  //데이터가 들어왔을 때 한번에 렌더링해준다.
+  if (list[0].index === '') return null;
+
   return (
     <BoardWrap>
       <WriteButton>
