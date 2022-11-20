@@ -357,10 +357,6 @@ const View = () => {
     return () => document.removeEventListener('click', deleteModal);
   });
 
-  /*
-  이미 삭제된 게시물에 대한 예외처리 꼭 해주자!!!!!!!!!!!!!
-  */
-
   return (
     <ThemeProvider theme={theme}>
       <ViewWrap>
