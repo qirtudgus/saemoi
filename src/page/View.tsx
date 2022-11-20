@@ -175,6 +175,12 @@ const CommentContent = styled.div`
   padding: 25px 0;
 `;
 
+const ContentButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+`;
+
 const MoreButtonGroup = styled.div`
   width: auto;
   cursor: pointer;
@@ -260,7 +266,6 @@ const View = () => {
   const navigate = useNavigate();
   const [undifinedContent, setUndifinedContent] = useState(false);
   const [clickCommentIndex, setClickCommentIndex] = useState<number>(-1);
-  const [writeCommentAfterRendering, setWriteCommentAfterRendering] = useState(false);
 
   let { number } = useParams();
   const id = useAppSelector((state) => state.user.id);
@@ -329,6 +334,18 @@ const View = () => {
     }
   };
 
+  const getViewPostApi = () => {
+    customAxios('get', `/board/posts?number=${number}`, {}).then((res) => {
+      console.log(res.status);
+      console.log(res.data);
+      if (res.status === 201) {
+        setUndifinedContent(true);
+      } else {
+        setContent(res.data);
+      }
+    });
+  };
+
   useEffect(() => {
     customAxios('get', `/board/posts?number=${number}`, {}).then((res) => {
       console.log(res.status);
@@ -339,7 +356,7 @@ const View = () => {
         setContent(res.data);
       }
     });
-  }, [number, writeCommentAfterRendering]);
+  }, [number]);
 
   useEffect(() => {
     let deleteModal = (e: any) => {
@@ -356,6 +373,9 @@ const View = () => {
     document.addEventListener('click', deleteModal);
     return () => document.removeEventListener('click', deleteModal);
   });
+
+  //데이터가 들어왔을 때 한번에 렌더링해준다.
+  if (content.index === '') return null;
 
   return (
     <ThemeProvider theme={theme}>
@@ -379,23 +399,6 @@ const View = () => {
               </UserInfoWrap>
               <ViewTitle>{content.title}</ViewTitle>
               <ViewContent>{content.content === '' ? null : <Viewer initialValue={content.content} />}</ViewContent>
-              {content.id === id ? (
-                <>
-                  <BasicButton
-                    OnClick={() => {
-                      navigate(`/board/edit/${number}`);
-                    }}
-                  >
-                    수정
-                  </BasicButton>
-                  <BasicButton
-                    ClassName='ml_10'
-                    OnClick={postDeleteSumbit}
-                  >
-                    삭제
-                  </BasicButton>
-                </>
-              ) : null}
             </div>
             <CommentLikeWrap>
               <LikeButtonBox
@@ -406,7 +409,7 @@ const View = () => {
                         if (isLogin) {
                           customAxios('put', `/board/like?number=${number}&&behavior=0&&id=${id}`).then((res) => {
                             console.log('싫어요 시도');
-                            setWriteCommentAfterRendering((prev) => !prev);
+                            getViewPostApi();
                           });
                         } else {
                           alert('로그인 후 이용 가능합니다!');
@@ -417,7 +420,7 @@ const View = () => {
                         if (isLogin) {
                           customAxios('put', `/board/like?number=${number}&&behavior=1&&id=${id}`).then((res) => {
                             console.log('좋아요 시도');
-                            setWriteCommentAfterRendering((prev) => !prev);
+                            getViewPostApi();
                           });
                         } else {
                           alert('로그인 후 이용 가능합니다!');
@@ -431,32 +434,23 @@ const View = () => {
               </LikeButtonBox>
               <p>{content.likes}</p>
             </CommentLikeWrap>
-            {/* <CommentLikeWrap>
-              <p>추천수 : </p>
-              {content.likeUserList.includes(id + ',') ? (
-                <button
-                  onClick={() => {
-                    customAxios('put', `/board/like?number=${number}&&behavior=0&&id=${id}`).then((res) => {
-                      console.log('싫어요 시도');
-                      setWriteCommentAfterRendering((prev) => !prev);
-                    });
+            {content.id === id && (
+              <ContentButtonGroup>
+                <BasicButton
+                  OnClick={() => {
+                    navigate(`/board/edit/${number}`);
                   }}
                 >
-                  추천취소
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    customAxios('put', `/board/like?number=${number}&&behavior=1&&id=${id}`).then((res) => {
-                      console.log('좋아요 시도');
-                      setWriteCommentAfterRendering((prev) => !prev);
-                    });
-                  }}
+                  수정
+                </BasicButton>
+                <BasicButton
+                  ClassName='ml_10'
+                  OnClick={postDeleteSumbit}
                 >
-                  추천
-                </button>
-              )}
-            </CommentLikeWrap> */}
+                  삭제
+                </BasicButton>
+              </ContentButtonGroup>
+            )}
             <BorderLine />
 
             <CommentList>
@@ -511,7 +505,7 @@ const View = () => {
                                             {},
                                           ).then((res) => {
                                             if (res.status === 200) {
-                                              setWriteCommentAfterRendering((prev) => !prev);
+                                              getViewPostApi();
                                               document.querySelectorAll('.ulList').forEach((i) => {
                                                 i.classList.remove('active');
                                               });
@@ -600,7 +594,8 @@ const View = () => {
                                                     {},
                                                   ).then((res) => {
                                                     if (res.status === 200) {
-                                                      setWriteCommentAfterRendering((prev) => !prev);
+                                                      getViewPostApi();
+
                                                       document.querySelectorAll('.ulList').forEach((i) => {
                                                         i.classList.remove('active');
                                                       });
@@ -653,7 +648,7 @@ const View = () => {
                                 }).then((res) => {
                                   if (res.status === 200) {
                                     alert('대댓글이 등록되었습니다!');
-                                    setWriteCommentAfterRendering((prev) => !prev);
+                                    getViewPostApi();
                                     //대댓글 등록 후 대댓글컴포넌트 제거
                                     setClickCommentIndex(-1);
                                     console.log(res.data);
@@ -693,7 +688,7 @@ const View = () => {
                         (res) => {
                           if (res.status === 200) {
                             alert('댓글이 등록되었습니다!');
-                            setWriteCommentAfterRendering((prev) => !prev);
+                            getViewPostApi();
                             commentRef.current!.value = '';
                             console.log(res.data);
                           }
