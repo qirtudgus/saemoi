@@ -470,54 +470,58 @@ const View = () => {
                                 <span>{elapsedTime(i.date)}</span>
                               </NicknameAndTime>
                               {content.id === id ? (
-                                <MoreButtonGroup
-                                  className='ulList'
-                                  onClick={(e) => {
-                                    if (e.currentTarget.className.includes('ulList active')) {
-                                      e.currentTarget.classList.remove('active');
-                                    } else {
-                                      document.querySelectorAll('.ulList').forEach((i) => {
-                                        i.classList.remove('active');
-                                      });
-                                      e.currentTarget.classList.toggle('active');
-                                    }
-                                  }}
-                                >
-                                  <img
-                                    src={more_horiz}
-                                    alt='더보기'
-                                  />
-                                  <ul>
-                                    <li
-                                      onClick={() => {
-                                        alert('수정하시겠습니가?');
-                                      }}
-                                    >
-                                      수정하기
-                                    </li>
-                                    <li
-                                      onClick={() => {
-                                        console.log(`${i.index}번 댓글 삭제 시도`);
-                                        if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
-                                          customAxios(
-                                            'put',
-                                            `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
-                                            {},
-                                          ).then((res) => {
-                                            if (res.status === 200) {
-                                              getViewPostApi();
-                                              document.querySelectorAll('.ulList').forEach((i) => {
-                                                i.classList.remove('active');
-                                              });
-                                            }
+                                <>
+                                  {i.isDeleted === 'true' ? null : (
+                                    <MoreButtonGroup
+                                      className='ulList'
+                                      onClick={(e) => {
+                                        if (e.currentTarget.className.includes('ulList active')) {
+                                          e.currentTarget.classList.remove('active');
+                                        } else {
+                                          document.querySelectorAll('.ulList').forEach((i) => {
+                                            i.classList.remove('active');
                                           });
+                                          e.currentTarget.classList.toggle('active');
                                         }
                                       }}
                                     >
-                                      삭제하기
-                                    </li>
-                                  </ul>
-                                </MoreButtonGroup>
+                                      <img
+                                        src={more_horiz}
+                                        alt='더보기'
+                                      />
+                                      <ul>
+                                        <li
+                                          onClick={() => {
+                                            alert('수정하시겠습니가?');
+                                          }}
+                                        >
+                                          수정하기
+                                        </li>
+                                        <li
+                                          onClick={() => {
+                                            console.log(`${i.index}번 댓글 삭제 시도`);
+                                            if (window.confirm('해당 댓글을 삭제하시겠습니까?')) {
+                                              customAxios(
+                                                'put',
+                                                `/comment?commentNumber=${i.index}&&boardNumber=${number}`,
+                                                {},
+                                              ).then((res) => {
+                                                if (res.status === 200) {
+                                                  getViewPostApi();
+                                                  document.querySelectorAll('.ulList').forEach((i) => {
+                                                    i.classList.remove('active');
+                                                  });
+                                                }
+                                              });
+                                            }
+                                          }}
+                                        >
+                                          삭제하기
+                                        </li>
+                                      </ul>
+                                    </MoreButtonGroup>
+                                  )}
+                                </>
                               ) : null}
                             </CommentUserInfo>
                             <CommentContent>
@@ -542,7 +546,24 @@ const View = () => {
                         ) : (
                           <>
                             {i.isDeleted === 'true' ? (
-                              <p>삭제된 댓글입니다.</p>
+                              <NestedCommentWrap>
+                                <NestedComment>
+                                  <CommentUserInfo>
+                                    <NicknameAndTime>
+                                      <img
+                                        src={nestedCommentArrow}
+                                        alt='nestedCommentArrow'
+                                      ></img>
+                                      <span>{i.nickname}</span>
+                                      <VerticalLine />
+                                      <span>{elapsedTime(i.date)}</span>
+                                    </NicknameAndTime>
+                                  </CommentUserInfo>
+                                  <CommentContent>
+                                    <span>{i.content}</span>
+                                  </CommentContent>
+                                </NestedComment>
+                              </NestedCommentWrap>
                             ) : (
                               //대댓글 컴포넌트 제작
                               <>
