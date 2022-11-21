@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
 import customAxios from '../util/customAxios';
 import comment_img from '../img/commentLine_img.svg';
 import add_like from '../img/add_like.svg';
+import 돋보기 from '../img/돋보기.svg';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import { elapsedTime } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
+import e from 'express';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
@@ -115,6 +117,14 @@ const BoardLi = styled.li`
     height: 15px;
   }
 `;
+
+const WriteSearchWrap = styled.div`
+  display: flex;
+  & button {
+    flex-shrink: 0;
+  }
+`;
+
 const WriteButton = styled.div`
   width: 100%;
   display: flex;
@@ -123,99 +133,190 @@ const WriteButton = styled.div`
   border-bottom: 1px solid#dadde6;
 `;
 
+const SearchInputWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 3px 3px 8px;
+  border: 1px solid#dadde6;
+  border-radius: 10px;
+  height: 40px;
+  margin-left: 10px;
+  & input {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0 0 2px 3px;
+    width: 100%;
+  }
+  & input:focus-visible {
+    outline: 0px;
+  }
+`;
+
 const Board = () => {
   const navigate = useNavigate();
+  const searchInputRef = useRef() as RefObject<HTMLInputElement>;
   const isLogin = useAppSelector((state) => state.user.isLogin);
-  const [list, setList] = useState([
-    {
-      index: '',
-      title: '',
-      nickname: '',
-      date: '',
-      commentCount: '',
-      view: '',
-      likes: '',
-    },
-  ]);
+
+  interface BoardListInterface {
+    index: string;
+    title: string;
+    nickname: string;
+    date: string;
+    commentCount: string;
+    view: string;
+    likes: string;
+  }
+
+  // const [list, setList] = useState([
+  //   {
+  //     index: '',
+  //     title: '',
+  //     nickname: '',
+  //     date: '',
+  //     commentCount: '',
+  //     view: '',
+  //     likes: '',
+  //   },
+  // ]);
+
+  const [list, setList] = useState<null | BoardListInterface[]>(null);
 
   useEffect(() => {
     customAxios('get', '/board', {}).then((res) => {
       console.log(res.data);
-      setList(res.data);
+      if (res.data.length === 0) {
+        setList([
+          {
+            index: '',
+            title: '',
+            nickname: '',
+            date: '',
+            commentCount: '',
+            view: '',
+            likes: '',
+          },
+        ]);
+        return;
+      } else {
+        setList(res.data);
+      }
     });
   }, []);
 
+  const searchBoardFunc = () => {
+    console.log(searchInputRef.current!.value);
+    const keyword = searchInputRef.current!.value;
+    if (keyword.length < 2) {
+      alert('검색어를 두 글자 이상입력해주세요!');
+    } else {
+      navigate(`/board/list/search/${keyword}`);
+    }
+  };
+
   //데이터가 들어왔을 때 한번에 렌더링해준다.
-  if (list[0].index === '') return null;
+  // if (list === null) {
+  //   return null;
+  // }
 
   return (
     <BoardWrap>
       <WriteButton>
         <TitleText text='게시판'></TitleText>
-        <SolidButton
-          ClassName='ml_10'
-          text='작성하기'
-          OnClick={() => {
-            if (isLogin) {
-              navigate('/board/write');
-            } else {
-              alert('로그인 후 이용 가능합니다!');
-              return;
-            }
-          }}
-        >
-          <img
-            src={edit_document_white_24dp}
-            alt='작성하기'
-          />
-          작성하기
-        </SolidButton>
+        <WriteSearchWrap>
+          <SearchInputWrap>
+            <img
+              src={돋보기}
+              alt='검색'
+            />
+            <input
+              ref={searchInputRef}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  searchBoardFunc();
+                } else {
+                  return;
+                }
+              }}
+            ></input>
+            {/* <BasicButton OnClick={searchBoardFunc}>검색</BasicButton> */}
+          </SearchInputWrap>
+          <SolidButton
+            ClassName='ml_10'
+            text='작성하기'
+            OnClick={() => {
+              if (isLogin) {
+                navigate('/board/write');
+              } else {
+                alert('로그인 후 이용 가능합니다!');
+                return;
+              }
+            }}
+          >
+            <img
+              src={edit_document_white_24dp}
+              alt='작성하기'
+            />
+            작성하기
+          </SolidButton>
+        </WriteSearchWrap>
       </WriteButton>
-      {list.map((i) => {
-        return (
-          <React.Fragment key={i.index}>
-            <BoardLi>
-              <div className='topInfo'>
-                <div className='frontInfo'>
-                  <span className='nickname'>{i.nickname}</span>
-                  <div className='line'></div>
-                  <span className='date'>{elapsedTime(i.date)}</span>
-                </div>
-                <div className='secondInfo'>
-                  <div className='comment'>
-                    <img
-                      src={comment_img}
-                      alt='댓글'
-                    />
-                    <span>{i.commentCount}</span>
-                  </div>
-                  <div className='line'></div>
-                  <div className='like'>
-                    <img
-                      src={add_like}
-                      alt='좋아요'
-                    />
-                    <span>{i.likes}</span>
-                  </div>
-                </div>
-              </div>
-              <p className='title'>
-                <span
-                  onClick={() => {
-                    //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
-                    //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
-                    // dispatch(BoardViewService.getBoard({ number: i.index }))
-                    customAxios('put', `/board/view?number=${i.index}`);
-                    navigate(`/board/posts/${i.index}`);
-                  }}
-                >
-                  {i.title}
-                </span>
-              </p>
-            </BoardLi>
-          </React.Fragment>
-        );
-      })}
+      {list === null ? null : (
+        <>
+          {list[0].index === '' ? (
+            <TitleText text='게시글이 없습니다.' />
+          ) : (
+            <>
+              {list.map((i) => {
+                return (
+                  <React.Fragment key={i.index}>
+                    <BoardLi>
+                      <div className='topInfo'>
+                        <div className='frontInfo'>
+                          <span className='nickname'>{i.nickname}</span>
+                          <div className='line'></div>
+                          <span className='date'>{elapsedTime(i.date)}</span>
+                        </div>
+                        <div className='secondInfo'>
+                          <div className='comment'>
+                            <img
+                              src={comment_img}
+                              alt='댓글'
+                            />
+                            <span>{i.commentCount}</span>
+                          </div>
+                          <div className='line'></div>
+                          <div className='like'>
+                            <img
+                              src={add_like}
+                              alt='좋아요'
+                            />
+                            <span>{i.likes}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <p className='title'>
+                        <span
+                          onClick={() => {
+                            //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
+                            //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
+                            // dispatch(BoardViewService.getBoard({ number: i.index }))
+                            customAxios('put', `/board/view?number=${i.index}`);
+                            navigate(`/board/posts/${i.index}`);
+                          }}
+                        >
+                          {i.title}
+                        </span>
+                      </p>
+                    </BoardLi>
+                  </React.Fragment>
+                );
+              })}
+            </>
+          )}
+        </>
+      )}
     </BoardWrap>
   );
 };
