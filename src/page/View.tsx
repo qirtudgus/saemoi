@@ -651,34 +651,40 @@ const View = () => {
                                 rows={5}
                               ></CommentArea>
                             </CommentWrap>
-                            <button
-                              onClick={() => {
+                            <SolidButton
+                              OnClick={() => {
                                 console.log(nestedCommentRef.current?.value);
-                                //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
-                                //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
-                                // let content = commentRef.current?.value.replaceAll('\n', '<br>');
-                                let content = nestedCommentRef.current?.value;
-                                let date = returnTodayString();
-                                customAxios('post', '/comment/write/nested', {
-                                  board_index: number,
-                                  comment_index: i.index,
-                                  content,
-                                  date,
-                                  id,
-                                  nickname,
-                                }).then((res) => {
-                                  if (res.status === 200) {
-                                    alert('대댓글이 등록되었습니다!');
-                                    getViewPostApi();
-                                    //대댓글 등록 후 대댓글컴포넌트 제거
-                                    setClickCommentIndex(-1);
-                                    console.log(res.data);
-                                  }
-                                });
+
+                                if (isLogin) {
+                                  //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
+                                  //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
+                                  // let content = commentRef.current?.value.replaceAll('\n', '<br>');
+                                  let content = nestedCommentRef.current?.value;
+                                  let date = returnTodayString();
+                                  customAxios('post', '/comment/write/nested', {
+                                    board_index: number,
+                                    comment_index: i.index,
+                                    content,
+                                    date,
+                                    id,
+                                    nickname,
+                                  }).then((res) => {
+                                    if (res.status === 200) {
+                                      alert('대댓글이 등록되었습니다!');
+                                      getViewPostApi();
+                                      //대댓글 등록 후 대댓글컴포넌트 제거
+                                      setClickCommentIndex(-1);
+                                      console.log(res.data);
+                                    }
+                                  });
+                                } else {
+                                  alert('로그인 후 이용 가능합니다!');
+                                  return;
+                                }
                               }}
                             >
-                              대댓글등록
-                            </button>
+                              답글 등록
+                            </SolidButton>
                           </>
                         ) : null}
                       </React.Fragment>
