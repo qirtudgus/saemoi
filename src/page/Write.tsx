@@ -1,6 +1,6 @@
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { RefObject, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import customAxios from '../util/customAxios';
 import { useNavigate } from 'react-router-dom';
 import '@toast-ui/editor/dist/i18n/ko-kr';
@@ -58,6 +58,10 @@ const Write = () => {
     });
   };
 
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
+
   return (
     <>
       <div>
@@ -80,6 +84,7 @@ const Write = () => {
             height='350px' // 에디터 창 높이
             initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
             hideModeSwitch={true}
+            autofocus={false}
             language='ko-KR'
             toolbarItems={[
               // 툴바 옵션 설정
