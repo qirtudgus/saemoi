@@ -12,7 +12,7 @@ const Title = styled.h1`
   }
 
   @media ${({ theme }) => theme.device.mobile} {
-    font-size: 2em;
+    font-size: 1.8em;
   }
 `;
 
