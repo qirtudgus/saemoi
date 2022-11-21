@@ -143,3 +143,17 @@ boardRouter.put('/edit', (req, res) => {
     }
   });
 });
+
+// 게시물 검색결과
+boardRouter.get('/search:?', (req, res) => {
+  const keyword = req.query.keyword;
+  console.log(keyword);
+
+  let searchQuery = 'SELECT * FROM board WHERE title LIKE ?';
+
+  db.query(searchQuery, ['%' + keyword + '%'], (err, rows) => {
+    console.log(err);
+    console.log(rows);
+    res.status(200).json(rows.reverse());
+  });
+});
