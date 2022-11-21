@@ -13,6 +13,7 @@ import Write from './page/Write';
 import View from './page/View';
 import PostEdit from './page/PostEdit';
 import ErrorPage from './page/ErrorPage';
+import BoardSearchResult from './page/BoardSearchResult';
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
           <Route
             path='/board/list'
             element={<Board />}
-          />
+          ></Route>
           <Route
             path='/board/write'
             element={<Write />}
@@ -59,6 +60,10 @@ function App() {
           <Route
             path='/board/edit/:number'
             element={<PostEdit />}
+          />
+          <Route
+            path='/board/list/search/:keyword'
+            element={<BoardSearchResult />}
           />
           <Route
             path='*'
