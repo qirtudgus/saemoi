@@ -5,6 +5,7 @@ const Title = styled.h1`
   font-size: 2.5em;
   padding: 30px 0;
   font-weight: bold;
+  word-break: keep-all;
 
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 2.3em;
