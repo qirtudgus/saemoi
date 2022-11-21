@@ -131,6 +131,9 @@ const WriteButton = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid#dadde6;
+  & h1 {
+    flex-shrink: 0;
+  }
 `;
 
 const SearchInputWrap = styled.div`
