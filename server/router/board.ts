@@ -157,3 +157,43 @@ boardRouter.get('/search:?', (req, res) => {
     res.status(200).json(rows.reverse());
   });
 });
+
+boardRouter.get('/list', (req, res, next) => {
+  const currentPageNum = Number(req.query.page);
+  console.log(req.query);
+  console.log(currentPageNum);
+  let board = 'SELECT (`index`), title, date, nickname,commentCount,view,likes FROM board';
+
+  db.query(board, [], (err, rows, fields) => {
+    //정렬
+    let sortList = rows.reverse();
+    //100까지만 자르기
+    let sliceArr = sortList.slice(0, 200);
+    interface data {
+      data?: [];
+      listNum?: number;
+    }
+
+    let payload: data = {};
+    //페이지넘버를 요청했을 때
+    let pageNumber = (currentPageNum - 1) * 10; // 0
+    // console.log(currentPageNum)
+    payload.data = sliceArr.slice(pageNumber, pageNumber + 9 + 1); // 0~9 까지 10개를 넘겨준다.
+
+    payload.listNum = Math.ceil(sliceArr.length / 10); // 10으로 나눈 뒤 반올림하여 필요한 페이지 갯수(정수)를 넘겨준다.
+
+    console.log(payload);
+
+    res.status(200).json({
+      payload: {
+        data: sliceArr.slice(pageNumber, pageNumber + 9 + 1),
+        listNum: Math.ceil(sliceArr.length / 10),
+      },
+    });
+  });
+
+  //   db.query(loginQuery, [userId], (err, rows, fields) => {
+  //     const uesrInfo = userInfoProcess(rows[0]);
+  //     res.status(200).json({ code: 200, userInfo: uesrInfo });
+  //   });
+});
