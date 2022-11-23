@@ -64,6 +64,20 @@ const CommentWrap = styled.div`
   margin-top: 30px;
 `;
 
+const WriteNestedCommentWrap = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #dadde6;
+  border: 1px solid#dadde6;
+  border-radius: 0 0 5px 5px;
+  height: 220px;
+  padding: 10px 0;
+`;
+
 const CommentArea = styled.textarea`
   position: relative;
   padding: 10px;
@@ -128,11 +142,6 @@ const CommentLikeWrap = styled.div`
 
 const CommentList = styled.div`
   white-space: pre;
-
-  & button {
-    margin: 10px;
-    padding: 10px;
-  }
 `;
 const MainComment = styled.div`
   padding: 15px;
@@ -149,6 +158,7 @@ const NestedCommentWrap = styled.div`
 const NestedComment = styled.div`
   width: 100%;
   padding: 15px 15px 15px 40px;
+
   border-bottom: 1px solid#dadde6;
   background: #fafafa;
 `;
@@ -644,47 +654,51 @@ const View = () => {
                         {/* 대댓글 컴포넌트 */}
                         {clickCommentIndex === index ? (
                           <>
-                            <CommentWrap>
+                            <WriteNestedCommentWrap>
                               <CommentArea
+                                placeholder='답글을 입력해주세요.'
                                 ref={nestedCommentRef}
                                 cols={40}
                                 rows={5}
                               ></CommentArea>
-                            </CommentWrap>
-                            <SolidButton
-                              OnClick={() => {
-                                console.log(nestedCommentRef.current?.value);
+                              <SolidButtonWrap>
+                                <span>건강한 답글을 달면 모두가 건강해져요!</span>
+                                <SolidButton
+                                  OnClick={() => {
+                                    console.log(nestedCommentRef.current?.value);
 
-                                if (isLogin) {
-                                  //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
-                                  //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
-                                  // let content = commentRef.current?.value.replaceAll('\n', '<br>');
-                                  let content = nestedCommentRef.current?.value;
-                                  let date = returnTodayString();
-                                  customAxios('post', '/comment/write/nested', {
-                                    board_index: number,
-                                    comment_index: i.index,
-                                    content,
-                                    date,
-                                    id,
-                                    nickname,
-                                  }).then((res) => {
-                                    if (res.status === 200) {
-                                      alert('대댓글이 등록되었습니다!');
-                                      getViewPostApi();
-                                      //대댓글 등록 후 대댓글컴포넌트 제거
-                                      setClickCommentIndex(-1);
-                                      console.log(res.data);
+                                    if (isLogin) {
+                                      //<br>태그로 치환하지않고 그냥 db에 넣었다빼는것이 비용이 덜 들겠다.
+                                      //치환하고나면 다시 여기와서 \n으로 치환해줘야하는데, 댓글이 많을수록 비용도 곱해진다.
+                                      // let content = commentRef.current?.value.replaceAll('\n', '<br>');
+                                      let content = nestedCommentRef.current?.value;
+                                      let date = returnTodayString();
+                                      customAxios('post', '/comment/write/nested', {
+                                        board_index: number,
+                                        comment_index: i.index,
+                                        content,
+                                        date,
+                                        id,
+                                        nickname,
+                                      }).then((res) => {
+                                        if (res.status === 200) {
+                                          alert('답글이 등록되었습니다!');
+                                          getViewPostApi();
+                                          //대댓글 등록 후 대댓글컴포넌트 제거
+                                          setClickCommentIndex(-1);
+                                          console.log(res.data);
+                                        }
+                                      });
+                                    } else {
+                                      alert('로그인 후 이용 가능합니다!');
+                                      return;
                                     }
-                                  });
-                                } else {
-                                  alert('로그인 후 이용 가능합니다!');
-                                  return;
-                                }
-                              }}
-                            >
-                              답글 등록
-                            </SolidButton>
+                                  }}
+                                >
+                                  답글 등록
+                                </SolidButton>
+                              </SolidButtonWrap>
+                            </WriteNestedCommentWrap>
                           </>
                         ) : null}
                       </React.Fragment>
@@ -696,6 +710,7 @@ const View = () => {
 
             <CommentWrap>
               <CommentArea
+                placeholder='댓글을 입력해주세요.'
                 ref={commentRef}
                 cols={40}
                 rows={5}
