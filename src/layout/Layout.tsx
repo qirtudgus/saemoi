@@ -230,7 +230,7 @@ const Layout = () => {
             </MenuBtn>
             {isLogin ? (
               <LoginBtnWrap>
-                <SolidButton
+                <BasicButton
                   OnClick={() => {
                     console.log('로그아웃 시도');
 
@@ -238,7 +238,7 @@ const Layout = () => {
                   }}
                 >
                   로그아웃
-                </SolidButton>
+                </BasicButton>
               </LoginBtnWrap>
             ) : (
               <LoginBtnWrap>
