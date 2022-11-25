@@ -479,7 +479,7 @@ const View = () => {
                                 <VerticalLine />
                                 <span>{elapsedTime(i.date)}</span>
                               </NicknameAndTime>
-                              {content.id === id ? (
+                              {i.id === id ? (
                                 <>
                                   {i.isDeleted === 'true' ? null : (
                                     <MoreButtonGroup
@@ -589,7 +589,7 @@ const View = () => {
                                         <VerticalLine />
                                         <span>{elapsedTime(i.date)}</span>
                                       </NicknameAndTime>
-                                      {content.id === id ? (
+                                      {i.id === id ? (
                                         <MoreButtonGroup
                                           className='ulList'
                                           onClick={(e) => {
