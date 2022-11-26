@@ -500,13 +500,13 @@ const View = () => {
                                         alt='더보기'
                                       />
                                       <ul>
-                                        <li
+                                        {/* <li
                                           onClick={() => {
                                             alert('수정하시겠습니가?');
                                           }}
                                         >
                                           수정하기
-                                        </li>
+                                        </li> */}
                                         <li
                                           onClick={() => {
                                             console.log(`${i.index}번 댓글 삭제 시도`);
@@ -608,13 +608,13 @@ const View = () => {
                                             alt='더보기'
                                           />
                                           <ul>
-                                            <li
+                                            {/* <li
                                               onClick={() => {
                                                 alert('수정하시겠습니가?');
                                               }}
                                             >
                                               수정하기
-                                            </li>
+                                            </li> */}
                                             <li
                                               onClick={() => {
                                                 console.log(`${i.index}번 댓글 삭제 시도`);
