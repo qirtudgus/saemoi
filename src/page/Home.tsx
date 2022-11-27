@@ -11,16 +11,7 @@ const Home = () => {
 
   return (
     <div>
-      <Title as={'h3'}>당신의 닉네임 {nickname}</Title>
-      <button
-        onClick={() => {
-          customAxios('post', '/test', { test: '프론트에서 보내는 테스트값' }).then((res) => {
-            console.log(res.data);
-          });
-        }}
-      >
-        api 테스트
-      </button>
+      <Title as={'h3'}>홈 {nickname}</Title>
     </div>
   );
 };
