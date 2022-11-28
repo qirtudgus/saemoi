@@ -1,5 +1,4 @@
 import { useAppSelector } from '../store/store';
-import customAxios from '../util/customAxios';
 import styled from 'styled-components';
 
 const Title = styled.h1`
