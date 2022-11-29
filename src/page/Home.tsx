@@ -9,9 +9,11 @@ const Home = () => {
   const nickname = useAppSelector((state) => state.user.nickname);
 
   return (
-    <div>
-      <Title as={'h3'}>홈 {nickname}</Title>
-    </div>
+    <>
+      <div>
+        <Title as={'h3'}>홈 {nickname}</Title>
+      </div>
+    </>
   );
 };
 
