@@ -1,7 +1,7 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
-import { BasicButton, SolidButton } from '../components/BtnGroup';
+import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
 import customAxios from '../util/customAxios';
 import comment_img from '../img/commentLine_img.svg';
