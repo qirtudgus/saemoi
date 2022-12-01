@@ -12,7 +12,6 @@ import 오른쪽화살표 from '../img/오른쪽화살표.svg';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import { elapsedTime } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
-import e from 'express';
 import theme from '../layout/theme';
 const BoardWrap = styled.div`
   width: 100%;
