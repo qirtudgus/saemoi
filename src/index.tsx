@@ -12,7 +12,6 @@ const cookies = new Cookies();
 
 //로그인 유지를 위한 함수, 토큰이 유효할 시 정보를 불러오는 디스패치, 토큰이 없을 시 return
 function loadUser() {
-  console.log(cookies.get('AT'));
   let AT = cookies.get('AT');
   store.dispatch(UserServiceAutoLogin.getUserAutoLogin(AT));
 }
