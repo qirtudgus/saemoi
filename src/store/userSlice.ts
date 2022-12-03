@@ -68,6 +68,10 @@ const user = createSlice({
         state.isLogin = actions.payload.isLogin;
         state.id = actions.payload.id;
         state.nickname = actions.payload.nickname;
+        //로그아웃 시 아이디를 담아 전송
+        socket.emit('users.count', { id: '첫접속' }, (res: any) => {
+          console.log('로그인 에밋 후');
+        });
       })
       .addCase(UserService.getUser.pending, (state, actions) => {
         console.log('getUser가 펜딩중');
