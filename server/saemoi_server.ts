@@ -6,7 +6,7 @@ import { loginRouter } from './router/login.js';
 import { jwtCheck } from './middleware/CheckToken.js';
 import cookieParser from 'cookie-parser';
 import { boardRouter } from './router/board.js';
-import { raidBoardRouter } from './router/raidboard.js';
+import { raidBoardRouter } from './router/raidBoard.js';
 import { commentRouter } from './router/comment.js';
 import { Server } from 'socket.io';
 import http from 'http';
