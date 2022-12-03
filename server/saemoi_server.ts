@@ -121,12 +121,14 @@ app.post('/api/loginlist', (req, res) => {
   res.status(200).json('haha');
 });
 
-app.listen(SERVER_PORT, () => {
+//socketio와 http 포트를 동일하게 사용하는 법
+//https://doc.scalingo.com/languages/nodejs/websocket-web-same-port
+server.listen(SERVER_PORT, () => {
   console.log(`
     🛡️  Server listening on port: ${SERVER_PORT}
   `);
 });
 
-server.listen(4000, function () {
-  console.log('listening on port 4000');
-});
+// server.listen(3002, function () {
+//   console.log('listening on port 4000');
+// });
