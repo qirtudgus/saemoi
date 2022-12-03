@@ -33,12 +33,23 @@ const PropertyLabel = styled.label`
 const BtnLabel = styled.label`
   cursor: pointer;
   width: auto;
+  min-width: 90px;
   padding: 10px;
-  margin-right: 15px;
+
   flex-shrink: 0;
   text-align: center;
-  border: 2px solid ${({ theme }) => theme.colors.main};
+  border: 2px solid#ddd;
   border-radius: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+
+  &:hover {
+    border: 2px solid ${({ theme }) => theme.colors.main};
+  }
+
+  &:active {
+    border: 2px solid ${({ theme }) => theme.colors.main};
+  }
 `;
 const BtnRadio = styled.input`
   display: none;
@@ -57,19 +68,13 @@ const BtnRadio = styled.input`
 `;
 
 const InputWrap = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  user-select: none;
   width: 100%;
-
-  & .swiper-slide {
-    height: 50px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
 `;
 
 const ContentLabel = styled.label`
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   display: block;
 `;
 
@@ -87,7 +92,7 @@ const MultiInputWrap = styled.div`
 `;
 
 const list = ['어태커', '서포터', '올라운더'];
-const difficultyList = [7, 6, 5, 4];
+const difficultyList = ['7성', '6성', '5성', '4성', '3성 이하'];
 
 const property = [
   '노말',
@@ -116,8 +121,9 @@ const RaidWrite = () => {
   const etcTextRef = useRef() as RefObject<HTMLInputElement>;
 
   const nickname = useAppSelector((state) => state.user.nickname);
+  const [code, setCode] = useState('');
   const [positionState, setPositionState] = useState('어태커');
-  const [difficultyState, setDifficultyState] = useState(6);
+  const [difficultyState, setDifficultyState] = useState('6성');
 
   const option = ['1턴 도발', '3턴 공격', '디버프 금지', '나이킹팟', '1딜러 3서폿', '특수방어🔻', '방어🔻'];
   const nameRefFocus = () => {
@@ -156,6 +162,36 @@ const RaidWrite = () => {
     }
   }, []);
 
+  const submit = () => {
+    let optionList: any[] = [];
+    let a = document.getElementsByName('option') as NodeListOf<HTMLInputElement>;
+    a.forEach((i) => {
+      if (i.checked === true) {
+        optionList.push(i.value);
+      }
+    });
+
+    if (titleRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
+      let date = returnTodayString();
+
+      customAxios('post', '/raidboard/list', {
+        nickname,
+        raidCode: titleRef.current.value,
+        monsterName: nameRef.current.value,
+        type: typeRef.current.value,
+        positionState,
+        difficultyState,
+        optionList,
+        etcText: etcTextRef.current.value,
+        date,
+      }).then((res) => {
+        console.log('완료');
+      });
+    }
+
+    return;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <>
@@ -171,6 +207,11 @@ const RaidWrite = () => {
                 ref={titleRef}
                 maxLength={6}
                 placeholder='레이드 코드'
+                value={code}
+                onChange={(e) => {
+                  //자동으로 대문자로 변경
+                  setCode(e.target.value.toUpperCase());
+                }}
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
                     titleRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
@@ -212,43 +253,8 @@ const RaidWrite = () => {
           </MultiInputWrap>
         </InputWrap>
 
-        {/* <InputWrap>
-          <ContentLabel htmlFor='title'>레이드 코드</ContentLabel>
-          <TitleInput
-            id='title'
-            type={'text'}
-            ref={titleRef}
-            placeholder='레이드 코드를 입력해주세요.'
-            onKeyDown={(e) => {
-              if (e.keyCode === 13) {
-                titleRef.current!.value.length > 0 ? console.log('엔터') : console.log('땡');
-              }
-            }}
-          ></TitleInput>
-        </InputWrap>
-
         <InputWrap>
-          <ContentLabel htmlFor='title'>몬스터명</ContentLabel>
-          <TitleInput
-            id='title'
-            type={'text'}
-            ref={nameRef}
-            placeholder='몬스터의 이름을 입력해주세요.'
-          ></TitleInput>
-        </InputWrap>
-
-        <InputWrap>
-          <ContentLabel htmlFor='title'>타입</ContentLabel>
-          <TitleInput
-            id='title'
-            type={'text'}
-            ref={typeRef}
-            placeholder='몬스터의 타입을 입력해주세요.'
-          ></TitleInput>
-        </InputWrap> */}
-
-        <InputWrap>
-          <ContentLabel>포지션을 선택해주세요. - 선택</ContentLabel>
+          <ContentLabel>자신의 포지션을 선택해주세요. - 선택</ContentLabel>
           <BtnList>
             {list.map((i, index) => {
               return (
@@ -269,29 +275,6 @@ const RaidWrite = () => {
             })}
           </BtnList>
         </InputWrap>
-
-        {/* <InputWrap>
-          <ContentLabel>속성을 선택해주세요. - 필수</ContentLabel>
-          <BtnList>
-            {property.sort().map((i, index) => {
-              return (
-                <React.Fragment key={i}>
-                  <BtnRadio
-                    id={i.toString()}
-                    name='property'
-                    onChange={(e) => {
-                      console.log('하하');
-                      console.log(e.target.value);
-                    }}
-                    type={'radio'}
-                    value={i}
-                  ></BtnRadio>
-                  <PropertyLabel htmlFor={i.toString()}> {i}</PropertyLabel>
-                </React.Fragment>
-              );
-            })}
-          </BtnList>
-        </InputWrap> */}
 
         <InputWrap>
           <ContentLabel>난이도를 선택해주세요. - 필수</ContentLabel>
@@ -317,11 +300,11 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel>옵션을 선택해주세요. - 다중 선택 가능</ContentLabel>
+          <ContentLabel>필요한 태그를 선택해주세요. - 다중 선택 가능</ContentLabel>
           <BtnList>
             {option.map((i, index) => {
               return (
-                <React.Fragment key={i}>
+                <React.Fragment key={index}>
                   <BtnRadio
                     id={i.toString()}
                     name='option'
@@ -349,92 +332,7 @@ const RaidWrite = () => {
           ></TitleInput>
         </InputWrap>
 
-        {/* <InputWrap>
-          <ContentLabel>옵션을 선택해주세요. - 선택</ContentLabel>
-
-          <Swiper
-            scrollbar={{
-              hide: false,
-            }}
-            slidesPerView={3}
-            spaceBetween={0}
-            // grabCursor={true}
-            pagination={{
-              //   type: 'fraction',
-              clickable: true,
-            }}
-            freeMode={true}
-            modules={[FreeMode, Scrollbar]}
-            className='mySwiper'
-            // breakpoints={{
-            //   // when window width is >= 768px
-            //   768: {
-            //     // width: 768,
-            //     slidesPerView: 2,
-            //   },
-            //   1024: {
-            //     // width: 768,
-            //     slidesPerView: 3,
-            //   },
-            //   1440: {
-            //     slidesPerView: 4,
-            //   },
-            // }}
-          >
-            <BtnList>
-              {option.map((i, index) => {
-                return (
-                  <SwiperSlide key={i}>
-                    <BtnRadio
-                      id={i.toString()}
-                      name='option'
-                      onChange={(e) => {
-                        console.log('하하');
-                        console.log(e.target.value);
-                      }}
-                      type={'radio'}
-                      value={i}
-                    ></BtnRadio>
-                    <BtnLabel htmlFor={i.toString()}> {i}</BtnLabel>
-                  </SwiperSlide>
-                );
-              })}
-            </BtnList>
-          </Swiper>
-        </InputWrap> */}
-        <SolidButton
-          OnClick={() => {
-            let optionList: any[] = [];
-            let a = document.getElementsByName('option') as NodeListOf<HTMLInputElement>;
-            a.forEach((i) => {
-              if (i.checked === true) {
-                optionList.push(i.value);
-              }
-            });
-
-            if (titleRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
-              let date = returnTodayString();
-
-              customAxios('post', '/raidboard/list', {
-                nickname,
-                raidCode: titleRef.current.value,
-                monsterName: nameRef.current.value,
-                type: typeRef.current.value,
-                positionState,
-                difficultyState,
-                optionList,
-                etcText: etcTextRef.current.value,
-                date,
-              }).then((res) => {
-                console.log('완료');
-              });
-            }
-
-            return;
-          }}
-        >
-          등록
-        </SolidButton>
+        <SolidButton OnClick={submit}>등록</SolidButton>
       </>
     </ThemeProvider>
   );
