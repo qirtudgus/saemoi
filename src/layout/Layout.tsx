@@ -16,6 +16,8 @@ const menuList2 = [
   { name: '화장품', link: '/cosmetic' },
   { name: '식품', link: '/food' },
   { name: '게시판', link: '/board/list' },
+  { name: '레이드 게시판', link: '/raidboard/list' },
+  { name: '레이드 작성', link: '/raidboard/write' },
 ];
 
 const HeaderWrap = styled.header`
