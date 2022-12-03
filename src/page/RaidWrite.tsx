@@ -177,7 +177,6 @@ const RaidWrite = () => {
 
     if (titleRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
       let date = returnTodayString();
-
       customAxios('post', '/raidboard/list', {
         nickname,
         raidCode: titleRef.current.value,
@@ -200,7 +199,6 @@ const RaidWrite = () => {
     <ThemeProvider theme={theme}>
       <>
         <TitleText text={'레이드 작성'}></TitleText>
-
         <InputWrap>
           <MultiInputWrap>
             <div>
