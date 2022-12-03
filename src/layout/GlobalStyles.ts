@@ -138,8 +138,8 @@ table {
     body {  line-height: 1;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 14px;
-        background-color:#fff;
-        color: #000;
+        background-color:#35363a;
+        color: #fff;
     }
     //토스트에디터 팝업창 위치 조정
     @media only screen and (max-width: 480px) {
