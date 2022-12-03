@@ -15,13 +15,13 @@ commentRouter.post('/write', (req, res) => {
 
   let depth = 0;
   const { board_index, content2, date, id, nickname } = req.body;
-  // let commentWriteQuery = 'INSERT INTO commentTable (board_index,content,date,nickname, id) VALUES (?,?,?,?,?)';
+  // let commentWriteQuery = 'INSERT INTO commenttable (board_index,content,date,nickname, id) VALUES (?,?,?,?,?)';
 
   //작성한 다음에 해당 index를 comment_index에 저장하자
   let 인덱스쿼리 = 'SELECT LAST_INSERT_ID()';
-  let commentWriteQuery = 'INSERT INTO commentTable (board_index,content,date,nickname, id) VALUES (?,?,?,?,?)';
+  let commentWriteQuery = 'INSERT INTO commenttable (board_index,content,date,nickname, id) VALUES (?,?,?,?,?)';
   let commentCountCreate = 'UPDATE board SET commentCount = commentCount + 1 WHERE (`index` = ?)';
-  let 같은인덱스찾아서값저장 = 'UPDATE commentTable SET comment_index = ? WHERE (`index` = ?)';
+  let 같은인덱스찾아서값저장 = 'UPDATE commenttable SET comment_index = ? WHERE (`index` = ?)';
 
   db.query(commentWriteQuery, [board_index, content2, date, nickname, id], (err, rows) => {
     if (err) {
@@ -50,7 +50,7 @@ commentRouter.post('/write', (req, res) => {
 commentRouter.delete('/', (req, res) => {
   const commentNumber = req.query.commentNumber;
   const boardNumber = req.query.boardNumber;
-  let commentDelete = 'DELETE FROM commentTable WHERE (`index`=?)';
+  let commentDelete = 'DELETE FROM commenttable WHERE (`index`=?)';
   let commentCountDelete = 'UPDATE board SET commentCount = commentCount -1 WHERE (`index` = ?)';
   db.query(commentDelete, [commentNumber], (err, rows) => {
     if (err) {
@@ -69,7 +69,7 @@ commentRouter.delete('/', (req, res) => {
 commentRouter.put('/', (req, res) => {
   const commentNumber = req.query.commentNumber;
   const boardNumber = req.query.boardNumber;
-  let commentDeleted = 'UPDATE commentTable SET isDeleted = "true" WHERE (`index` = ?)';
+  let commentDeleted = 'UPDATE commenttable SET isDeleted = "true" WHERE (`index` = ?)';
   let commentCountDelete = 'UPDATE board SET commentCount = commentCount -1 WHERE (`index` = ?)';
   db.query(commentDeleted, [commentNumber], (err, rows) => {
     if (err) {
@@ -115,11 +115,11 @@ commentRouter.post('/write/nested', (req, res) => {
   let { board_index, comment_index, content, date, id, nickname } = req.body;
 
   //같은 인덱스인 게시물을 찾았고..이중에 가장 큰 order를 조회해야했다.
-  let 찾기3 = 'SELECT MAX(orders) FROM commentTable WHERE board_index = ? AND comment_index = ?';
+  let 찾기3 = 'SELECT MAX(orders) FROM commenttable WHERE board_index = ? AND comment_index = ?';
 
   //
   let commentWriteQuery =
-    'INSERT INTO commentTable (board_index,content,date,nickname, id, orders, depth, comment_index) VALUES (?,?,?,?,?,?,?,?)';
+    'INSERT INTO commenttable (board_index,content,date,nickname, id, orders, depth, comment_index) VALUES (?,?,?,?,?,?,?,?)';
   let commentCountCreate = 'UPDATE board SET commentCount = commentCount + 1 WHERE (`index` = ?)';
 
   db.query(찾기3, [board_index, comment_index.toString()], (err, rows) => {
