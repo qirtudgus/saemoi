@@ -28,6 +28,7 @@ function App() {
   useEffect(() => {
     //소켓 이벤트마다 현재 접속자를 가져와준다..
     socket.on('users.count', function (payload) {
+      console.log('소켓 온!!');
       console.log(payload);
       dispatch(connectedUser(payload));
     });
