@@ -9,18 +9,15 @@ import theme from '../layout/theme';
 const ListCard = styled.div`
   width: 100%;
   height: auto;
-  background-color: #fafafa;
+  background-color: #ffffff;
   margin-bottom: 15px;
   border-radius: 5px;
   box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 14%);
   padding: 15px 10px;
   font-size: 1em;
   & p {
+    word-break: keep-all;
     line-height: 1.3em;
-  }
-
-  & span {
-    margin-right: 10px;
   }
 `;
 
@@ -30,7 +27,8 @@ const ListFooter = styled.div`
 `;
 
 const ListTop = styled.p`
-  font-size: 1.3em;
+  font-size: 1.2em;
+  margin-bottom: 5px;
 `;
 
 const ListFooterTime = styled.span`
@@ -51,6 +49,13 @@ const RefreshBtn = styled.button`
   }
 `;
 
+const VerticalLine = styled.div`
+  display: inline-block;
+  border-left: 1px solid #dadde6;
+  margin: 0 10px;
+  height: 15px;
+`;
+
 const RaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState<any>(null);
@@ -64,6 +69,7 @@ const RaidBoard = () => {
   }, []);
 
   const Refresh = () => {
+    window.scrollTo({ top: 0 });
     setIsLoading(false);
     customAxios('get', '/raidboard/list', {}).then((res) => {
       console.log(res.data);
@@ -81,9 +87,12 @@ const RaidBoard = () => {
           ? list.map((i: any, index: number) => (
               <ListCard>
                 <ListTop>
-                  <span>{i.raidDifficulty}성</span>
+                  <span>{i.raidDifficulty}</span>
+                  <VerticalLine />
                   <span>{i.monsterName}</span>
+                  <VerticalLine />
                   <span>{i.type}</span>
+                  <VerticalLine />
                   <span>{i.raidCode}</span>
                 </ListTop>
                 <p>{i.raidOption}</p>
