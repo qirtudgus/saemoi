@@ -31,7 +31,7 @@ const PropertyLabel = styled.label`
 const BtnLabel = styled.label`
   cursor: pointer;
   width: auto;
-  min-width: 90px;
+
   padding: 10px;
 
   flex-shrink: 0;
@@ -87,6 +87,12 @@ const MultiInputWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+`;
+
+const BtnWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const list = ['어태커', '서포터', '올라운더'];
@@ -223,7 +229,7 @@ const RaidWrite = () => {
                 id='title'
                 type={'text'}
                 ref={nameRef}
-                maxLength={9}
+                maxLength={8}
                 placeholder='몬스터 이름'
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
@@ -240,7 +246,7 @@ const RaidWrite = () => {
                 type={'text'}
                 ref={typeRef}
                 placeholder='타입'
-                maxLength={4}
+                maxLength={3}
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
                     typeRef.current!.value.length > 0 ? console.log('엔터') : console.log('땡');
@@ -260,7 +266,7 @@ const RaidWrite = () => {
                   <BtnRadio
                     id={i}
                     name='position'
-                    onChange={(e) => {
+                    onChange={() => {
                       setPositionState(i);
                     }}
                     type={'radio'}
@@ -307,7 +313,8 @@ const RaidWrite = () => {
                     id={i.toString()}
                     name='option'
                     type={'checkBox'}
-                    value={i}
+                    defaultValue={i}
+                    // value={i}
                   ></BtnRadio>
                   <BtnLabel htmlFor={i.toString()}> {i}</BtnLabel>
                 </React.Fragment>
@@ -325,8 +332,9 @@ const RaidWrite = () => {
             placeholder='하고싶은 말'
           ></TitleInput>
         </InputWrap>
-
-        <SolidButton OnClick={submit}>등록</SolidButton>
+        <BtnWrap>
+          <SolidButton OnClick={submit}>등록</SolidButton>
+        </BtnWrap>
       </>
     </ThemeProvider>
   );
