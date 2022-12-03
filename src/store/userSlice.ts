@@ -69,7 +69,7 @@ const user = createSlice({
         state.id = actions.payload.id;
         state.nickname = actions.payload.nickname;
         //로그아웃 시 아이디를 담아 전송
-        socket.emit('users.count', { id: '첫접속' }, (res: any) => {
+        socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
           console.log('로그인 에밋 후');
         });
       })
