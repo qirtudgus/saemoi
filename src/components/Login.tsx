@@ -1,12 +1,8 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import { RootState } from '../store/store';
 import { UserService } from '../store/userSlice';
-import customAxios from '../util/customAxios';
-import { resolveSoa } from 'dns';
 import TitleText from './TitleText';
 
 const RegisterWrap = styled.div`
@@ -95,7 +91,6 @@ const Login = () => {
     let pw = passwordRef.current.value;
     console.log(id);
     dispatch(UserService.getUser({ id, pw })).then((res) => {
-      console.log(res);
       console.log(res.payload);
       console.log(res.payload.errorcode);
       if (res.payload.errorcode === 100) {
