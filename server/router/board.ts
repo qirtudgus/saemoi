@@ -95,9 +95,9 @@ boardRouter.get('/posts', (req, res) => {
     } else {
       //댓글 불러오기
       let commentQuery =
-        'SELECT (`index`), id, nickname, content, date, orders, depth, comment_index, isDeleted FROM commentTable WHERE board_index = ?';
+        'SELECT (`index`), id, nickname, content, date, orders, depth, comment_index, isDeleted FROM commenttable WHERE board_index = ?';
       db.query(commentQuery, [boardNumber], (err, rows) => {
-        //이제 nestedCommentTable에서 comment의 index와 동일한 row만 뽑아온다.
+        //이제 nestedcommenttable에서 comment의 index와 동일한 row만 뽑아온다.
         // 댓글 정렬 뒤 할당
         let 댓글정렬 = rows.sort((c: any, d: any) => {
           return c.comment_index < d.comment_index ? -1 : 1;
