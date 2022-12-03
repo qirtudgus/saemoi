@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './page/Home';
 import Layout from './layout/Layout';
@@ -14,10 +14,32 @@ import View from './page/View';
 import PostEdit from './page/PostEdit';
 import ErrorPage from './page/ErrorPage';
 import BoardSearchResult from './page/BoardSearchResult';
+import RaidWrite from './page/RaidWrite';
+import { useAppSelector, useAppDispatch } from './store/store';
+import { io } from 'socket.io-client';
+import { connectedUser } from './store/userListSlice';
+import RaidBoard from './page/RaidBoard';
+const port = process.env.REACT_APP_IO_SERVER_API as string;
+const socket = io(port);
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    //소켓 이벤트마다 현재 접속자를 가져와준다..
+    socket.on('users.count', function (payload) {
+      console.log(payload);
+      dispatch(connectedUser(payload));
+    });
+  }, []);
+
   return (
     <>
+      {/* 
+      <p>현재 접속자 : {list.length}</p>
+      {list.map((i: any) => {
+        return <li key={i.id}>{i.id}</li>;
+      })} */}
       <GlobalStyles />
       <Routes>
         <Route element={<Layout />}>
@@ -65,6 +87,14 @@ function App() {
             path='/board/list/search/:keyword'
             element={<BoardSearchResult />}
           />
+          <Route
+            path='/raidboard/write'
+            element={<RaidWrite />}
+          ></Route>
+          <Route
+            path='/raidboard/list'
+            element={<RaidBoard />}
+          ></Route>
           <Route
             path='*'
             element={<ErrorPage />}
