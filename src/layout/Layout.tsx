@@ -68,10 +68,10 @@ const FooterWrap = styled.footer`
   /* background: #e4e4fc; */
   border-top: 1px solid #e5e7eb;
 
-  @media ${({ theme }) => theme.device.mobile} {
+  /* @media ${({ theme }) => theme.device.mobile} {
     height: 150px;
     margin-top: 25px;
-  }
+  } */
 `;
 
 const FooterContent = styled.div`
