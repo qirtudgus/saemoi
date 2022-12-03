@@ -64,8 +64,22 @@ const FooterWrap = styled.footer`
   width: 100%;
   height: 200px;
   margin-top: 50px;
-  background: #e4e4fc;
+  background: #575757;
+  /* background: #e4e4fc; */
   border-top: 1px solid #e5e7eb;
+
+  @media ${({ theme }) => theme.device.mobile} {
+    height: 150px;
+    margin-top: 25px;
+  }
+`;
+
+const FooterContent = styled.div`
+  margin: 0 auto;
+  padding: 20px 0;
+  width: 95%;
+  max-width: 1280px;
+  word-break: keep-all;
 `;
 
 const MainWrap = styled.main`
@@ -119,8 +133,10 @@ const MenuBtn = styled.div`
   width: 50px;
   height: 100%;
   display: none;
+
   & img {
     width: 45px;
+    filter: invert(65%) sepia(14%) saturate(1866%) hue-rotate(74deg) brightness(91%) contrast(90%);
   }
   @media ${({ theme }) => theme.device.tablet} {
     width: 40px;
@@ -318,7 +334,9 @@ const Layout = () => {
         <MainWrap>
           <Outlet />
         </MainWrap>
-        <FooterWrap></FooterWrap>
+        <FooterWrap>
+          <FooterContent>포켓몬스터 스칼렛/바이올렛 테라레이드 배틀 모집을 위한 사이트입니다.</FooterContent>
+        </FooterWrap>
       </ThemeProvider>
     </div>
   );
