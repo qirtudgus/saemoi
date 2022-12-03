@@ -59,6 +59,9 @@ const user = createSlice({
       cookies.remove('RT');
       cookies.remove('id');
       cookies.remove('nickname');
+      socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
+        console.log('로그인 에밋 후');
+      });
     },
   },
   extraReducers: (builder) => {
@@ -72,6 +75,9 @@ const user = createSlice({
         socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
           console.log('로그인 에밋 후');
         });
+      })
+      .addCase(UserService.logoutUser.rejected, (state, actions) => {
+        console.log('로그아웃 실패');
       })
       .addCase(UserService.getUser.pending, (state, actions) => {
         console.log('getUser가 펜딩중');
