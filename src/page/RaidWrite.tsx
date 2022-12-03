@@ -36,7 +36,7 @@ const BtnLabel = styled.label`
 
   flex-shrink: 0;
   text-align: center;
-  border: 2px solid#ddd;
+  border: 2px solid#929292;
   border-radius: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
