@@ -36,7 +36,7 @@ export function elapsedTime(date: any) {
 
     // 큰 단위는 0보다 작은 소수 단위 나옴
     if (betweenTime > 0) {
-      return `약 ${betweenTime}${value.time} 전`;
+      return `${betweenTime}${value.time} 전`;
     }
   }
 
