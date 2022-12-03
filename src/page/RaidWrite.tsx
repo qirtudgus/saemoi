@@ -323,12 +323,12 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel htmlFor='etcText'>기타 전달하고싶은 말 - 선택</ContentLabel>
+          <ContentLabel htmlFor='etcText'>하고싶은 말 - 선택</ContentLabel>
           <TitleInput
             id='etcText'
             type={'text'}
             ref={etcTextRef}
-            placeholder='전달하고싶은 말'
+            placeholder='하고싶은 말'
           ></TitleInput>
         </InputWrap>
 
