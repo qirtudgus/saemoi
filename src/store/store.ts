@@ -3,11 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import user from './userSlice';
 import board from './boardSlice';
+import userList from './userListSlice';
 
 //굳이 루트리듀서로 작성하지않아도 자동으로 생성된다고 한다.
 const rooteReducer = combineReducers({
   user,
   board,
+  userList,
 });
 
 export const store = configureStore({
