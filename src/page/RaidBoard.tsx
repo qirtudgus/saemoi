@@ -13,8 +13,7 @@ const ListCard = styled.div`
   margin-bottom: 15px;
   border-radius: 5px;
   box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 14%);
-  padding: 15px 10px;
-  font-size: 1em;
+  padding: 10px 10px;
   & p {
     word-break: keep-all;
     line-height: 1.3em;
@@ -27,7 +26,6 @@ const ListFooter = styled.div`
 `;
 
 const ListTop = styled.p`
-  font-size: 1.2em;
   margin-bottom: 5px;
 `;
 

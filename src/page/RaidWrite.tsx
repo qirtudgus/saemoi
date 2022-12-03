@@ -1,8 +1,6 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, FreeMode, Scrollbar } from 'swiper';
 import 'swiper/css/bundle';
 import TitleText from '../components/TitleText';
 import { SolidButton } from '../components/BtnGroup';
@@ -308,10 +306,6 @@ const RaidWrite = () => {
                   <BtnRadio
                     id={i.toString()}
                     name='option'
-                    onChange={(e) => {
-                      console.log('하하');
-                      console.log(e.target.value);
-                    }}
                     type={'checkBox'}
                     value={i}
                   ></BtnRadio>
