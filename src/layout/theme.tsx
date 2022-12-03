@@ -13,7 +13,8 @@ const fontSizes = {
 
 // 자주 사용하는 색을 객체로 만들자.
 const colors = {
-  main: '#3e55ff',
+  main: '#48b651',
+  // main: '#3e55ff',
   black: '#000000',
   grey: '#999999',
   green: '#3cb46e',
