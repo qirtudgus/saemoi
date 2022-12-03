@@ -22,6 +22,7 @@ export function elapsedTime(date: any) {
   const diff = +end - +start; // 경과 시간
 
   const times = [
+    { time: '초', milliSeconds: 1000 },
     { time: '분', milliSeconds: 1000 * 60 },
     { time: '시간', milliSeconds: 1000 * 60 * 60 },
     { time: '일', milliSeconds: 1000 * 60 * 60 * 24 },
