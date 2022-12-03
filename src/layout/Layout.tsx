@@ -12,9 +12,9 @@ import { BasicButton, SolidButton } from '../components/BtnGroup';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
-  { name: '의류', link: '/clother' },
-  { name: '화장품', link: '/cosmetic' },
-  { name: '식품', link: '/food' },
+  // { name: '의류', link: '/clother' },
+  // { name: '화장품', link: '/cosmetic' },
+  // { name: '식품', link: '/food' },
   { name: '게시판', link: '/board/list' },
   { name: '레이드 게시판', link: '/raidboard/list' },
   { name: '레이드 작성', link: '/raidboard/write' },
@@ -26,7 +26,7 @@ const HeaderWrap = styled.header`
   left: 0px;
   width: 100%;
   height: 60px;
-  background: #fff;
+  background: #35363a;
   z-index: 100;
   border-bottom: 1px solid #e5e7eb;
   box-sizing: border-box;
@@ -89,7 +89,7 @@ const HeaderLi = styled.li`
   width: auto;
   margin: 0px 20px;
   & > a:visited {
-    color: #000;
+    color: #fff;
   }
   & > a.active {
     color: ${({ theme }) => theme.colors.main};
@@ -142,7 +142,7 @@ const SlideWrap = styled.div<SlideInterface>`
   z-index: 10000;
   width: 100%;
   ${({ theme }) => theme.common.flexCenterColumn};
-  background-color: #fff;
+  background-color: #575757;
   position: fixed;
   top: 60px;
   &.active {
@@ -175,7 +175,7 @@ const SlideLi = styled.li`
   width: 100%;
   cursor: pointer;
   & > a:visited {
-    color: #000;
+    color: #fff;
   }
   & > a {
     width: 100%;
