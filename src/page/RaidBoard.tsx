@@ -64,10 +64,12 @@ const RaidBoard = () => {
   }, []);
 
   const Refresh = () => {
+    setIsLoading(false);
     customAxios('get', '/raidboard/list', {}).then((res) => {
       console.log(res.data);
       setList(res.data);
-      setIsLoading(true);
+
+      setTimeout(() => setIsLoading(true), 500);
     });
   };
 
@@ -75,24 +77,25 @@ const RaidBoard = () => {
     <ThemeProvider theme={theme}>
       <>
         <TitleText text='레이드 리스트'></TitleText>
-        {isLoading &&
-          list.map((i: any, index: number) => (
-            <ListCard>
-              <ListTop>
-                <span>{i.raidDifficulty}성</span>
-                <span>{i.monsterName}</span>
-                <span>{i.type}</span>
-                <span>{i.raidCode}</span>
-              </ListTop>
-              <p>{i.raidOption}</p>
-              {/* <p>{i.raidPosition}</p> */}
-              <p>{i.raidText}</p>
-              <ListFooter>
-                <span>{i.nickname}</span>
-                <ListFooterTime> {elapsedTime(i.date)}</ListFooterTime>
-              </ListFooter>
-            </ListCard>
-          ))}
+        {isLoading
+          ? list.map((i: any, index: number) => (
+              <ListCard>
+                <ListTop>
+                  <span>{i.raidDifficulty}성</span>
+                  <span>{i.monsterName}</span>
+                  <span>{i.type}</span>
+                  <span>{i.raidCode}</span>
+                </ListTop>
+                <p>{i.raidOption}</p>
+                {/* <p>{i.raidPosition}</p> */}
+                <p>{i.raidText}</p>
+                <ListFooter>
+                  <span>{i.nickname}</span>
+                  <ListFooterTime> {elapsedTime(i.date)}</ListFooterTime>
+                </ListFooter>
+              </ListCard>
+            ))
+          : '로딩중'}
         <RefreshBtn onClick={Refresh}>
           <img
             src={새로고침이미지}
