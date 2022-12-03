@@ -48,6 +48,19 @@ io.on('connection', (socket) => {
 
     if (id === '첫접속') {
       io.emit('users.count', userList);
+    } else if (id === '로그아웃') {
+      //로그아웃시에도 해당 소켓을 삭제
+      let idx = userList.findIndex((i: any) => {
+        return i.socketId === socketId;
+      });
+      if (idx === -1) {
+        io.emit('users.count', userList);
+      } else {
+        userList.splice(idx, 1);
+        io.emit('users.count', userList);
+        console.log('연결끊겼을때 유저리스트');
+        console.log(userList);
+      }
     } else {
       userList.push({ id, socketId: socketId });
       console.log('에밋전에 가공한 유저리스트 데이터');
@@ -61,7 +74,6 @@ io.on('connection', (socket) => {
     let idx = userList.findIndex((i: any) => {
       return i.socketId === socketId;
     });
-
     console.log('파인드인덱스로 찾은 번호');
     console.log(idx);
     if (idx === -1) {
