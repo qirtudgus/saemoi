@@ -9,27 +9,28 @@ import theme from '../layout/theme';
 const ListCard = styled.div`
   width: 100%;
   height: auto;
-  background-color: #ffffff;
+  background-color: #575757;
   margin-bottom: 15px;
   border-radius: 5px;
-  box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 14%);
+  box-shadow: 0px 2px 5px 0px rgb(0 0 0 / 44%);
   padding: 10px 10px;
   & p {
     word-break: keep-all;
-    line-height: 1.3em;
+    line-height: 1.4em;
   }
 `;
 
-const ListFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const ListTop = styled.p`
+  align-items: center;
+  display: flex;
   margin-bottom: 5px;
+  font-size: 1.1em;
 `;
 
 const ListFooterTime = styled.span`
+  display: block;
+  width: 100%;
+  text-align: right;
   margin-right: 0px !important;
 `;
 
@@ -47,11 +48,11 @@ const RefreshBtn = styled.button`
   }
 `;
 
-const VerticalLine = styled.div`
+const VerticalLine = styled.span`
   display: inline-block;
   border-left: 1px solid #dadde6;
   margin: 0 10px;
-  height: 15px;
+  height: 10px;
 `;
 
 const RaidBoard = () => {
@@ -69,12 +70,16 @@ const RaidBoard = () => {
   const Refresh = () => {
     window.scrollTo({ top: 0 });
     setIsLoading(false);
-    customAxios('get', '/raidboard/list', {}).then((res) => {
-      console.log(res.data);
-      setList(res.data);
+    customAxios('get', '/raidboard/list', {})
+      .then((res) => {
+        console.log(res.data);
+        setList(res.data);
 
-      setTimeout(() => setIsLoading(true), 500);
-    });
+        // setTimeout(() => setIsLoading(true), 330);
+      })
+      .then((res) => {
+        setIsLoading(true);
+      });
   };
 
   return (
@@ -83,7 +88,7 @@ const RaidBoard = () => {
         <TitleText text='레이드 리스트'></TitleText>
         {isLoading
           ? list.map((i: any, index: number) => (
-              <ListCard>
+              <ListCard key={index}>
                 <ListTop>
                   <span>{i.raidDifficulty}</span>
                   <VerticalLine />
@@ -92,14 +97,11 @@ const RaidBoard = () => {
                   <span>{i.type}</span>
                   <VerticalLine />
                   <span>{i.raidCode}</span>
-                </ListTop>
-                <p>{i.raidOption}</p>
-                {/* <p>{i.raidPosition}</p> */}
-                <p>{i.raidText}</p>
-                <ListFooter>
-                  <span>{i.nickname}</span>
+
                   <ListFooterTime> {elapsedTime(i.date)}</ListFooterTime>
-                </ListFooter>
+                </ListTop>
+                <p>{i.raidText}</p>
+                <p>{i.raidOption}</p>
               </ListCard>
             ))
           : '로딩중'}
