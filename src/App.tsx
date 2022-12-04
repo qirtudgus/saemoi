@@ -22,6 +22,7 @@ import RaidBoard from './page/RaidBoard';
 import styled, { css, ThemeProvider } from 'styled-components';
 import theme from './layout/theme';
 import { userCountDispatch } from './store/userCountSlice';
+import 초록불 from './img/onboard.svg';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
 
@@ -40,11 +41,8 @@ const CountBox = styled.div`
   align-items: center;
   flex-shrink: 0;
 
-  & > span {
-    font-size: 15px;
-    position: relative;
-    top: -2px;
-    color: #41cc41;
+  & img {
+    width: 9px;
     margin-right: 3px;
   }
 `;
@@ -67,12 +65,8 @@ const CountBoxMobile = styled.div`
     display: flex;
     /* height: 25px; */
   }
-
-  & > span {
-    font-size: 15px;
-    position: relative;
-    top: -2px;
-    color: #41cc41;
+  & img {
+    width: 9px;
     margin-right: 3px;
   }
 `;
@@ -83,7 +77,10 @@ export const UserCount = () => {
   return (
     <ThemeProvider theme={theme}>
       <CountBox>
-        <span>● </span>
+        <img
+          src={초록불}
+          alt='접속중'
+        />
         {userCount2}명 접속중
       </CountBox>
     </ThemeProvider>
@@ -95,7 +92,10 @@ export const UserCountMobile = () => {
   return (
     <ThemeProvider theme={theme}>
       <CountBoxMobile>
-        <span>●</span>
+        <img
+          src={초록불}
+          alt='접속중'
+        />
         {userCount2}명 접속중
       </CountBoxMobile>
     </ThemeProvider>
