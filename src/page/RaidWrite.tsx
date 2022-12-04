@@ -187,7 +187,7 @@ const property = [
   '페어리',
 ];
 const RaidWrite = () => {
-  const titleRef = useRef() as RefObject<HTMLInputElement>;
+  const codeRef = useRef() as RefObject<HTMLInputElement>;
   const nameRef = useRef() as RefObject<HTMLInputElement>;
   const typeRef = useRef() as RefObject<HTMLInputElement>;
   const etcTextRef = useRef() as RefObject<HTMLInputElement>;
@@ -223,13 +223,13 @@ const RaidWrite = () => {
   };
 
   useEffect(() => {
-    if (titleRef === null) {
+    if (codeRef === null) {
       return;
     } else {
-      if (titleRef.current === null) {
+      if (codeRef.current === null) {
         return;
       } else {
-        titleRef.current.focus();
+        codeRef.current.focus();
       }
     }
   }, []);
@@ -237,21 +237,25 @@ const RaidWrite = () => {
   const submit = () => {
     let optionList: any[] = [];
     let a = document.getElementsByName('option') as NodeListOf<HTMLInputElement>;
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     a.forEach((i) => {
       if (i.checked === true) {
         optionList.push(i.value);
       }
     });
 
-    if (titleRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
-      if (titleRef.current.value.length !== 6) {
+    if (codeRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
+      if (codeRef.current.value.length !== 6) {
         alert('코드는 6자입니다.');
-        titleRef.current.focus();
+        codeRef.current.focus();
+      }
+      if (korean.test(codeRef.current.value)) {
+        alert('코드는 영문과 숫자입니다.');
       } else {
         let date = returnTodayString();
         customAxios('post', '/raidboard/list', {
           nickname,
-          raidCode: titleRef.current.value,
+          raidCode: codeRef.current.value,
           monsterName: nameRef.current.value,
           type: typeRef.current.value,
           positionState,
@@ -290,7 +294,7 @@ const RaidWrite = () => {
               <TitleInput
                 id='title'
                 type={'text'}
-                ref={titleRef}
+                ref={codeRef}
                 maxLength={6}
                 placeholder='레이드 코드'
                 value={code}
@@ -300,7 +304,7 @@ const RaidWrite = () => {
                 }}
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
-                    titleRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
+                    codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
                   }
                 }}
               ></TitleInput>
