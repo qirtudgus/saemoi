@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 
@@ -23,4 +24,4 @@ const TitleText = ({ text }: { text: string }) => {
     </ThemeProvider>
   );
 };
-export default TitleText;
+export default React.memo(TitleText);
