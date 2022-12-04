@@ -33,7 +33,7 @@ const RefreshBtn = styled.button<RefreshInterface>`
   bottom: 20px;
   right: 20px;
   border-radius: 100%;
-  box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 30%);
+  box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
 
   & img {
     width: 70%;
@@ -53,7 +53,7 @@ const WriteBtn = styled.button`
   bottom: 90px;
   right: 20px;
   border-radius: 100%;
-  box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 30%);
+  box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
   & img {
     width: 70%;
   }
