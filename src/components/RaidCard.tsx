@@ -58,4 +58,4 @@ const RaidCard = (props: any) => {
   );
 };
 
-export default React.memo(RaidCard);
+export default RaidCard;
