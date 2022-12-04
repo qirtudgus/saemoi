@@ -7,6 +7,7 @@ import { SolidButton } from '../components/BtnGroup';
 import customAxios from '../util/customAxios';
 import { returnTodayString } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
+import { useNavigate } from 'react-router-dom';
 
 const BtnList = styled.div`
   display: flex;
@@ -119,7 +120,7 @@ const RaidWrite = () => {
   const nameRef = useRef() as RefObject<HTMLInputElement>;
   const typeRef = useRef() as RefObject<HTMLInputElement>;
   const etcTextRef = useRef() as RefObject<HTMLInputElement>;
-
+  const navigate = useNavigate();
   const nickname = useAppSelector((state) => state.user.nickname);
   const [code, setCode] = useState('');
   const [positionState, setPositionState] = useState('어태커');
@@ -189,6 +190,7 @@ const RaidWrite = () => {
           date,
         }).then((res) => {
           console.log('완료');
+          navigate('/');
         });
       }
     }
