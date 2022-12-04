@@ -3,17 +3,19 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 
 const Title = styled.h1`
-  font-size: 2.5em;
-  padding: 30px 0;
+  font-size: 2em;
+  padding: 15px 0;
+  display: block;
+  margin: 0 auto;
   font-weight: bold;
   word-break: keep-all;
 
   @media ${({ theme }) => theme.device.tablet} {
-    font-size: 2.3em;
+    font-size: 1.8em;
   }
 
   @media ${({ theme }) => theme.device.mobile} {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
 `;
 
