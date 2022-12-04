@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './page/Home';
 import Layout from './layout/Layout';
@@ -17,12 +17,12 @@ import BoardSearchResult from './page/BoardSearchResult';
 import RaidWrite from './page/RaidWrite';
 import { useAppSelector, useAppDispatch } from './store/store';
 import { io } from 'socket.io-client';
-import { connectedUser } from './store/userListSlice';
 import RaidBoard from './page/RaidBoard';
 import styled, { css, ThemeProvider } from 'styled-components';
 import theme from './layout/theme';
 import { userCountDispatch } from './store/userCountSlice';
 import 초록불 from './img/onboard.svg';
+import LayoutWrite from './layout/LayoutWrite';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
 
@@ -104,7 +104,6 @@ export const UserCountMobile = () => {
 
 function App() {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     console.log('app 렌더링');
     //소켓 이벤트마다 현재 접속자를 가져와준다..
@@ -122,6 +121,12 @@ function App() {
     <>
       <GlobalStyles />
       <Routes>
+        <Route element={<LayoutWrite />}>
+          <Route
+            path='/raidboard/write'
+            element={<RaidWrite />}
+          ></Route>
+        </Route>
         <Route element={<Layout />}>
           <Route
             path='/'
@@ -167,10 +172,7 @@ function App() {
             path='/board/list/search/:keyword'
             element={<BoardSearchResult />}
           />
-          <Route
-            path='/raidboard/write'
-            element={<RaidWrite />}
-          ></Route>
+
           <Route
             path='/raidboard/list'
             element={<RaidBoard />}
