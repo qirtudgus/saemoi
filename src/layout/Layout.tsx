@@ -350,7 +350,11 @@ const Layout = () => {
           <Outlet />
         </MainWrap>
         <FooterWrap>
-          <FooterContent>포켓몬스터 스칼렛/바이올렛 테라레이드 배틀 모집을 위한 사이트입니다.</FooterContent>
+          <FooterContent>
+            포켓몬스터 스칼렛/바이올렛 테라레이드 배틀 모집을 위한 사이트입니다.
+            <br />
+            poraid.official@google.com
+          </FooterContent>
         </FooterWrap>
       </ThemeProvider>
     </div>
