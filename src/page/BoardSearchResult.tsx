@@ -10,6 +10,7 @@ import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import { elapsedTime } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
 import 돋보기 from '../img/돋보기.svg';
+import { Title } from './Board';
 
 const BoardWrap = styled.div`
   width: 100%;
@@ -220,7 +221,7 @@ const BoardSearchResult = () => {
   return (
     <BoardWrap>
       <WriteButton>
-        <TitleText text='게시판'></TitleText>
+        <Title>게시판</Title>
         <WriteSearchWrap>
           <SearchInputWrap>
             <img
