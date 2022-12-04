@@ -19,8 +19,37 @@ import { useAppSelector, useAppDispatch } from './store/store';
 import { io } from 'socket.io-client';
 import { connectedUser } from './store/userListSlice';
 import RaidBoard from './page/RaidBoard';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from './layout/theme';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
+
+const CountBox = styled.div`
+  width: auto;
+  height: 40px;
+  background-color: ${({ theme }) => theme.colors.main};
+  color: #fff;
+  margin-right: 5px;
+  border-radius: 10px;
+  padding: 0 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  @media ${({ theme }) => theme.device.mobile} {
+    height: 30px;
+  }
+`;
+
+export const UserCount = () => {
+  const userCount = useAppSelector((state) => state.userList.length);
+  return (
+    <ThemeProvider theme={theme}>
+      <CountBox>{userCount}명 접속중</CountBox>
+    </ThemeProvider>
+  );
+};
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,17 +57,13 @@ function App() {
   useEffect(() => {
     //소켓 이벤트마다 현재 접속자를 가져와준다..
     socket.on('users.count', function (payload) {
+      console.log(payload);
       dispatch(connectedUser(payload));
     });
   }, []);
 
   return (
     <>
-      {/* 
-      <p>현재 접속자 : {list.length}</p>
-      {list.map((i: any) => {
-        return <li key={i.id}>{i.id}</li>;
-      })} */}
       <GlobalStyles />
       <Routes>
         <Route element={<Layout />}>
