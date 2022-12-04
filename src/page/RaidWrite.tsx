@@ -6,7 +6,6 @@ import customAxios from '../util/customAxios';
 import { returnTodayString } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
 import { useNavigate } from 'react-router-dom';
-
 import 등록하기 from '../img/post_add_white_24dp.svg';
 
 const BtnList = styled.div`
@@ -298,15 +297,22 @@ const RaidWrite = () => {
                 maxLength={6}
                 placeholder='레이드 코드'
                 value={code}
+                onKeyUp={(e) => {
+                  console.log(e.currentTarget!.value);
+                }}
                 onChange={(e) => {
                   //자동으로 대문자로 변경
+                  // let trans = translate(e.target.value) as string;
+                  if (e.target.value.length >= 6) {
+                    nameRefFocus();
+                  }
                   setCode(e.target.value.toUpperCase());
                 }}
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
-                  }
-                }}
+                // onKeyDown={(e) => {
+                //   if (e.keyCode === 13) {
+                //     codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
+                //   }
+                // }}
               ></TitleInput>
             </div>
             <div>
