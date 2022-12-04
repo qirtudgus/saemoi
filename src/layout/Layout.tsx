@@ -133,6 +133,7 @@ const LoginBtnWrap = styled.div`
 `;
 
 const MenuBtn = styled.div`
+  cursor: pointer;
   width: 50px;
   height: 100%;
   display: none;
