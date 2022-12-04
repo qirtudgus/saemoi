@@ -31,6 +31,7 @@ const ListFooterTime = styled.span`
   width: 100%;
   text-align: right;
   margin-right: 0px !important;
+  font-size: 0.85em;
 `;
 
 const VerticalLine = styled.span`
