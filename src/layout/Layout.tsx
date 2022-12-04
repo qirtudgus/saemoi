@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout, UserService } from '../store/userSlice';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
-import { UserCount } from '../App';
+import { UserCount, UserCountMobile } from '../App';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
@@ -241,7 +241,7 @@ const Layout = () => {
               ))}
             </HeaderUl>
             <UserCountandMenu>
-              <UserCount />
+              <UserCountMobile />
               <MenuBtn
                 onClick={() => {
                   if (menu != null) {
@@ -259,6 +259,7 @@ const Layout = () => {
             </UserCountandMenu>
             {isLogin ? (
               <LoginBtnWrap>
+                <UserCount />
                 <BasicButton
                   OnClick={() => {
                     console.log('로그아웃 시도');
@@ -271,6 +272,7 @@ const Layout = () => {
               </LoginBtnWrap>
             ) : (
               <LoginBtnWrap>
+                <UserCount />
                 <SolidButton
                   ClassName={'ml_10 mr_10'}
                   OnClick={() => {
