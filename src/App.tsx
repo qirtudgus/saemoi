@@ -28,25 +28,35 @@ const socket = io(port);
 const CountBox = styled.div`
   width: auto;
   height: 40px;
-  background-color: ${({ theme }) => theme.colors.main};
+  /* background-color: ${({ theme }) => theme.colors.main}; */
+  border: 2px solid ${({ theme }) => theme.colors.main};
   color: #fff;
   margin-right: 10px;
   border-radius: 10px;
-  padding: 0 15px;
+  padding: 0 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+
+  & > span {
+    font-size: 1.2em;
+    position: relative;
+    top: -2px;
+    color: #41cc41;
+    margin-right: 3px;
+  }
 `;
 const CountBoxMobile = styled.div`
   width: auto;
-  height: 40px;
-  background-color: ${({ theme }) => theme.colors.main};
+  height: 25px;
+  /* background-color: ${({ theme }) => theme.colors.main}; */
+  border: 2px solid ${({ theme }) => theme.colors.main};
   color: #fff;
   margin-right: 5px;
-  border-radius: 10px;
-  padding: 0 15px;
+  border-radius: 8px;
+  padding: 0 10px;
 
   display: none;
   justify-content: center;
@@ -55,11 +65,15 @@ const CountBoxMobile = styled.div`
 
   @media ${({ theme }) => theme.device.tablet} {
     display: flex;
-    height: 21px;
+    /* height: 25px; */
   }
-  @media ${({ theme }) => theme.device.mobile} {
-    display: flex;
-    height: 21px;
+
+  & > span {
+    font-size: 1.2em;
+    position: relative;
+    top: -2px;
+    color: #41cc41;
+    margin-right: 3px;
   }
 `;
 
@@ -68,7 +82,10 @@ export const UserCount = () => {
   const userCount2 = useAppSelector((state) => state.userCount);
   return (
     <ThemeProvider theme={theme}>
-      <CountBox>{userCount2}명 접속중</CountBox>
+      <CountBox>
+        <span>● </span>
+        {userCount2}명 접속중
+      </CountBox>
     </ThemeProvider>
   );
 };
@@ -77,7 +94,10 @@ export const UserCountMobile = () => {
   const userCount2 = useAppSelector((state) => state.userCount);
   return (
     <ThemeProvider theme={theme}>
-      <CountBoxMobile>{userCount2}명 접속중</CountBoxMobile>
+      <CountBoxMobile>
+        <span>●</span>
+        {userCount2}명 접속중
+      </CountBoxMobile>
     </ThemeProvider>
   );
 };
