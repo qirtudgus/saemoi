@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
-import 로고 from '../img/saemoiSVG2.svg';
+// import 로고 from '../img/saemoiSVG2.svg';
+import 로고 from '../img/logo_s.svg';
+// import 로고 from '../img/logo_w.svg';
 import 햄버거메뉴 from '../img/menu_black.svg';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -16,9 +18,9 @@ const menuList2 = [
   // { name: '의류', link: '/clother' },
   // { name: '화장품', link: '/cosmetic' },
   // { name: '식품', link: '/food' },
-  { name: '게시판', link: '/board/list' },
   { name: '레이드 게시판', link: '/raidboard/list' },
   { name: '레이드 작성', link: '/raidboard/write' },
+  { name: '자유 게시판', link: '/board/list' },
 ];
 
 const HeaderWrap = styled.header`
