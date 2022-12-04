@@ -5,6 +5,7 @@ import TitleText from '../components/TitleText';
 import 새로고침이미지 from '../img/refresh_white_24dp.svg';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
 import 등록하기 from '../img/post_add_white_24dp.svg';
+import 뮤 from '../img/뮤.png';
 import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import React from 'react';
@@ -24,6 +25,8 @@ const RefreshAni = keyframes`
 
 interface RefreshInterface {
   isRefresh?: boolean;
+  isLoading?: boolean;
+  isRefreshFunc?: boolean;
 }
 
 const BtnWrap = styled.div`
@@ -54,6 +57,16 @@ const RefreshBtn = styled.button<RefreshInterface>`
   background-color: ${({ theme }) => theme.colors.main};
   /* bottom: 20px;
   right: 20px; */
+  ${(props) =>
+    !props.isRefreshFunc
+      ? css`
+          background-color: ${({ theme }) => theme.colors.main};
+        `
+      : css`
+          cursor: default;
+          background-color: #9e9e9e;
+        `}
+
   border-radius: 100%;
   box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
 
@@ -115,6 +128,15 @@ const ButtonWrapPc = styled.button<RefreshInterface>`
   padding: 5px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.main};
+  ${(props) =>
+    !props.isRefreshFunc
+      ? css`
+          background-color: ${({ theme }) => theme.colors.main};
+        `
+      : css`
+          cursor: default;
+          background-color: #9e9e9e;
+        `}
   color: #fff;
   display: flex;
   justify-content: center;
@@ -138,9 +160,31 @@ const ButtonWrapPc = styled.button<RefreshInterface>`
   }
 `;
 
+const LoadingAni = keyframes`
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+
+`;
+
+const LoadingText = styled.div`
+  width: 100%;
+  height: calc(50vh);
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & img {
+    margin-right: 20px;
+    width: 50px;
+    animation: ${LoadingAni} 1s ease-out infinite;
+  }
+`;
+
 const RaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
+  const [isRefreshFunc, setIsRefreshFunc] = useState(true);
   const [list, setList] = useState<any>(null);
   // const lists = useAppSelector((state) => state.userList);
 
@@ -150,12 +194,22 @@ const RaidBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsLoading(false);
+    setIsRefreshFunc(true);
     window.scrollTo({ top: 0 });
-    customAxios('get', '/raidboard/list', {}).then((res) => {
-      console.log(res.data);
-      setList(res.data);
-      setIsLoading(true);
-    });
+    // customAxios('get', '/raidboard/list', {}).then((res) => {
+    //   console.log(res.data);
+    //   setList(res.data);
+    //   setIsLoading(true);
+    // });
+    setTimeout(() => {
+      customAxios('get', '/raidboard/list', {}).then((res) => {
+        console.log(res.data);
+        setList(res.data);
+        setIsLoading(true);
+        setIsRefreshFunc(false);
+      });
+    }, 500);
   }, [isLoad]);
 
   const Refresh = () => {
@@ -183,7 +237,11 @@ const RaidBoard = () => {
       <PcBtnWrap>
         <Title>레이드 리스트</Title>
         <PcInnerBtnWrap>
-          <ButtonWrapPc onClick={RefreshPc}>
+          <ButtonWrapPc
+            isLoading={isLoading}
+            isRefreshFunc={isRefreshFunc}
+            onClick={isRefreshFunc ? undefined : RefreshPc}
+          >
             <img
               ref={imgPcRef}
               src={새로고침이미지}
@@ -204,24 +262,33 @@ const RaidBoard = () => {
           </ButtonWrapPc>
         </PcInnerBtnWrap>
       </PcBtnWrap>
-      {isLoading
-        ? list.map((i: any, index: number) => (
-            <RaidCard
-              key={i.idx}
-              monsterName={i.monsterName}
-              raidDifficulty={i.raidDifficulty}
-              raidCode={i.raidCode}
-              type={i.type}
-              date={i.date}
-              raidText={i.raidText}
-              raidOption={i.raidOption}
-            />
-          ))
-        : '로딩중'}
+      {isLoading ? (
+        list.map((i: any, index: number) => (
+          <RaidCard
+            key={i.idx}
+            monsterName={i.monsterName}
+            raidDifficulty={i.raidDifficulty}
+            raidCode={i.raidCode}
+            type={i.type}
+            date={i.date}
+            raidText={i.raidText}
+            raidOption={i.raidOption}
+          />
+        ))
+      ) : (
+        <LoadingText>
+          <img
+            src={뮤}
+            alt='로딩중'
+          />
+          불러오는 중...
+        </LoadingText>
+      )}
       <BtnWrap>
         <RefreshBtn
-          isRefresh={isLoad}
-          onClick={Refresh}
+          isLoading={isLoading}
+          isRefreshFunc={isRefreshFunc}
+          onClick={isRefreshFunc ? undefined : Refresh}
         >
           <motion.img
             ref={imgRef}
