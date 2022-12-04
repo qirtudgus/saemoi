@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { logout, UserService } from '../store/userSlice';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
+import { UserCount } from '../App';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
@@ -53,8 +54,8 @@ const HeaderLogo = styled.div`
     width: auto;
   }
   @media ${({ theme }) => theme.device.tablet} {
+    width: 100px;
     & img {
-      width: auto;
       max-width: 100px;
     }
   }
@@ -136,7 +137,9 @@ const MenuBtn = styled.div`
 
   & img {
     width: 45px;
-    filter: invert(65%) sepia(14%) saturate(1866%) hue-rotate(74deg) brightness(91%) contrast(90%);
+    filter: invert(49%) sepia(20%) saturate(7074%) hue-rotate(340deg) brightness(96%) contrast(95%);
+
+    /* filter: invert(65%) sepia(14%) saturate(1866%) hue-rotate(74deg) brightness(91%) contrast(90%); */
   }
   @media ${({ theme }) => theme.device.tablet} {
     width: 40px;
@@ -199,12 +202,17 @@ const SlideLi = styled.li`
   }
 `;
 
+const UserCountandMenu = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const menu = useRef() as React.RefObject<HTMLDivElement>;
   const { isLogin } = useAppSelector((state) => state.user);
-
+  // const userCount = useAppSelector((state) => state.userList.length);
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -232,20 +240,23 @@ const Layout = () => {
                 </HeaderLi>
               ))}
             </HeaderUl>
-            <MenuBtn
-              onClick={() => {
-                if (menu != null) {
-                  menu.current!.classList.toggle('active');
-                } else {
-                  return;
-                }
-              }}
-            >
-              <img
-                src={햄버거메뉴}
-                alt='메뉴'
-              ></img>
-            </MenuBtn>
+            <UserCountandMenu>
+              <UserCount />
+              <MenuBtn
+                onClick={() => {
+                  if (menu != null) {
+                    menu.current!.classList.toggle('active');
+                  } else {
+                    return;
+                  }
+                }}
+              >
+                <img
+                  src={햄버거메뉴}
+                  alt='메뉴'
+                ></img>
+              </MenuBtn>
+            </UserCountandMenu>
             {isLogin ? (
               <LoginBtnWrap>
                 <BasicButton
