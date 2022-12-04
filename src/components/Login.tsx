@@ -35,7 +35,7 @@ const InputWarning = styled.span`
   color: red;
   @media ${({ theme }) => theme.device.tablet} {
     display: block;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 0px;
   }
   @media ${({ theme }) => theme.device.mobile} {
