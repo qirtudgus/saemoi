@@ -19,7 +19,7 @@ import { useAppSelector, useAppDispatch } from './store/store';
 import { io } from 'socket.io-client';
 import { connectedUser } from './store/userListSlice';
 import RaidBoard from './page/RaidBoard';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import theme from './layout/theme';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
@@ -29,7 +29,7 @@ const CountBox = styled.div`
   height: 40px;
   background-color: ${({ theme }) => theme.colors.main};
   color: #fff;
-  margin-right: 5px;
+  margin-right: 10px;
   border-radius: 10px;
   padding: 0 15px;
 
@@ -37,7 +37,26 @@ const CountBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+`;
+const CountBoxMobile = styled.div`
+  width: auto;
+  height: 40px;
+  background-color: ${({ theme }) => theme.colors.main};
+  color: #fff;
+  margin-right: 5px;
+  border-radius: 10px;
+  padding: 0 15px;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: flex;
+  }
   @media ${({ theme }) => theme.device.mobile} {
+    display:flex
     height: 30px;
   }
 `;
@@ -47,6 +66,14 @@ export const UserCount = () => {
   return (
     <ThemeProvider theme={theme}>
       <CountBox>{userCount}명 접속중</CountBox>
+    </ThemeProvider>
+  );
+};
+export const UserCountMobile = () => {
+  const userCount = useAppSelector((state) => state.userList.length);
+  return (
+    <ThemeProvider theme={theme}>
+      <CountBoxMobile>{userCount}명 접속중</CountBoxMobile>
     </ThemeProvider>
   );
 };
