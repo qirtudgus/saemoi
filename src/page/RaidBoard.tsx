@@ -1,5 +1,5 @@
-import styled, { ThemeProvider } from 'styled-components';
-import { useEffect, useState } from 'react';
+import styled, { ThemeProvider, keyframes, css } from 'styled-components';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import customAxios from '../util/customAxios';
 import TitleText from '../components/TitleText';
 import 새로고침이미지 from '../img/refresh_white_24dp.svg';
@@ -7,8 +7,30 @@ import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import React from 'react';
 import RaidCard from '../components/RaidCard';
+import { motion } from 'framer-motion';
 
-const RefreshBtn = styled.button`
+const RefreshAni = keyframes`
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(-360deg);
+  }
+`;
+const ARefreshAni222 = keyframes`
+  to {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(-360deg);
+  }
+`;
+
+interface RefreshInterface {
+  isRefresh: boolean;
+}
+
+const RefreshBtn = styled.button<RefreshInterface>`
   cursor: pointer;
   position: fixed;
   width: 50px;
@@ -19,14 +41,25 @@ const RefreshBtn = styled.button`
   border-radius: 100%;
   & img {
     width: 70%;
+    /* ${(props) =>
+      props.isRefresh
+        ? css`
+            animation: ${RefreshAni} 0.8s ease;
+          `
+        : css`
+            animation: ${ARefreshAni222} 0.8s ease;
+          `} */
   }
 `;
 
 const RaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
+  const [isAni, setIsAni] = useState(true);
   const [list, setList] = useState<any>(null);
-  const lists = useAppSelector((state) => state.userList);
+  // const lists = useAppSelector((state) => state.userList);
+
+  const imgRef = useRef() as RefObject<HTMLImageElement>;
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -53,10 +86,10 @@ const RaidBoard = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <p>현재 접속자 : {lists.length}</p>
+      {/* <p>현재 접속자 : {lists.length}</p>
       {lists.map((i: any) => {
         return <li key={i.id}>{i.id}</li>;
-      })}
+      })} */}
       <TitleText text='레이드 리스트'></TitleText>
       {isLoading
         ? list.map((i: any, index: number) => (
@@ -72,11 +105,16 @@ const RaidBoard = () => {
             />
           ))
         : '로딩중'}
-      <RefreshBtn onClick={Refresh}>
-        <img
+      <RefreshBtn
+        isRefresh={isLoad}
+        onClick={Refresh}
+      >
+        <motion.img
+          animate={{ rotate: isLoad ? 360 : 0 }}
+          transition={{ duration: 0.5 }}
           src={새로고침이미지}
           alt='새로고침'
-        />
+        ></motion.img>
       </RefreshBtn>
     </ThemeProvider>
   );
