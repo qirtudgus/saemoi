@@ -196,6 +196,22 @@ const PageBtn = styled.button<PageBtnInterface>`
     }
   }
 `;
+const Title = styled.h1`
+  font-size: 2em;
+  padding: 15px 0;
+  display: block;
+  font-weight: bold;
+  word-break: keep-all;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 1.8em;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 1.6em;
+  }
+`;
 
 const Board = () => {
   const navigate = useNavigate();
@@ -340,7 +356,7 @@ const Board = () => {
     <ThemeProvider theme={theme}>
       <BoardWrap>
         <WriteButton>
-          <TitleText text='게시판'></TitleText>
+          <Title>게시판</Title>
           <WriteSearchWrap>
             <SearchInputWrap>
               <img
