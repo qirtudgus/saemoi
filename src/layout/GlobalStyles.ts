@@ -129,6 +129,7 @@ table {
 }
 
     a{
+      color:#fff;
         text-decoration: none;
     }
     *{
