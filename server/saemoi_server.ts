@@ -31,8 +31,11 @@ const io = new Server(server, {
   },
 });
 
+var userCount = 0;
 var userList: any = [];
 io.on('connection', (socket) => {
+  userCount++;
+  io.emit('userCount', userCount);
   console.log('a user connected');
   console.log(socket.id);
   const socketId = socket.id;
@@ -41,49 +44,52 @@ io.on('connection', (socket) => {
   // userList.push(socketId);
   // io.emit('users.count', { userList });
 
-  socket.on('users.count', ({ id }) => {
-    console.log('들어온 데이터');
-    console.log(id);
-    console.log(socketId);
+  // socket.on('users.count', ({ id }) => {
+  //   console.log('들어온 데이터');
+  //   console.log(id);
+  //   console.log(socketId);
 
-    if (id === '첫접속') {
-      io.emit('users.count', userList);
-    } else if (id === '로그아웃') {
-      //로그아웃시에도 해당 소켓을 삭제
-      let idx = userList.findIndex((i: any) => {
-        return i.socketId === socketId;
-      });
-      if (idx === -1) {
-        io.emit('users.count', userList);
-      } else {
-        userList.splice(idx, 1);
-        io.emit('users.count', userList);
-        console.log('연결끊겼을때 유저리스트');
-        console.log(userList);
-      }
-    } else {
-      userList.push({ id, socketId: socketId });
-      console.log('에밋전에 가공한 유저리스트 데이터');
-      console.log(userList);
-      io.emit('users.count', userList);
-    }
-  });
+  //   if (id === '첫접속') {
+  //     io.emit('users.count', userList);
+  //   } else if (id === '로그아웃') {
+  //     //로그아웃시에도 해당 소켓을 삭제
+  //     let idx = userList.findIndex((i: any) => {
+  //       return i.socketId === socketId;
+  //     });
+  //     if (idx === -1) {
+  //       io.emit('users.count', userList);
+  //     } else {
+  //       userList.splice(idx, 1);
+  //       io.emit('users.count', userList);
+  //       console.log('연결끊겼을때 유저리스트');
+  //       console.log(userList);
+  //     }
+  //   } else {
+  //     userList.push({ id, socketId: socketId });
+  //     console.log('에밋전에 가공한 유저리스트 데이터');
+  //     console.log(userList);
+  //     io.emit('users.count', userList);
+  //   }
+  // });
 
   socket.on('disconnect', function () {
+    userCount--;
+    console.log('undecreas!', userCount);
+    io.emit('userCount', userCount);
     //소켓이 연결이 끊길 시 고유 소켓값과 유저수를 줄인다.
-    let idx = userList.findIndex((i: any) => {
-      return i.socketId === socketId;
-    });
-    console.log('파인드인덱스로 찾은 번호');
-    console.log(idx);
-    if (idx === -1) {
-      io.emit('users.count', userList);
-    } else {
-      userList.splice(idx, 1);
-      io.emit('users.count', userList);
-      console.log('연결끊겼을때 유저리스트');
-      console.log(userList);
-    }
+    // let idx = userList.findIndex((i: any) => {
+    //   return i.socketId === socketId;
+    // });
+    // console.log('파인드인덱스로 찾은 번호');
+    // console.log(idx);
+    // if (idx === -1) {
+    //   io.emit('users.count', userList);
+    // } else {
+    //   userList.splice(idx, 1);
+    //   io.emit('users.count', userList);
+    //   console.log('연결끊겼을때 유저리스트');
+    //   console.log(userList);
+    // }
   });
 });
 
