@@ -8,7 +8,7 @@ import { useAppSelector } from '../store/store';
 import { returnTodayString } from '../util/returnTodayString';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import styled from 'styled-components';
-import TitleText from '../components/TitleText';
+import { Title } from './Board';
 const InputWrap = styled.div`
   margin-bottom: 20px;
   width: 100%;
@@ -65,7 +65,7 @@ const Write = () => {
   return (
     <>
       <div>
-        <TitleText text='게시글 작성'></TitleText>
+        <Title>게시글 작성</Title>
         <InputWrap>
           <ContentLabel htmlFor='title'>제목</ContentLabel>
           <TitleInput
