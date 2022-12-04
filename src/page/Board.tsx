@@ -213,6 +213,26 @@ export const Title = styled.h1`
   }
 `;
 
+export const SubmitTitle = styled(Title)`
+  font-size: 2em;
+  padding: 15px 0;
+  display: block;
+  font-weight: bold;
+  word-break: keep-all;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: none;
+  color: ${({ theme }) => theme.colors.main};
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 1.8em;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 1.6em;
+  }
+`;
+
 const Board = () => {
   const navigate = useNavigate();
   const searchInputRef = useRef() as RefObject<HTMLInputElement>;
