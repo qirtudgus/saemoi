@@ -196,7 +196,7 @@ const PageBtn = styled.button<PageBtnInterface>`
     }
   }
 `;
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 2em;
   padding: 15px 0;
   display: block;
