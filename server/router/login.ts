@@ -30,10 +30,10 @@ loginRouter.post('/', async (req, res, next) => {
         req.decoded = verifyToken(AT);
         console.log(req.decoded);
         //쿠키설정
-        res.cookie('id', id, { httpOnly: true, secure: true });
-        res.cookie('AT', AT, { httpOnly: true, secure: true });
-        res.cookie('RT', RT, { httpOnly: true, secure: true });
-        res.cookie('nickname', nickname, { httpOnly: true, secure: true });
+        res.cookie('id', id, { httpOnly: true });
+        res.cookie('AT', AT, { httpOnly: true });
+        res.cookie('RT', RT, { httpOnly: true });
+        res.cookie('nickname', nickname, { httpOnly: true });
         console.log(req.cookies);
 
         db.query(insertTokenQuery, [RT, id]);
