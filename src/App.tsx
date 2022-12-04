@@ -41,7 +41,7 @@ const CountBox = styled.div`
   flex-shrink: 0;
 
   & > span {
-    font-size: 1.2em;
+    font-size: 15px;
     position: relative;
     top: -2px;
     color: #41cc41;
@@ -69,7 +69,7 @@ const CountBoxMobile = styled.div`
   }
 
   & > span {
-    font-size: 1.2em;
+    font-size: 15px;
     position: relative;
     top: -2px;
     color: #41cc41;
