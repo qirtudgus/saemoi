@@ -21,6 +21,7 @@ import { connectedUser } from './store/userListSlice';
 import RaidBoard from './page/RaidBoard';
 import styled, { css, ThemeProvider } from 'styled-components';
 import theme from './layout/theme';
+import { userCountDispatch } from './store/userCountSlice';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
 
@@ -63,18 +64,20 @@ const CountBoxMobile = styled.div`
 `;
 
 export const UserCount = () => {
-  const userCount = useAppSelector((state) => state.userList.length);
+  // const userCount = useAppSelector((state) => state.userList.length);
+  const userCount2 = useAppSelector((state) => state.userCount);
   return (
     <ThemeProvider theme={theme}>
-      <CountBox>{userCount}명 접속중</CountBox>
+      <CountBox>{userCount2}명 접속중</CountBox>
     </ThemeProvider>
   );
 };
 export const UserCountMobile = () => {
-  const userCount = useAppSelector((state) => state.userList.length);
+  // const userCount = useAppSelector((state) => state.userList.length);
+  const userCount2 = useAppSelector((state) => state.userCount);
   return (
     <ThemeProvider theme={theme}>
-      <CountBoxMobile>{userCount}명 접속중</CountBoxMobile>
+      <CountBoxMobile>{userCount2}명 접속중</CountBoxMobile>
     </ThemeProvider>
   );
 };
@@ -83,10 +86,15 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log('app 렌더링');
     //소켓 이벤트마다 현재 접속자를 가져와준다..
-    socket.on('users.count', function (payload) {
+    // socket.on('users.count', function (payload) {
+    //   console.log(payload);
+    //   dispatch(connectedUser(payload));
+    // });
+    socket.on('userCount', function (payload) {
       console.log(payload);
-      dispatch(connectedUser(payload));
+      dispatch(userCountDispatch(payload));
     });
   }, []);
 
