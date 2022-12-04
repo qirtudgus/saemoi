@@ -54,10 +54,11 @@ const CountBoxMobile = styled.div`
 
   @media ${({ theme }) => theme.device.tablet} {
     display: flex;
+    height: 21px;
   }
   @media ${({ theme }) => theme.device.mobile} {
-    display:flex
-    height: 30px;
+    display: flex;
+    height: 21px;
   }
 `;
 
