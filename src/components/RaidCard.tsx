@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from '../layout/theme';
 import { elapsedTime } from '../util/returnTodayString';
 
 const ListCard = styled.div`
@@ -24,6 +25,10 @@ const ListTop = styled.p`
   & span:first-child {
     margin-right: 5px;
   }
+  & .raidCode {
+    color: #42ff42;
+    /* color: ${({ theme }) => theme.colors.main}; */
+  }
 `;
 
 const ListFooterTime = styled.span`
@@ -43,19 +48,21 @@ const VerticalLine = styled.span`
 
 const RaidCard = (props: any) => {
   return (
-    <ListCard>
-      <ListTop>
-        <span>{props.raidDifficulty}</span>
-        <span>{props.monsterName}</span>
-        <VerticalLine />
-        <span>{props.type}</span>
-        <VerticalLine />
-        <span>{props.raidCode}</span>
-        <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
-      </ListTop>
-      <p>{props.raidText}</p>
-      <p>{props.raidOption}</p>
-    </ListCard>
+    <ThemeProvider theme={theme}>
+      <ListCard>
+        <ListTop>
+          <span>{props.raidDifficulty}</span>
+          <span>{props.monsterName}</span>
+          <VerticalLine />
+          <span>{props.type}</span>
+          <VerticalLine />
+          <span className='raidCode'>{props.raidCode}</span>
+          <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
+        </ListTop>
+        <p>{props.raidText}</p>
+        <p>{props.raidOption}</p>
+      </ListCard>
+    </ThemeProvider>
   );
 };
 
