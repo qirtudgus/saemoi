@@ -1,10 +1,8 @@
 import styled, { ThemeProvider, keyframes, css } from 'styled-components';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import customAxios from '../util/customAxios';
-import TitleText from '../components/TitleText';
 import 새로고침이미지 from '../img/refresh_white_24dp.svg';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
-import 등록하기 from '../img/post_add_white_24dp.svg';
 import 뮤 from '../img/뮤.png';
 import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
@@ -12,7 +10,7 @@ import React from 'react';
 import RaidCard from '../components/RaidCard';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { SolidButton } from '../components/BtnGroup';
+import { Title } from './Board';
 
 const RefreshAni = keyframes`
   to {
@@ -103,22 +101,6 @@ const PcBtnWrap = styled.div`
 
 const PcInnerBtnWrap = styled.div`
   display: flex;
-`;
-const Title = styled.h1`
-  font-size: 2em;
-  padding: 15px 0;
-  display: block;
-  font-weight: bold;
-  word-break: keep-all;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  @media ${({ theme }) => theme.device.tablet} {
-    font-size: 1.8em;
-  }
-
-  @media ${({ theme }) => theme.device.mobile} {
-    font-size: 1.6em;
-  }
 `;
 
 const ButtonWrapPc = styled.button<RefreshInterface>`
