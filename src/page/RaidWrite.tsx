@@ -100,7 +100,7 @@ const Title = styled.h1`
   display: block;
   font-weight: bold;
   word-break: keep-all;
-
+  flex-shrink: 0;
   @media ${({ theme }) => theme.device.tablet} {
     font-size: 1.8em;
   }
