@@ -7,6 +7,7 @@ import { returnTodayString } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import 등록하기 from '../img/post_add_white_24dp.svg';
+import { Title } from './Board';
 
 const BtnList = styled.div`
   display: flex;
@@ -91,22 +92,6 @@ const BtnWrap = styled.div`
   justify-content: center;
   align-items: center;
   justify-content: space-between;
-`;
-
-const Title = styled.h1`
-  font-size: 2em;
-  padding: 15px 0;
-  display: block;
-  font-weight: bold;
-  word-break: keep-all;
-  flex-shrink: 0;
-  @media ${({ theme }) => theme.device.tablet} {
-    font-size: 1.8em;
-  }
-
-  @media ${({ theme }) => theme.device.mobile} {
-    font-size: 1.6em;
-  }
 `;
 
 interface ButtonInterface {
