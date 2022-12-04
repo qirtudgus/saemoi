@@ -4,7 +4,17 @@ export const raidBoardRouter = express.Router();
 
 //게시물 작성하기
 raidBoardRouter.post('/list', (req, res) => {
-  let { nickname, raidCode, monsterName, type, positionState, difficultyState, optionList, etcText, date } = req.body;
+  let {
+    nickname,
+    raidCode,
+    monsterName,
+    type,
+    positionState = '',
+    difficultyState,
+    optionList,
+    etcText,
+    date,
+  } = req.body;
 
   let insertQuery =
     'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
