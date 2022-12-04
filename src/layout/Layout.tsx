@@ -79,10 +79,12 @@ const FooterWrap = styled.footer`
 
 const FooterContent = styled.div`
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 10px 0;
   width: 95%;
   max-width: 1280px;
   word-break: keep-all;
+  color: #d3d3d3;
+  line-height: 20px;
 `;
 
 const MainWrap = styled.main`
@@ -352,9 +354,12 @@ const Layout = () => {
         </MainWrap>
         <FooterWrap>
           <FooterContent>
-            포켓몬스터 스칼렛/바이올렛 테라레이드 배틀 모집을 위한 사이트입니다.
+            Poraid
             <br />
-            poraid.official@google.com
+            포켓몬스터 스칼렛/바이올렛 테라 레이드 배틀 파티원 모집을 위한 사이트입니다.
+            <br />
+            이메일 : poraid.official@google.com
+            <br />ⓒ 2022 Poraid., INC. All rights reserved.
           </FooterContent>
         </FooterWrap>
       </ThemeProvider>
