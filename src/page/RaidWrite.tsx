@@ -7,14 +7,16 @@ import { returnTodayString } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
 import { useNavigate } from 'react-router-dom';
 import 등록하기 from '../img/post_add_white_24dp.svg';
-import { Title } from './Board';
+import 뒤로가기 from '../img/뒤로가기.svg';
+import { SubmitTitle, Title } from './Board';
 
 const BtnList = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  margin: 10px 0;
+  height: 100%;
+  /* margin: 10px 0; */
 `;
 
 const PropertyLabel = styled.label`
@@ -39,13 +41,18 @@ const BtnLabel = styled.label`
   text-align: center;
   border: 2px solid#929292;
   border-radius: 10px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   margin-right: 10px;
 
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.main};
   }
 `;
+
+const BtnRaidOptionLabel = styled(BtnLabel)`
+  margin-bottom: 10px;
+`;
+
 const BtnRadio = styled.input`
   display: none;
 
@@ -63,7 +70,7 @@ const BtnRadio = styled.input`
 `;
 
 const InputWrap = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   user-select: none;
   width: 100%;
 `;
@@ -170,6 +177,41 @@ const property = [
   '강철',
   '페어리',
 ];
+
+const HeaderWrap = styled.header`
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 60px;
+  background: #35363a;
+  z-index: 100;
+  border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  ${({ theme }) => theme.common.flexCenter};
+  margin-bottom: 50px;
+`;
+const HeaderDiv = styled.div`
+  max-width: 1280px;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const BackBtn = styled.button`
+  background: none;
+`;
+
+const TitleOrBackWrap = styled.div`
+  display: flex;
+  & img {
+    cursor: pointer;
+    margin-right: 5px;
+  }
+`;
 const RaidWrite = () => {
   const codeRef = useRef() as RefObject<HTMLInputElement>;
   const nameRef = useRef() as RefObject<HTMLInputElement>;
@@ -232,9 +274,9 @@ const RaidWrite = () => {
       if (codeRef.current.value.length !== 6) {
         alert('코드는 6자입니다.');
         codeRef.current.focus();
-      }
-      if (korean.test(codeRef.current.value)) {
-        alert('코드는 영문과 숫자입니다.');
+      } else if (korean.test(codeRef.current.value)) {
+        alert('코드는 영문과 숫자로 이루어져있습니다.');
+        codeRef.current.focus();
       } else {
         let date = returnTodayString();
         customAxios('post', '/raidboard/list', {
@@ -260,7 +302,31 @@ const RaidWrite = () => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <BtnWrap>
+        <HeaderWrap>
+          <HeaderDiv>
+            <TitleOrBackWrap>
+              <BackBtn
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <img
+                  src={뒤로가기}
+                  alt='뒤로가기'
+                />
+              </BackBtn>
+
+              <Title>레이드 등록</Title>
+            </TitleOrBackWrap>
+            <SubmitTitle
+              as='button'
+              onClick={submit}
+            >
+              완료
+            </SubmitTitle>
+          </HeaderDiv>
+        </HeaderWrap>
+        {/* <BtnWrap>
           <Title>레이드 등록</Title>
           <ButtonWrapMobile onClick={submit}>
             <img
@@ -269,7 +335,7 @@ const RaidWrite = () => {
             />
             등록
           </ButtonWrapMobile>
-        </BtnWrap>
+        </BtnWrap> */}
 
         <InputWrap>
           <MultiInputWrap>
@@ -334,7 +400,7 @@ const RaidWrite = () => {
           </MultiInputWrap>
         </InputWrap>
 
-        <InputWrap>
+        {/* <InputWrap>
           <ContentLabel>자신의 포지션을 선택해주세요. - 선택</ContentLabel>
           <BtnList>
             {list.map((i, index) => {
@@ -355,10 +421,10 @@ const RaidWrite = () => {
               );
             })}
           </BtnList>
-        </InputWrap>
+        </InputWrap> */}
 
         <InputWrap>
-          <ContentLabel>난이도를 선택해주세요. - 필수</ContentLabel>
+          <ContentLabel>난이도를 선택해주세요.</ContentLabel>
           <BtnList>
             {difficultyList.map((i, index) => {
               return (
@@ -381,7 +447,16 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel>필요한 태그를 선택해주세요. - 다중 선택 가능</ContentLabel>
+          <ContentLabel htmlFor='etcText'>하고싶은 말 - 선택 사항</ContentLabel>
+          <TitleInput
+            id='etcText'
+            type={'text'}
+            ref={etcTextRef}
+            placeholder='하고싶은 말'
+          ></TitleInput>
+        </InputWrap>
+        <InputWrap>
+          <ContentLabel>필요한 태그를 선택해주세요. - 선택 사항(다중 선택 가능)</ContentLabel>
           <BtnList>
             {option.map((i, index) => {
               return (
@@ -393,21 +468,11 @@ const RaidWrite = () => {
                     defaultValue={i}
                     // value={i}
                   ></BtnRadio>
-                  <BtnLabel htmlFor={i.toString()}> {i}</BtnLabel>
+                  <BtnRaidOptionLabel htmlFor={i.toString()}> {i}</BtnRaidOptionLabel>
                 </React.Fragment>
               );
             })}
           </BtnList>
-        </InputWrap>
-
-        <InputWrap>
-          <ContentLabel htmlFor='etcText'>하고싶은 말 - 선택</ContentLabel>
-          <TitleInput
-            id='etcText'
-            type={'text'}
-            ref={etcTextRef}
-            placeholder='하고싶은 말'
-          ></TitleInput>
         </InputWrap>
       </>
       <BtnWrap>
@@ -416,7 +481,7 @@ const RaidWrite = () => {
             src={등록하기}
             alt='등록하기'
           />
-          등록
+          완료
         </ButtonWrap>
       </BtnWrap>
     </ThemeProvider>
