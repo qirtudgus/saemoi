@@ -2,12 +2,12 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import styled, { css, ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 import 'swiper/css/bundle';
-import TitleText from '../components/TitleText';
-import { SolidButton } from '../components/BtnGroup';
 import customAxios from '../util/customAxios';
 import { returnTodayString } from '../util/returnTodayString';
 import { useAppSelector } from '../store/store';
 import { useNavigate } from 'react-router-dom';
+
+import 등록하기 from '../img/post_add_white_24dp.svg';
 
 const BtnList = styled.div`
   display: flex;
@@ -75,7 +75,7 @@ const ContentLabel = styled.label`
 
 const TitleInput = styled.input`
   width: 100%;
-  max-width: 400px;
+  max-width: 573px;
   padding: 10px;
   border: 1px solid#dadde6;
 `;
@@ -90,6 +90,77 @@ const BtnWrap = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Title = styled.h1`
+  font-size: 2em;
+  padding: 15px 0;
+  display: block;
+  font-weight: bold;
+  word-break: keep-all;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 1.8em;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    font-size: 1.6em;
+  }
+`;
+
+interface ButtonInterface {
+  ButtonBG?: string;
+  ButtonTextColor?: string;
+}
+
+const ButtonWrapMobile = styled.button<ButtonInterface>`
+  cursor: pointer;
+  width: 100px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.main};
+  color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    opacity: 0.8;
+  }
+  & img {
+    max-width: 25px;
+  }
+
+  @media ${({ theme }) => theme.device.tablet} {
+    display: flex;
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+  }
+`;
+
+const ButtonWrap = styled.button<ButtonInterface>`
+  cursor: pointer;
+  width: 100px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.main};
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    opacity: 0.8;
+  }
+  & img {
+    max-width: 25px;
+  }
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const list = ['어태커', '서포터', '올라운더'];
@@ -201,7 +272,17 @@ const RaidWrite = () => {
   return (
     <ThemeProvider theme={theme}>
       <>
-        <TitleText text={'레이드 작성'}></TitleText>
+        <BtnWrap>
+          <Title>레이드 등록</Title>
+          <ButtonWrapMobile onClick={submit}>
+            <img
+              src={등록하기}
+              alt='등록하기'
+            />
+            등록
+          </ButtonWrapMobile>
+        </BtnWrap>
+
         <InputWrap>
           <MultiInputWrap>
             <div>
@@ -333,10 +414,16 @@ const RaidWrite = () => {
             placeholder='하고싶은 말'
           ></TitleInput>
         </InputWrap>
-        <BtnWrap>
-          <SolidButton OnClick={submit}>등록</SolidButton>
-        </BtnWrap>
       </>
+      <BtnWrap>
+        <ButtonWrap onClick={submit}>
+          <img
+            src={등록하기}
+            alt='등록하기'
+          />
+          등록
+        </ButtonWrap>
+      </BtnWrap>
     </ThemeProvider>
   );
 };
