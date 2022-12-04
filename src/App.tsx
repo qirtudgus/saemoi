@@ -34,7 +34,7 @@ const CountBox = styled.div`
   margin-right: 10px;
   border-radius: 10px;
   padding: 0 10px;
-
+  font-size: 0.9em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,7 +57,7 @@ const CountBoxMobile = styled.div`
   margin-right: 5px;
   border-radius: 8px;
   padding: 0 10px;
-
+  font-size: 0.9em;
   display: none;
   justify-content: center;
   align-items: center;
