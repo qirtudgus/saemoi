@@ -2,9 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import customAxios from '../util/customAxios';
 import { Cookies } from 'react-cookie';
-import { io } from 'socket.io-client';
-const port = process.env.REACT_APP_IO_SERVER_API as string;
-const socket = io(port);
 
 const cookies = new Cookies();
 //비동기함수
@@ -59,9 +56,9 @@ const user = createSlice({
       cookies.remove('RT');
       cookies.remove('id');
       cookies.remove('nickname');
-      socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
-        console.log('로그인 에밋 후');
-      });
+      // socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
+      //   console.log('로그인 에밋 후');
+      // });
     },
   },
   extraReducers: (builder) => {
@@ -72,9 +69,9 @@ const user = createSlice({
         state.id = actions.payload.id;
         state.nickname = actions.payload.nickname;
         //로그아웃 시 아이디를 담아 전송
-        socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
-          console.log('로그인 에밋 후');
-        });
+        // socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
+        //   console.log('로그인 에밋 후');
+        // });
       })
       .addCase(UserService.logoutUser.rejected, (state, actions) => {
         console.log('로그아웃 실패');
@@ -96,9 +93,9 @@ const user = createSlice({
         console.log(actions.payload.id);
         console.log(document.cookie);
         //로그인 시 소켓에 아이디를 담아 전송
-        socket.emit('users.count', { id: state.id }, (res: any) => {
-          console.log('로그인 에밋 후');
-        });
+        // socket.emit('users.count', { id: state.id }, (res: any) => {
+        //   console.log('로그인 에밋 후');
+        // });
       })
 
       .addCase(UserService.getUser.rejected, (state) => {
@@ -116,18 +113,17 @@ const user = createSlice({
         state.id = actions.payload.id;
         state.nickname = actions.payload.nickname;
         //로그인 시 소켓에 아이디를 담아 전송
-        socket.emit('users.count', { id: state.id }, (res: any) => {
-          console.log('로그인 에밋 후');
-          // dispatch(connectedUser([{ id, socketId: socket.id }]));
-        });
+        // socket.emit('users.count', { id: state.id }, (res: any) => {
+        //   console.log('로그인 에밋 후');
+        //   // dispatch(connectedUser([{ id, socketId: socket.id }]));
+        // });
       })
       .addCase(UserServiceAutoLogin.getUserAutoLogin.rejected, (state, actions) => {
         console.log('자동로그인 실패');
         //접속 시 소켓에 아이디를 담아 전송
-        socket.emit('users.count', { id: '첫접속' }, (res: any) => {
-          console.log('로그인 에밋 후');
-          // dispatch(connectedUser([{ id, socketId: socket.id }]));
-        });
+        // socket.emit('users.count', { id: '첫접속' }, (res: any) => {
+        //   console.log('로그인 에밋 후');
+        // });
       });
   },
 });
