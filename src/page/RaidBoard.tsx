@@ -233,12 +233,12 @@ const RaidBoard = () => {
           </ButtonWrapPc>
           <ButtonWrapPc
             onClick={() => {
-              console.log('test');
+              navigate('/raidboard/write');
             }}
           >
             <img
               src={작성하기이미지}
-              alt='작성하기'
+              alt='등록하기'
             />
             등록하기
           </ButtonWrapPc>
@@ -289,7 +289,7 @@ const RaidBoard = () => {
             // animate={{ rotate: isLoad ? 360 : 0 }}
             // transition={{ duration: 0.5 }}
             src={작성하기이미지}
-            alt='작성하기'
+            alt='등록하기'
           ></motion.img>
         </WriteBtn>
       </BtnWrap>
