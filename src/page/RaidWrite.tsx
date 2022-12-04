@@ -44,10 +44,6 @@ const BtnLabel = styled.label`
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.main};
   }
-
-  &:active {
-    border: 2px solid ${({ theme }) => theme.colors.main};
-  }
 `;
 const BtnRadio = styled.input`
   display: none;
@@ -176,20 +172,25 @@ const RaidWrite = () => {
     });
 
     if (titleRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
-      let date = returnTodayString();
-      customAxios('post', '/raidboard/list', {
-        nickname,
-        raidCode: titleRef.current.value,
-        monsterName: nameRef.current.value,
-        type: typeRef.current.value,
-        positionState,
-        difficultyState,
-        optionList,
-        etcText: etcTextRef.current.value,
-        date,
-      }).then((res) => {
-        console.log('완료');
-      });
+      if (titleRef.current.value.length !== 6) {
+        alert('코드는 6자입니다.');
+        titleRef.current.focus();
+      } else {
+        let date = returnTodayString();
+        customAxios('post', '/raidboard/list', {
+          nickname,
+          raidCode: titleRef.current.value,
+          monsterName: nameRef.current.value,
+          type: typeRef.current.value,
+          positionState,
+          difficultyState,
+          optionList,
+          etcText: etcTextRef.current.value,
+          date,
+        }).then((res) => {
+          console.log('완료');
+        });
+      }
     }
 
     return;
