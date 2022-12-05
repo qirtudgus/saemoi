@@ -3,8 +3,8 @@ import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 
 interface ButtonInterface {
-  ButtonBG?: string;
-  ButtonTextColor?: string;
+  $ButtonBG?: string;
+  $ButtonTextColor?: string;
 }
 
 const ButtonWrap = styled(motion.button)<ButtonInterface>`
@@ -14,8 +14,8 @@ const ButtonWrap = styled(motion.button)<ButtonInterface>`
   padding: 5px;
   border-radius: 10px;
   font-weight: bold;
-  background-color: ${(props) => (props.ButtonBG ? props.ButtonBG : '#eee')};
-  color: ${(props) => (props.ButtonTextColor ? props.ButtonTextColor : '#000')};
+  background-color: ${(props) => (props.$ButtonBG ? props.$ButtonBG : '#eee')};
+  color: ${(props) => (props.$ButtonTextColor ? props.$ButtonTextColor : '#000')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,8 +70,8 @@ export const SolidButton = ({ text, ClassName, OnClick, children }: ButtonPropsI
         whileTap={{ scale: 0.95 }}
         className={ClassName}
         onClick={OnClick}
-        ButtonBG={theme.colors.main}
-        ButtonTextColor='#fff'
+        $ButtonBG={theme.colors.main}
+        $ButtonTextColor='#fff'
       >
         {children}
       </ButtonWrap>

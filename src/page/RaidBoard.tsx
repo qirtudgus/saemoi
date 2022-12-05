@@ -22,8 +22,8 @@ const RefreshAni = keyframes`
 
 interface RefreshInterface {
   isRefresh?: boolean;
-  isLoading?: boolean;
-  isRefreshFunc?: boolean;
+  $isLoading?: boolean;
+  $isRefreshFunc?: boolean;
 }
 
 const BtnWrap = styled.div`
@@ -55,7 +55,7 @@ const RefreshBtn = styled(motion.button)<RefreshInterface>`
   /* bottom: 20px;
   right: 20px; */
   ${(props) =>
-    !props.isRefreshFunc
+    !props.$isRefreshFunc
       ? css`
           background-color: ${({ theme }) => theme.colors.main};
         `
@@ -110,7 +110,7 @@ const ButtonWrapPc = styled(motion.button)<RefreshInterface>`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.main};
   ${(props) =>
-    !props.isRefreshFunc
+    !props.$isRefreshFunc
       ? css`
           background-color: ${({ theme }) => theme.colors.main};
         `
@@ -239,8 +239,8 @@ const RaidBoard = () => {
         <PcInnerBtnWrap>
           <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
-            isLoading={isLoading}
-            isRefreshFunc={isRefreshFunc}
+            $isLoading={isLoading}
+            $isRefreshFunc={isRefreshFunc}
             onClick={isRefreshFunc ? undefined : RefreshPc}
           >
             <img
@@ -290,8 +290,8 @@ const RaidBoard = () => {
       <BtnWrap>
         <RefreshBtn
           whileTap={{ scale: 0.95 }}
-          isLoading={isLoading}
-          isRefreshFunc={isRefreshFunc}
+          $isLoading={isLoading}
+          $isRefreshFunc={isRefreshFunc}
           onClick={isRefreshFunc ? undefined : Refresh}
         >
           <img
