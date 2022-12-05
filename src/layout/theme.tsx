@@ -16,6 +16,7 @@ const colors = {
   main: '#ef5a34',
   // main: '#48b651',
   // main: '#3e55ff',
+  borderColor: '#5c5c5c',
   black: '#000000',
   grey: '#999999',
   green: '#3cb46e',
