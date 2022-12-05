@@ -177,6 +177,7 @@ const NicknameAndTime = styled.div`
   display: flex;
   align-items: center;
   & img {
+    user-select: none;
     opacity: 0.5;
     width: 20px;
     position: absolute;
