@@ -73,7 +73,7 @@ const RaidCard = (props: any) => {
         )}
         {props.raidOption !== '' && (
           <p>
-            <RaidText># </RaidText>
+            <RaidText>- </RaidText>
             {props.raidOption}
           </p>
         )}
