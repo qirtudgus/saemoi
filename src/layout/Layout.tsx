@@ -19,7 +19,7 @@ const menuList2 = [
   // { name: '식품', link: '/food' },
   { name: '레이드 리스트', link: '/raidboard/list' },
   { name: '레이드 등록', link: '/raidboard/write' },
-  { name: '자유 게시판', link: '/board/list' },
+  // { name: '자유 게시판', link: '/board/list' },
 ];
 
 const HeaderWrap = styled.header`
@@ -169,7 +169,7 @@ const SlideWrap = styled.div<SlideInterface>`
   position: fixed;
   top: 60px;
   &.active {
-    transition: height 0.4s;
+    /* transition: height 0.2s; */
     height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px);
     box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
   }
@@ -366,7 +366,7 @@ const Layout = () => {
             <br />
             포켓몬스터 스칼렛/바이올렛 테라 레이드 배틀 파티원 모집을 위한 사이트입니다.
             <br />
-            이메일 : poraid.official@google.com
+            문의 및 건의 이메일 : poraid.official@google.com
             <br />ⓒ 2022 Poraid., INC. All rights reserved.
           </FooterContent>
         </FooterWrap>

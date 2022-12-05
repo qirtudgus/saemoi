@@ -155,7 +155,7 @@ function App() {
             path='/register'
             element={<Register />}
           />
-          <Route
+          {/* <Route
             path='/board/list'
             element={<Board />}
           ></Route>
@@ -174,7 +174,7 @@ function App() {
           <Route
             path='/board/list/search/:keyword'
             element={<BoardSearchResult />}
-          />
+          /> */}
 
           <Route
             path='/raidboard/list'
