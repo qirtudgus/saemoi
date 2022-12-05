@@ -141,6 +141,10 @@ table {
         font-size: 14px;
         background-color:#35363a;
         color: #fff;
+        //텍스트 부드럽게
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: auto;
+         
     }
     //토스트에디터 팝업창 위치 조정
     @media only screen and (max-width: 480px) {
@@ -182,7 +186,7 @@ input:focus {
     outline:1px solid #ef5a34;  
   }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #fff;
+  color: #aaa;
   opacity: 1; /* Firefox */
 }
 
