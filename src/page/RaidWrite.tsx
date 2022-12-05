@@ -209,7 +209,17 @@ const RaidWrite = () => {
   const [positionState, setPositionState] = useState('어태커');
   const [difficultyState, setDifficultyState] = useState('6성');
 
-  const option = ['1턴 도발', '3턴 공격', '디버프❌', '나이킹팟', '1딜러 3서폿', '특수방어🔻', '방어🔻', '재도전!'];
+  const option = [
+    '1턴 도발',
+    '3턴 공격',
+    '디버프❌',
+    '1딜러 3서폿',
+    '방장 초보😥',
+    '특수방어🔻',
+    '방어🔻',
+    '나이킹팟',
+    '재도전!',
+  ];
   const nameRefFocus = () => {
     if (nameRef === null) {
       return;
