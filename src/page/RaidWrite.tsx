@@ -155,7 +155,7 @@ const ButtonWrap = styled.button<ButtonInterface>`
 `;
 
 const list = ['어태커', '서포터', '올라운더'];
-const difficultyList = ['7성', '6성', '5성', '4성', '3성 이하'];
+const difficultyList = ['7성', '6성', '5성', '4성', '3성↓'];
 
 const property = [
   '노말',
@@ -453,12 +453,12 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel htmlFor='etcText'>하고싶은 말 - 선택 사항</ContentLabel>
+          <ContentLabel htmlFor='etcText'>기타 전달사항 - 선택 사항</ContentLabel>
           <TitleInput
             id='etcText'
             type={'text'}
             ref={etcTextRef}
-            placeholder='하고싶은 말'
+            placeholder='ex)방장 블래키...등'
           ></TitleInput>
         </InputWrap>
         <InputWrap>
