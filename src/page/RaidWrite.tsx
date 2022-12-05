@@ -277,6 +277,12 @@ const RaidWrite = () => {
       } else if (korean.test(codeRef.current.value)) {
         alert('코드는 영문과 숫자로 이루어져있습니다.');
         codeRef.current.focus();
+      } else if (nameRef.current.value === '' && nameRef.current.value.length === 0) {
+        alert('포켓몬의 이름을 입력해주세요.');
+        nameRef.current.focus();
+      } else if (typeRef.current.value === '' && typeRef.current.value.length === 0) {
+        alert('포켓몬의 타입을 입력해주세요.');
+        typeRef.current.focus();
       } else {
         let date = returnTodayString();
         customAxios('post', '/raidboard/list', {
@@ -367,13 +373,13 @@ const RaidWrite = () => {
               ></TitleInput>
             </div>
             <div>
-              <ContentLabel htmlFor='title'>몬스터 이름</ContentLabel>
+              <ContentLabel htmlFor='title'>포켓몬 이름</ContentLabel>
               <TitleInput
                 id='title'
                 type={'text'}
                 ref={nameRef}
                 maxLength={8}
-                placeholder='몬스터 이름'
+                placeholder='포켓몬 이름'
                 onKeyDown={(e) => {
                   if (e.keyCode === 13) {
                     nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
