@@ -1,17 +1,16 @@
-import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from './theme';
 // import 로고 from '../img/saemoiSVG2.svg';
 import 로고 from '../img/logo_s.svg';
 // import 로고 from '../img/logo_w.svg';
-import 햄버거메뉴 from '../img/menu_black.svg';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../store/store';
-import { logout, UserService } from '../store/userSlice';
-import { BasicButton, SolidButton } from '../components/BtnGroup';
 import { UserCount, UserCountMobile } from '../App';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
+import 햄버거메뉴 from '../img/menu_black.svg';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { logout, UserService } from '../store/userSlice';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
@@ -238,7 +237,7 @@ const Layout = () => {
                 <HeaderLi key={index}>
                   <NavLink
                     to={`${i.link}`}
-                    className={({ isActive }) => (isActive ? 'active' : undefined)}
+                    className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
                   >
                     {i.name}
                   </NavLink>
@@ -248,7 +247,10 @@ const Layout = () => {
             <UserCountandMenu>
               <UserCountMobile />
               <MenuBtn
-                onClick={() => {
+                onClick={(e) => {
+                  console.log('햄버거 메뉴 눌렀을 시');
+                  console.log(e.target);
+                  console.log(e.currentTarget);
                   if (menu != null) {
                     menu.current!.classList.toggle('active');
                   } else {
@@ -299,19 +301,23 @@ const Layout = () => {
           </HeaderDiv>
         </HeaderWrap>
         <SlideWrap
+          id={'OpenMenuCheck'}
           isLogin={isLogin}
           ref={menu}
         >
           <SlideUl>
             {menuList2.map((i, index) => {
               return (
-                <SlideLi key={index}>
+                <SlideLi
+                  key={index}
+                  className='menuOpenCheck'
+                >
                   <NavLink
                     onClick={(e) => {
                       menu.current!.classList.toggle('active');
                     }}
                     to={`${i.link}`}
-                    className={({ isActive }) => (isActive ? 'active' : undefined)}
+                    className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
                   >
                     {i.name}
                   </NavLink>
@@ -320,6 +326,7 @@ const Layout = () => {
             })}
             {isLogin ? (
               <SlideLi
+                className='menuOpenCheck'
                 onClick={() => {
                   console.log('로그아웃 시도');
                   dispatch(logout());
@@ -330,6 +337,7 @@ const Layout = () => {
             ) : (
               <>
                 <SlideLi
+                  className='menuOpenCheck'
                   onClick={() => {
                     menu.current!.classList.toggle('active');
                     navigate('/login');
@@ -338,6 +346,7 @@ const Layout = () => {
                   로그인
                 </SlideLi>
                 <SlideLi
+                  className='menuOpenCheck'
                   onClick={() => {
                     menu.current!.classList.toggle('active');
                     navigate('/register');
