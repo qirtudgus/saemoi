@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { MutableRefObject, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
@@ -60,7 +61,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
+const Button = styled(motion.button)`
   width: 400px;
   height: 40px;
   color: #fff;
@@ -202,7 +203,12 @@ const Register = () => {
             // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setConfirmPassword)}
           ></Input>
         </InputDiv>
-        <Button onClick={join}>가입</Button>
+        <Button
+          whileTap={{ scale: 0.95 }}
+          onClick={join}
+        >
+          가입
+        </Button>
       </RegisterWrap>
     </ThemeProvider>
   );

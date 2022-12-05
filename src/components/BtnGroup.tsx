@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 
@@ -6,7 +7,7 @@ interface ButtonInterface {
   ButtonTextColor?: string;
 }
 
-const ButtonWrap = styled.button<ButtonInterface>`
+const ButtonWrap = styled(motion.button)<ButtonInterface>`
   cursor: pointer;
   width: 100px;
   height: 40px;
@@ -52,6 +53,7 @@ export const BasicButton = ({ text, ClassName, OnClick, children }: ButtonPropsI
   return (
     <ThemeProvider theme={theme}>
       <ButtonWrap
+        whileTap={{ scale: 0.95 }}
         className={ClassName}
         onClick={OnClick}
       >
@@ -65,6 +67,7 @@ export const SolidButton = ({ text, ClassName, OnClick, children }: ButtonPropsI
   return (
     <ThemeProvider theme={theme}>
       <ButtonWrap
+        whileTap={{ scale: 0.95 }}
         className={ClassName}
         onClick={OnClick}
         ButtonBG={theme.colors.main}

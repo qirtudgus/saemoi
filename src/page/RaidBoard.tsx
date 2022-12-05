@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +46,7 @@ const BtnWrap = styled.div`
   }
 `;
 
-const RefreshBtn = styled.button<RefreshInterface>`
+const RefreshBtn = styled(motion.button)<RefreshInterface>`
   cursor: pointer;
   position: relative;
   width: 50px;
@@ -75,7 +76,7 @@ const RefreshBtn = styled.button<RefreshInterface>`
   }
 `;
 
-const WriteBtn = styled.button`
+const WriteBtn = styled(motion.button)`
   cursor: pointer;
   position: relative;
   width: 50px;
@@ -101,7 +102,7 @@ const PcInnerBtnWrap = styled.div`
   display: flex;
 `;
 
-const ButtonWrapPc = styled.button<RefreshInterface>`
+const ButtonWrapPc = styled(motion.button)<RefreshInterface>`
   cursor: pointer;
   width: 100px;
   height: 35px;
@@ -237,6 +238,7 @@ const RaidBoard = () => {
         <Title>레이드 리스트</Title>
         <PcInnerBtnWrap>
           <ButtonWrapPc
+            whileTap={{ scale: 0.95 }}
             isLoading={isLoading}
             isRefreshFunc={isRefreshFunc}
             onClick={isRefreshFunc ? undefined : RefreshPc}
@@ -249,6 +251,7 @@ const RaidBoard = () => {
             새로고침
           </ButtonWrapPc>
           <ButtonWrapPc
+            whileTap={{ scale: 0.95 }}
             onClick={() => {
               navigate('/raidboard/write');
             }}
@@ -286,6 +289,7 @@ const RaidBoard = () => {
       )}
       <BtnWrap>
         <RefreshBtn
+          whileTap={{ scale: 0.95 }}
           isLoading={isLoading}
           isRefreshFunc={isRefreshFunc}
           onClick={isRefreshFunc ? undefined : Refresh}
@@ -299,6 +303,7 @@ const RaidBoard = () => {
           ></img>
         </RefreshBtn>
         <WriteBtn
+          whileTap={{ scale: 0.95 }}
           onClick={() => {
             navigate('/raidboard/write');
           }}

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -59,7 +60,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
+const Button = styled(motion.button)`
   width: 400px;
   height: 40px;
   color: #fff;
@@ -134,7 +135,12 @@ const Login = () => {
           // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setPassword)}
         ></Input>
       </InputDiv>
-      <Button onClick={login}>로그인</Button>
+      <Button
+        whileTap={{ scale: 0.95 }}
+        onClick={login}
+      >
+        로그인
+      </Button>
     </RegisterWrap>
   );
 };
