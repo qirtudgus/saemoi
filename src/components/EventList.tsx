@@ -1,13 +1,7 @@
-import { Pagination } from 'swiper';
-import 'swiper/css/bundle';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import EventCard from '../components/EventCard';
-import TitleText from './TitleText';
-
 const EventList = (props: any) => {
   return (
     <>
-      <TitleText text={props.title}></TitleText>
+      {/* <TitleText text={props.title}></TitleText>
       <Swiper
         slidesPerView={4}
         spaceBetween={0}
@@ -49,7 +43,7 @@ const EventList = (props: any) => {
             ></EventCard>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
     </>
   );
 };

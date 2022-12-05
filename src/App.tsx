@@ -5,9 +5,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import Login from './components/Login';
 import Register from './components/Register';
 import 초록불 from './img/onboard.svg';
-import Clother from './layout/Clother';
-import Cosmetic from './layout/Cosmetic';
-import Food from './layout/Food';
 import GlobalStyles from './layout/GlobalStyles';
 import Layout from './layout/Layout';
 import LayoutWrite from './layout/LayoutWrite';
@@ -132,18 +129,6 @@ function App() {
           <Route
             path='/'
             element={<Home />}
-          />
-          <Route
-            path='/clother'
-            element={<Clother />}
-          />
-          <Route
-            path='/cosmetic'
-            element={<Cosmetic />}
-          />
-          <Route
-            path='/food'
-            element={<Food />}
           />
           <Route
             path='/login'
