@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ArrayTestObj from './ArrayTestObj';
 
-interface ArrDiv {}
-
-const Div = styled.div`
-  width: 100%;
-  height: 40px;
-  background: green;
-`;
-
 var id = 0;
 
 const ArrayTest = () => {
@@ -27,7 +19,6 @@ const ArrayTest = () => {
     id = id += 1;
     setArr2([...arr2, { id: id, test: '테스트 박스입니다' }]);
   };
-
   return (
     <>
       <button onClick={AddArr}>1번 오브젝트 박스 추가</button>
