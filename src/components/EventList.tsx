@@ -1,15 +1,8 @@
-import styled from 'styled-components';
-import EventCard from '../components/EventCard';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css/bundle';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import EventCard from '../components/EventCard';
 import TitleText from './TitleText';
-
-const EventTitle = styled.h1`
-  font-size: 2em;
-  font-weight: bold;
-  margin: 15px 0;
-`;
 
 const EventList = (props: any) => {
   return (

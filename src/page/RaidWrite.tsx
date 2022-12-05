@@ -106,32 +106,6 @@ interface ButtonInterface {
   ButtonTextColor?: string;
 }
 
-const ButtonWrapMobile = styled.button<ButtonInterface>`
-  cursor: pointer;
-  width: 100px;
-  height: 35px;
-  padding: 5px;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.main};
-  color: #fff;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    opacity: 0.8;
-  }
-  & img {
-    max-width: 25px;
-  }
-
-  @media ${({ theme }) => theme.device.tablet} {
-    display: flex;
-  }
-
-  @media ${({ theme }) => theme.device.mobile} {
-  }
-`;
-
 const ButtonWrap = styled.button<ButtonInterface>`
   cursor: pointer;
   width: 100px;
@@ -154,29 +128,29 @@ const ButtonWrap = styled.button<ButtonInterface>`
   }
 `;
 
-const list = ['어태커', '서포터', '올라운더'];
+// const list = ['어태커', '서포터', '올라운더'];
 const difficultyList = ['7성', '6성', '5성', '4성', '3성↓'];
 
-const property = [
-  '노말',
-  '불꽃',
-  '물',
-  '전기',
-  '풀',
-  '얼음',
-  '격투',
-  '독',
-  '땅',
-  '비행',
-  '에스퍼',
-  '벌레',
-  '바위',
-  '고스트',
-  '드래곤',
-  '악',
-  '강철',
-  '페어리',
-];
+// const property = [
+//   '노말',
+//   '불꽃',
+//   '물',
+//   '전기',
+//   '풀',
+//   '얼음',
+//   '격투',
+//   '독',
+//   '땅',
+//   '비행',
+//   '에스퍼',
+//   '벌레',
+//   '바위',
+//   '고스트',
+//   '드래곤',
+//   '악',
+//   '강철',
+//   '페어리',
+// ];
 
 const HeaderWrap = styled.header`
   position: sticky;

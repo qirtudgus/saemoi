@@ -88,10 +88,6 @@ const Register = () => {
   const [pwWarning, setPwWarning] = useState('');
   const [cpwWarning, setCpwWarning] = useState('');
 
-  const inputChange = (e: any, setFunc: React.Dispatch<React.SetStateAction<string>>) => {
-    setFunc(e.currentTarget.value);
-  };
-
   const join = () => {
     let end = false;
     let id = idRef.current.value;
@@ -103,6 +99,7 @@ const Register = () => {
     const idCheckRegex = /^[a-zA-Z0-9]{2,10}$/;
 
     //특수문자 체크
+    // eslint-disable-next-line no-useless-escape
     const special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/i;
 
     //비밀번호 양식

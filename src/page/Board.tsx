@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import styled, { css, ThemeProvider } from 'styled-components';
 import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
-import customAxios from '../util/customAxios';
-import comment_img from '../img/commentLine_img.svg';
 import add_like from '../img/add_like.svg';
-import 돋보기 from '../img/돋보기.svg';
-import 왼쪽화살표 from '../img/왼쪽화살표.svg';
-import 오른쪽화살표 from '../img/오른쪽화살표.svg';
+import comment_img from '../img/commentLine_img.svg';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
-import { elapsedTime } from '../util/returnTodayString';
-import { useAppSelector } from '../store/store';
+import 돋보기 from '../img/돋보기.svg';
+import 오른쪽화살표 from '../img/오른쪽화살표.svg';
+import 왼쪽화살표 from '../img/왼쪽화살표.svg';
 import theme from '../layout/theme';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { elapsedTime } from '../util/returnTodayString';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
@@ -246,7 +246,7 @@ const Board = () => {
   //리스트에 따른 페이지 갯수
   const [pages, setPages] = useState<number[]>([]);
   //전체 랭킹에 보여줄 10개의 리스트
-  const [list2, setList2] = useState<[]>([]);
+  // const [list2, setList2] = useState<[]>([]);
   //현재 보여주고있는 페이지번호
   const [currentPageNum, setCurrentPageNum] = useState<number>(1);
   //현재 보여주고있는 페이지버튼 리스트
