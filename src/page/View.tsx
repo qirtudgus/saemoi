@@ -197,6 +197,7 @@ const ContentButtonGroup = styled.div`
 const MoreButtonGroup = styled.div`
   width: auto;
   cursor: pointer;
+  user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   z-index: 2;
   width: 20px;
