@@ -3,18 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import customAxios from '../util/customAxios';
-import { useAppSelector } from '../store/store';
-import ErrorPage from './ErrorPage';
-import styled, { css, keyframes, ThemeProvider } from 'styled-components';
-import { elapsedTime, returnTodayString } from '../util/returnTodayString';
-import TitleText from '../components/TitleText';
+import styled, { css, ThemeProvider } from 'styled-components';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
-import theme from '../layout/theme';
+import add_like from '../img/add_like2.svg';
 import more_horiz from '../img/more_horiz.svg';
 import nestedCommentArrow from '../img/nestedCommentArrow.svg';
-import add_like from '../img/add_like2.svg';
 import remove_like from '../img/remove_like.svg';
+import theme from '../layout/theme';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { elapsedTime, returnTodayString } from '../util/returnTodayString';
+import ErrorPage from './ErrorPage';
 
 const ViewWrap = styled.div`
   height: auto;
@@ -446,7 +445,17 @@ const View = () => {
                 }
                 isLike={content.likeUserList.includes(id + ',')}
               >
-                {content.likeUserList.includes(id + ',') ? <img src={add_like} /> : <img src={remove_like}></img>}
+                {content.likeUserList.includes(id + ',') ? (
+                  <img
+                    src={add_like}
+                    alt='추천 취소'
+                  />
+                ) : (
+                  <img
+                    src={remove_like}
+                    alt='추천'
+                  ></img>
+                )}
               </LikeButtonBox>
               <p>{content.likes}</p>
             </CommentLikeWrap>

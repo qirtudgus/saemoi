@@ -1,6 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
-import { ThemeProvider } from 'styled-components';
 
 interface ButtonInterface {
   ButtonBG?: string;

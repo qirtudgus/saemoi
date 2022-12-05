@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../store/store';
 import { useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import { UserService } from '../store/userSlice';
 import TitleText from './TitleText';
 

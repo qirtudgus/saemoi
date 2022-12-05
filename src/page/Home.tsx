@@ -1,5 +1,4 @@
-import { useAppSelector, useAppDispatch } from '../store/store';
-import styled from 'styled-components';
+import { useAppSelector } from '../store/store';
 import RaidBoard from './RaidBoard';
 
 const Home = () => {

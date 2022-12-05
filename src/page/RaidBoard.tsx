@@ -1,18 +1,14 @@
-import styled, { ThemeProvider, keyframes, css } from 'styled-components';
-import { RefObject, useEffect, useRef, useState } from 'react';
-import customAxios from '../util/customAxios';
-import 새로고침이미지 from '../img/refresh_white_24dp.svg';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
+import styled, { css, keyframes, ThemeProvider } from 'styled-components';
+import RefRaidCard from '../components/RefRaidCard';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
+import 새로고침이미지 from '../img/refresh_white_24dp.svg';
 import 뮤 from '../img/뮤.png';
 import theme from '../layout/theme';
-import { useAppSelector } from '../store/store';
-import React from 'react';
-import RaidCard from '../components/RaidCard';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import customAxios from '../util/customAxios';
 import { Title } from './Board';
-import { useInView } from 'react-intersection-observer';
-import RefRaidCard from '../components/RefRaidCard';
 
 const RefreshAni = keyframes`
   to {

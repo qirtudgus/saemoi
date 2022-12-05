@@ -1,4 +1,4 @@
-import { MutableRefObject, ReactElement, useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';

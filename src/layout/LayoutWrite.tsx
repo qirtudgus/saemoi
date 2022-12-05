@@ -1,9 +1,8 @@
-import styled from 'styled-components';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { Outlet } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
 import theme from './theme';
 
-import React, { useRef } from 'react';
+import React from 'react';
 
 const MainWrap = styled.main`
   min-height: calc(100vh - 310px);

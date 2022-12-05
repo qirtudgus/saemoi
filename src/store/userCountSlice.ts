@@ -1,6 +1,5 @@
 //View컴포넌트에서 useEffect를 사용하는것으로 변경하여 현재 사용하지않는 파일임
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import customAxios from '../util/customAxios';
+import { createSlice } from '@reduxjs/toolkit';
 
 let initialState: number = 0;
 

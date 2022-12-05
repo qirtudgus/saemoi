@@ -1,15 +1,15 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { BasicButton, SolidButton } from '../components/BtnGroup';
+import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
-import customAxios from '../util/customAxios';
-import comment_img from '../img/commentLine_img.svg';
 import add_like from '../img/add_like.svg';
+import comment_img from '../img/commentLine_img.svg';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
-import { elapsedTime } from '../util/returnTodayString';
-import { useAppSelector } from '../store/store';
 import 돋보기 from '../img/돋보기.svg';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { elapsedTime } from '../util/returnTodayString';
 import { Title } from './Board';
 
 const BoardWrap = styled.div`

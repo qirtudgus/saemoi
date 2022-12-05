@@ -1,13 +1,13 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeProvider } from 'styled-components';
-import theme from '../layout/theme';
-import 'swiper/css/bundle';
-import customAxios from '../util/customAxios';
-import { returnTodayString } from '../util/returnTodayString';
-import { useAppSelector } from '../store/store';
 import { useNavigate } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
+import 'swiper/css/bundle';
 import 등록하기 from '../img/post_add_white_24dp.svg';
 import 뒤로가기 from '../img/뒤로가기.svg';
+import theme from '../layout/theme';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { returnTodayString } from '../util/returnTodayString';
 import { SubmitTitle, Title } from './Board';
 
 const BtnList = styled.div`
