@@ -1,7 +1,6 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import 'swiper/css/bundle';
 import 등록하기 from '../img/post_add_white_24dp.svg';
 import 뒤로가기 from '../img/뒤로가기.svg';
 import theme from '../layout/theme';
