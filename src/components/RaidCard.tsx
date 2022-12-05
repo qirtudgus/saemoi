@@ -22,8 +22,10 @@ const ListTop = styled.p`
   display: flex;
   margin-bottom: 5px;
   font-size: 1.1em;
+
   & span:first-child {
     margin-right: 5px;
+    flex-shrink: 0;
   }
   & .raidCode {
     color: #42ff42;
@@ -46,6 +48,10 @@ const VerticalLine = styled.span`
   height: 10px;
 `;
 
+const RaidText = styled.span`
+  font-size: 0.9em;
+`;
+
 const RaidCard = (props: any) => {
   return (
     <ThemeProvider theme={theme}>
@@ -59,8 +65,18 @@ const RaidCard = (props: any) => {
           <span className='raidCode'>{props.raidCode}</span>
           <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
         </ListTop>
-        <p>{props.raidText}</p>
-        <p>{props.raidOption}</p>
+        {props.raidText !== '' && (
+          <p>
+            <RaidText>- </RaidText>
+            {props.raidText}
+          </p>
+        )}
+        {props.raidOption !== '' && (
+          <p>
+            <RaidText># </RaidText>
+            {props.raidOption}
+          </p>
+        )}
       </ListCard>
     </ThemeProvider>
   );
