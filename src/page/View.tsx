@@ -71,8 +71,9 @@ const WriteNestedCommentWrap = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #dadde6;
+  background-color: #575757;
   border: 1px solid#dadde6;
+  border-top: none;
   border-radius: 0 0 5px 5px;
   height: 220px;
   padding: 10px 0;
@@ -85,6 +86,8 @@ const CommentArea = styled.textarea`
   border: 1px solid #dadde6;
   border-radius: 2px;
   width: 98.5%;
+  background-color: #35363a;
+  color: #fff;
   &:hover {
     border: 1px solid #000;
   }
@@ -160,7 +163,7 @@ const NestedComment = styled.div`
   padding: 15px 15px 15px 40px;
 
   border-bottom: 1px solid#dadde6;
-  background: #fafafa;
+  background: #575757;
 `;
 
 const CommentUserInfo = styled.div`
@@ -201,6 +204,7 @@ const MoreButtonGroup = styled.div`
   display: flex;
   position: relative;
   align-items: center;
+  color: #000;
   & img {
     opacity: 0.6;
     position: relative;
@@ -260,7 +264,7 @@ const LikeButtonBox = styled.button<LikeMove>`
   align-items: center;
   position: relative;
   user-select: none;
-  background-color: #fff;
+  background-color: #35363a;
   ${(props) =>
     props.isLike &&
     css`
