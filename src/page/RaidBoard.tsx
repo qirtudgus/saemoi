@@ -11,6 +11,8 @@ import RaidCard from '../components/RaidCard';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Title } from './Board';
+import { useInView } from 'react-intersection-observer';
+import RefRaidCard from '../components/RefRaidCard';
 
 const RefreshAni = keyframes`
   to {
@@ -168,10 +170,16 @@ const RaidBoard = () => {
   const [isLoad, setIsLoad] = useState(false);
   const [isRefreshFunc, setIsRefreshFunc] = useState(true);
   const [list, setList] = useState<any>(null);
+  const [viewList, setViewList] = useState<any>(null);
   // const lists = useAppSelector((state) => state.userList);
 
   const imgRef = useRef() as RefObject<HTMLImageElement>;
   const imgPcRef = useRef() as RefObject<HTMLImageElement>;
+
+  const [ref, InView] = useInView({
+    threshold: 0.8, //타겟이 화면에 얼만큼 보였을 때 InView를 토글할 것인지
+    // delay: 2000, //로딩되는 딜레이
+  });
 
   const navigate = useNavigate();
 
@@ -186,13 +194,30 @@ const RaidBoard = () => {
     // });
     setTimeout(() => {
       customAxios('get', '/raidboard/list', {}).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setList(res.data);
+        setViewList(res.data.slice(0, 10));
         setIsLoading(true);
         setIsRefreshFunc(false);
       });
     }, 500);
   }, [isLoad]);
+
+  useEffect(() => {
+    if (InView === true) {
+      console.log('지금 InView가 true');
+      console.log(viewList.length);
+      console.log(list.length);
+      if (viewList.length === list.length) {
+        console.log('전부 불러왔다.');
+        return;
+      } else {
+        //10개씩 추가
+        setViewList([...viewList, ...list.slice(viewList.length, viewList.length + 10)]);
+        console.log(list);
+      }
+    }
+  }, [InView]);
 
   const Refresh = () => {
     let a = imgRef.current;
@@ -212,10 +237,6 @@ const RaidBoard = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <p>현재 접속자 : {lists.length}</p>
-      {lists.map((i: any) => {
-        return <li key={i.id}>{i.id}</li>;
-      })} */}
       <PcBtnWrap>
         <Title>레이드 리스트</Title>
         <PcInnerBtnWrap>
@@ -245,8 +266,9 @@ const RaidBoard = () => {
         </PcInnerBtnWrap>
       </PcBtnWrap>
       {isLoading ? (
-        list.map((i: any, index: number) => (
-          <RaidCard
+        viewList.map((i: any, index: number) => (
+          <RefRaidCard
+            ref={ref}
             key={i.idx}
             monsterName={i.monsterName}
             raidDifficulty={i.raidDifficulty}
@@ -255,7 +277,7 @@ const RaidBoard = () => {
             date={i.date}
             raidText={i.raidText}
             raidOption={i.raidOption}
-          />
+          ></RefRaidCard>
         ))
       ) : (
         <LoadingText>
@@ -272,25 +294,25 @@ const RaidBoard = () => {
           isRefreshFunc={isRefreshFunc}
           onClick={isRefreshFunc ? undefined : Refresh}
         >
-          <motion.img
+          <img
             ref={imgRef}
             // animate={{ rotate: isLoad ? 360 : 0 }}
             // transition={{ duration: 0.5 }}
             src={새로고침이미지}
             alt='새로고침'
-          ></motion.img>
+          ></img>
         </RefreshBtn>
         <WriteBtn
           onClick={() => {
             navigate('/raidboard/write');
           }}
         >
-          <motion.img
+          <img
             // animate={{ rotate: isLoad ? 360 : 0 }}
             // transition={{ duration: 0.5 }}
             src={작성하기이미지}
             alt='등록하기'
-          ></motion.img>
+          ></img>
         </WriteBtn>
       </BtnWrap>
     </ThemeProvider>
