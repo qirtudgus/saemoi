@@ -30,10 +30,10 @@ loginRouter.post('/', async (req, res, next) => {
         req.decoded = verifyToken(AT);
         console.log(req.decoded);
         //쿠키설정
-        res.cookie('id', id, { httpOnly: true });
-        res.cookie('AT', AT, { httpOnly: true });
-        res.cookie('RT', RT, { httpOnly: true });
-        res.cookie('nickname', nickname, { httpOnly: true });
+        res.cookie('id', id);
+        res.cookie('AT', AT);
+        res.cookie('RT', RT);
+        res.cookie('nickname', nickname);
         console.log(req.cookies);
 
         db.query(insertTokenQuery, [RT, id]);
@@ -50,6 +50,7 @@ loginRouter.post('/autologin', async (req, res, next) => {
   let RTresult = verifyToken(req.cookies.RT);
   console.log('자동 로그인 토큰 만료 유무');
   console.log(ATresult);
+
   if (ATresult === null) {
     if (RTresult === null) {
       res.clearCookie('id');
