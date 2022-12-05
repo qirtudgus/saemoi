@@ -247,10 +247,8 @@ const Layout = () => {
             <UserCountandMenu>
               <UserCountMobile />
               <MenuBtn
+                className='menuOpenCheck'
                 onClick={(e) => {
-                  console.log('햄버거 메뉴 눌렀을 시');
-                  console.log(e.target);
-                  console.log(e.currentTarget);
                   if (menu != null) {
                     menu.current!.classList.toggle('active');
                   } else {
@@ -259,6 +257,7 @@ const Layout = () => {
                 }}
               >
                 <img
+                  className='menuOpenCheck'
                   src={햄버거메뉴}
                   alt='메뉴'
                 ></img>
