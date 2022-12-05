@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
-import { elapsedTime } from '../util/returnTodayString';
+import { returnDiffTime } from '../util/returnTodayString';
 
 const ListCard = styled.div`
   width: 100%;
@@ -66,11 +66,9 @@ const RefRaidCard = forwardRef(function (props: any, ref: any) {
             <span>{props.raidDifficulty}</span>
             <span>{props.monsterName}</span>
             <VerticalLine />
-            {/* <span>{props.type}</span>
-          <VerticalLine /> */}
             <span className='raidCode'>{props.raidCode}</span>
           </div>
-          <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
+          <ListFooterTime> {returnDiffTime(props.date)}</ListFooterTime>
         </ListTop>
         {props.raidText !== '' && (
           <p>
