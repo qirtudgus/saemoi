@@ -61,7 +61,7 @@ const RefRaidCard = forwardRef(function (props: any, ref: any) {
   return (
     <ThemeProvider theme={theme}>
       <ListCard ref={ref}>
-        <ListTop>
+        <ListTop as='div'>
           <div>
             <span>{props.raidDifficulty}</span>
             <span>{props.monsterName}</span>
