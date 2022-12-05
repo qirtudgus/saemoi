@@ -59,8 +59,8 @@ const RaidCard = (props: any) => {
           <span>{props.raidDifficulty}</span>
           <span>{props.monsterName}</span>
           <VerticalLine />
-          <span>{props.type}</span>
-          <VerticalLine />
+          {/* <span>{props.type}</span>
+          <VerticalLine /> */}
           <span className='raidCode'>{props.raidCode}</span>
           <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
         </ListTop>

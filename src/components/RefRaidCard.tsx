@@ -20,22 +20,27 @@ const ListCard = styled.div`
 const ListTop = styled.p`
   align-items: center;
   display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   font-size: 1.1em;
-
+  /* flex-shrink: 0; */
   & span:first-child {
     margin-right: 5px;
     flex-shrink: 0;
   }
+  & span {
+    /* width: auto; */
+  }
   & .raidCode {
-    color: #42ff42;
+    color: #77ff77;
+    letter-spacing: 0.5px;
     /* color: ${({ theme }) => theme.colors.main}; */
   }
 `;
 
 const ListFooterTime = styled.span`
   display: block;
-  width: 100%;
+  width: auto;
   text-align: right;
   margin-right: 0px !important;
   font-size: 0.85em;
@@ -57,12 +62,14 @@ const RefRaidCard = forwardRef(function (props: any, ref: any) {
     <ThemeProvider theme={theme}>
       <ListCard ref={ref}>
         <ListTop>
-          <span>{props.raidDifficulty}</span>
-          <span>{props.monsterName}</span>
-          <VerticalLine />
-          <span>{props.type}</span>
-          <VerticalLine />
-          <span className='raidCode'>{props.raidCode}</span>
+          <div>
+            <span>{props.raidDifficulty}</span>
+            <span>{props.monsterName}</span>
+            <VerticalLine />
+            {/* <span>{props.type}</span>
+          <VerticalLine /> */}
+            <span className='raidCode'>{props.raidCode}</span>
+          </div>
           <ListFooterTime> {elapsedTime(props.date)}</ListFooterTime>
         </ListTop>
         {props.raidText !== '' && (
@@ -73,7 +80,7 @@ const RefRaidCard = forwardRef(function (props: any, ref: any) {
         )}
         {props.raidOption !== '' && (
           <p>
-            <RaidText>- </RaidText>
+            <RaidText># </RaidText>
             {props.raidOption}
           </p>
         )}
