@@ -158,12 +158,32 @@ table {
 .toastui-editor-contents h4,
 .toastui-editor-contents h5,
 .toastui-editor-contents h6 {
+  color:#fff;
   margin: 0px !important;
 }
 
 //토스트 에디터 뷰어 폰트사이즈 조절
 .toastui-editor-contents p {
   font-size: 15px;
+  color:#fff;
+}
+.toastui-editor-defaultUI .ProseMirror {
+  background-color: #35363a;
+}
+
+input {
+  color: #fff;
+  background-color: #35363a;
+}
+input:focus {
+    background-color: #35363a;
+  }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #fff;
+  opacity: 1; /* Firefox */
+}
+
+
 }
 `;
 
