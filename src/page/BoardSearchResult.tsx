@@ -9,7 +9,7 @@ import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import 돋보기 from '../img/돋보기.svg';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { elapsedTime } from '../util/returnTodayString';
+import { returnDiffTime } from '../util/returnTodayString';
 import { Title } from './Board';
 
 const BoardWrap = styled.div`
@@ -274,7 +274,7 @@ const BoardSearchResult = () => {
                         <div className='frontInfo'>
                           <span className='nickname'>{i.nickname}</span>
                           <div className='line'></div>
-                          <span className='date'>{elapsedTime(i.date)}</span>
+                          <span className='date'>{returnDiffTime(i.date)}</span>
                         </div>
                         <div className='secondInfo'>
                           <div className='comment'>
