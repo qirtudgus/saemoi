@@ -50,9 +50,6 @@ const Input = styled.input`
   margin-bottom: 30px;
   border: 1px solid#dadde6;
   border-radius: 5px;
-  &:focus {
-    background-color: #dfe3ff;
-  }
 
   @media ${({ theme }) => theme.device.tablet} {
     width: 300px;
