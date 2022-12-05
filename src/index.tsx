@@ -8,6 +8,13 @@ import { Cookies } from 'react-cookie';
 import { UserServiceAutoLogin } from './store/userSlice';
 import ScrollToTop from './components/pageMoveTopScroll';
 
+// replace console.* for disable log on production
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
+
 const cookies = new Cookies();
 
 //로그인 유지를 위한 함수, 토큰이 유효할 시 정보를 불러오는 디스패치, 토큰이 없을 시 return
