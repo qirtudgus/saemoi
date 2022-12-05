@@ -31,7 +31,7 @@ const HeaderWrap = styled.header`
   height: 60px;
   background: #35363a;
   z-index: 100;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   box-sizing: border-box;
   ${({ theme }) => theme.common.flexCenter};
 `;
@@ -69,7 +69,7 @@ const FooterWrap = styled.footer`
   margin-top: 50px;
   background: #575757;
   /* background: #e4e4fc; */
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid ${({ theme }) => theme.colors.borderColor};
 
   /* @media ${({ theme }) => theme.device.mobile} {
     height: 150px;
