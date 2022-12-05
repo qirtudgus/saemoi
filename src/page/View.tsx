@@ -12,7 +12,7 @@ import remove_like from '../img/remove_like.svg';
 import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { elapsedTime, returnTodayString } from '../util/returnTodayString';
+import { returnDiffTime, returnTodayString } from '../util/returnTodayString';
 import ErrorPage from './ErrorPage';
 
 const ViewWrap = styled.div`
@@ -492,7 +492,7 @@ const View = () => {
                               <NicknameAndTime>
                                 <span>{i.nickname}</span>
                                 <VerticalLine />
-                                <span>{elapsedTime(i.date)}</span>
+                                <span>{returnDiffTime(i.date)}</span>
                               </NicknameAndTime>
                               {i.id === id ? (
                                 <>
@@ -581,7 +581,7 @@ const View = () => {
                                       ></img>
                                       <span>{i.nickname}</span>
                                       <VerticalLine />
-                                      <span>{elapsedTime(i.date)}</span>
+                                      <span>{returnDiffTime(i.date)}</span>
                                     </NicknameAndTime>
                                   </CommentUserInfo>
                                   <CommentContent>
@@ -602,7 +602,7 @@ const View = () => {
                                         ></img>
                                         <span>{i.nickname}</span>
                                         <VerticalLine />
-                                        <span>{elapsedTime(i.date)}</span>
+                                        <span>{returnDiffTime(i.date)}</span>
                                       </NicknameAndTime>
                                       {i.id === id ? (
                                         <MoreButtonGroup
