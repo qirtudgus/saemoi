@@ -82,7 +82,7 @@ const ContentLabel = styled.label`
 
 const TitleInput = styled.input`
   width: 100%;
-  max-width: 573px;
+  max-width: 397px;
   padding: 10px;
   border: 1px solid#dadde6;
 `;
@@ -91,6 +91,9 @@ const MultiInputWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  & div:first-child {
+    margin-right: 15px;
+  }
 `;
 
 const BtnWrap = styled.div`
@@ -117,6 +120,7 @@ const ButtonWrap = styled(motion.button)<ButtonInterface>`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
   &:hover {
     opacity: 0.8;
   }
@@ -177,15 +181,23 @@ const HeaderDiv = styled.div`
 
 const BackBtn = styled(motion.button)`
   background: none;
+  display: flex;
+  align-items: center;
 `;
 
 const TitleOrBackWrap = styled.div`
   display: flex;
+
   & img {
     cursor: pointer;
     margin-right: 5px;
   }
 `;
+
+const HelpText = styled.p`
+  margin-bottom: 10px;
+`;
+
 const RaidWrite = () => {
   const codeRef = useRef() as RefObject<HTMLInputElement>;
   const nameRef = useRef() as RefObject<HTMLInputElement>;
@@ -197,7 +209,7 @@ const RaidWrite = () => {
   const [positionState, setPositionState] = useState('어태커');
   const [difficultyState, setDifficultyState] = useState('6성');
 
-  const option = ['1턴 도발', '3턴 공격', '디버프 금지', '나이킹팟', '1딜러 3서폿', '특수방어🔻', '방어🔻'];
+  const option = ['1턴 도발', '3턴 공격', '디버프❌', '나이킹팟', '1딜러 3서폿', '특수방어🔻', '방어🔻', '재도전!'];
   const nameRefFocus = () => {
     if (nameRef === null) {
       return;
@@ -244,7 +256,7 @@ const RaidWrite = () => {
       }
     });
 
-    if (codeRef.current && nameRef.current && typeRef.current && etcTextRef.current) {
+    if (codeRef.current && nameRef.current && etcTextRef.current) {
       if (codeRef.current.value.length !== 6) {
         alert('코드는 6자입니다.');
         codeRef.current.focus();
@@ -254,16 +266,19 @@ const RaidWrite = () => {
       } else if (nameRef.current.value === '' && nameRef.current.value.length === 0) {
         alert('포켓몬의 이름을 입력해주세요.');
         nameRef.current.focus();
-      } else if (typeRef.current.value === '' && typeRef.current.value.length === 0) {
-        alert('포켓몬의 타입을 입력해주세요.');
-        typeRef.current.focus();
-      } else {
+      }
+      // else if (typeRef.current.value === '' && typeRef.current.value.length === 0) {
+      //   alert('포켓몬의 타입을 입력해주세요.');
+      //   typeRef.current.focus();
+      // }
+      else {
         let date = returnTodayString();
         customAxios('post', '/raidboard/list', {
           nickname,
           raidCode: codeRef.current.value,
           monsterName: nameRef.current.value,
-          type: typeRef.current.value,
+          type: '',
+          // type: typeRef.current.value,
           positionState,
           difficultyState,
           optionList,
@@ -321,13 +336,13 @@ const RaidWrite = () => {
         <InputWrap>
           <MultiInputWrap>
             <div>
-              <ContentLabel htmlFor='title'>레이드 코드</ContentLabel>
+              <ContentLabel htmlFor='title'>레이드 암호 6자</ContentLabel>
               <TitleInput
                 id='title'
                 type={'text'}
                 ref={codeRef}
                 maxLength={6}
-                placeholder='레이드 코드'
+                placeholder='레이드 암호를 입력'
                 value={code}
                 onKeyUp={(e) => {
                   console.log(e.currentTarget!.value);
@@ -348,22 +363,22 @@ const RaidWrite = () => {
               ></TitleInput>
             </div>
             <div>
-              <ContentLabel htmlFor='title'>포켓몬 이름</ContentLabel>
+              <ContentLabel htmlFor='title'>포켓몬명 / 타입</ContentLabel>
               <TitleInput
                 id='title'
                 type={'text'}
                 ref={nameRef}
-                maxLength={8}
-                placeholder='포켓몬 이름'
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
-                  }
-                }}
+                maxLength={12}
+                placeholder='포켓몬 이름과 타입을 입력'
+                // onKeyDown={(e) => {
+                //   if (e.keyCode === 13) {
+                //     nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
+                //   }
+                // }}
               ></TitleInput>
             </div>
 
-            <div>
+            {/* <div>
               <ContentLabel htmlFor='title'>타입</ContentLabel>
               <TitleInput
                 id='title'
@@ -377,7 +392,7 @@ const RaidWrite = () => {
                   }
                 }}
               ></TitleInput>
-            </div>
+            </div> */}
           </MultiInputWrap>
         </InputWrap>
 
@@ -403,9 +418,19 @@ const RaidWrite = () => {
             })}
           </BtnList>
         </InputWrap> */}
+        <InputWrap>
+          <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
+          <TitleInput
+            id='etcText'
+            type={'text'}
+            ref={etcTextRef}
+            maxLength={20}
+            placeholder='ex)방장 블래키...등'
+          ></TitleInput>
+        </InputWrap>
 
         <InputWrap>
-          <ContentLabel>난이도를 선택해주세요.</ContentLabel>
+          <ContentLabel>난이도를 선택해주세요. (기본 6성 선택)</ContentLabel>
           <BtnList>
             {difficultyList.map((i, index) => {
               return (
@@ -434,17 +459,7 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
-          <TitleInput
-            id='etcText'
-            type={'text'}
-            ref={etcTextRef}
-            maxLength={20}
-            placeholder='ex)방장 블래키...등'
-          ></TitleInput>
-        </InputWrap>
-        <InputWrap>
-          <ContentLabel>필요한 태그를 선택해주세요. - 선택(다중 선택 가능)</ContentLabel>
+          <ContentLabel>필요한 태그를 선택해주세요. - 선택 (다중 선택 가능)</ContentLabel>
           <BtnList>
             {option.map((i, index) => {
               return (
@@ -481,6 +496,10 @@ const RaidWrite = () => {
           완료
         </ButtonWrap>
       </BtnWrap>
+
+      <HelpText>*레이드 코드에는 소문자 입력 시에도 자동으로 대문자로 변환됩니다.</HelpText>
+      <HelpText>*전달 사항에는 파티원들이 알았으면 하는 내용을 적고, 아예 적지 않아도 됩니다.</HelpText>
+      <HelpText>*태그는 쓰고 싶은 용어를 눌러놓으면 리스트에 표시됩니다.</HelpText>
     </ThemeProvider>
   );
 };
