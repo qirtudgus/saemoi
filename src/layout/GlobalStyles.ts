@@ -174,17 +174,18 @@ table {
 input {
   color: #fff;
   background-color: #35363a;
+  transition: outline 0.3s;
 }
 input:focus {
     background-color: #35363a;
+    border-color: #ef5a34;
+    outline:1px solid #ef5a34;  
   }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #fff;
   opacity: 1; /* Firefox */
 }
 
-
-}
 `;
 
 export default GlobalStyles;
