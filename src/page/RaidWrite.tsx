@@ -453,16 +453,17 @@ const RaidWrite = () => {
         </InputWrap>
 
         <InputWrap>
-          <ContentLabel htmlFor='etcText'>기타 전달사항 - 선택 사항</ContentLabel>
+          <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
           <TitleInput
             id='etcText'
             type={'text'}
             ref={etcTextRef}
+            maxLength={20}
             placeholder='ex)방장 블래키...등'
           ></TitleInput>
         </InputWrap>
         <InputWrap>
-          <ContentLabel>필요한 태그를 선택해주세요. - 선택 사항(다중 선택 가능)</ContentLabel>
+          <ContentLabel>필요한 태그를 선택해주세요. - 선택(다중 선택 가능)</ContentLabel>
           <BtnList>
             {option.map((i, index) => {
               return (
