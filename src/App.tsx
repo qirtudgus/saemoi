@@ -115,6 +115,25 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    let Check = (e: any) => {
+      console.log(e.target);
+      console.log(e.target.classList.value);
+      let a = 'menuOpenCheck';
+      let uiBox = document.getElementById('OpenMenuCheck');
+
+      if (a.match('menuOpenCheck')) {
+        //들어있을 때 uiBox 클래스 제거
+        console.log('오픈체크메뉴가 들어있음');
+        uiBox?.classList.remove('on');
+      }
+
+      // console.log(e.currentTarget);
+    };
+
+    document.addEventListener('click', Check);
+  }, []);
+
   return (
     <>
       <GlobalStyles />
