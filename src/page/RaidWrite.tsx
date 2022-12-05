@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
@@ -30,7 +31,7 @@ const PropertyLabel = styled.label`
   border-radius: 10px;
 `;
 
-const BtnLabel = styled.label`
+const BtnLabel = styled(motion.label)`
   cursor: pointer;
   width: auto;
 
@@ -105,7 +106,7 @@ interface ButtonInterface {
   ButtonTextColor?: string;
 }
 
-const ButtonWrap = styled.button<ButtonInterface>`
+const ButtonWrap = styled(motion.button)<ButtonInterface>`
   cursor: pointer;
   width: 100px;
   height: 35px;
@@ -174,7 +175,7 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
 `;
 
-const BackBtn = styled.button`
+const BackBtn = styled(motion.button)`
   background: none;
 `;
 
@@ -285,6 +286,7 @@ const RaidWrite = () => {
           <HeaderDiv>
             <TitleOrBackWrap>
               <BackBtn
+                whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   navigate(-1);
                 }}
@@ -418,7 +420,13 @@ const RaidWrite = () => {
                     value={i}
                     checked={i === difficultyState}
                   ></BtnRadio>
-                  <BtnLabel htmlFor={i.toString()}> {i}</BtnLabel>
+                  <BtnLabel
+                    whileTap={{ scale: 0.95 }}
+                    htmlFor={i.toString()}
+                  >
+                    {' '}
+                    {i}
+                  </BtnLabel>
                 </React.Fragment>
               );
             })}
@@ -448,7 +456,13 @@ const RaidWrite = () => {
                     defaultValue={i}
                     // value={i}
                   ></BtnRadio>
-                  <BtnRaidOptionLabel htmlFor={i.toString()}> {i}</BtnRaidOptionLabel>
+                  <BtnRaidOptionLabel
+                    whileTap={{ scale: 0.95 }}
+                    htmlFor={i.toString()}
+                  >
+                    {' '}
+                    {i}
+                  </BtnRaidOptionLabel>
                 </React.Fragment>
               );
             })}
@@ -456,7 +470,10 @@ const RaidWrite = () => {
         </InputWrap>
       </>
       <BtnWrap>
-        <ButtonWrap onClick={submit}>
+        <ButtonWrap
+          whileTap={{ scale: 0.95 }}
+          onClick={submit}
+        >
           <img
             src={등록하기}
             alt='등록하기'
