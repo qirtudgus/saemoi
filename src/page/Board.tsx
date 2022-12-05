@@ -27,7 +27,7 @@ const BoardLi = styled.li`
   align-items: flex-start;
   padding: 15px 15px 10px;
 
-  border-bottom: 1px solid#dadde6;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
 
   width: 100%;
   justify-content: space-around;
@@ -114,7 +114,7 @@ const BoardLi = styled.li`
 
   & .line {
     display: inline-block;
-    border-left: 1px solid #dadde6;
+    border-left: 1px solid ${({ theme }) => theme.colors.borderColor};
     margin: 0 10px;
     height: 15px;
   }
@@ -132,7 +132,7 @@ const WriteButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid#dadde6;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   & h1 {
     flex-shrink: 0;
   }
