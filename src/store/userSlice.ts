@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import customAxios from '../util/customAxios';
 import { Cookies } from 'react-cookie';
 
@@ -103,6 +102,7 @@ const user = createSlice({
       })
       .addCase(UserServiceAutoLogin.getUserAutoLogin.pending, (state, actions) => {
         console.log('자동로그인 시도');
+        console.log(actions);
       })
       .addCase(UserServiceAutoLogin.getUserAutoLogin.fulfilled, (state, actions) => {
         //자동 로그인 성공 시
