@@ -23,6 +23,7 @@ import theme from './layout/theme';
 import { userCountDispatch } from './store/userCountSlice';
 import 초록불 from './img/onboard.svg';
 import LayoutWrite from './layout/LayoutWrite';
+import ArrayTest from './page/ArrayTest';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 const socket = io(port);
 
@@ -177,11 +178,16 @@ function App() {
             path='/raidboard/list'
             element={<RaidBoard />}
           ></Route>
+
           <Route
             path='*'
             element={<ErrorPage />}
           ></Route>
         </Route>
+        <Route
+          path='/test'
+          element={<ArrayTest />}
+        ></Route>
       </Routes>
     </>
   );
