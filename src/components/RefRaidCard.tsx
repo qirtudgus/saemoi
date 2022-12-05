@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../layout/theme';
 import { elapsedTime } from '../util/returnTodayString';
