@@ -12,7 +12,7 @@ import 왼쪽화살표 from '../img/왼쪽화살표.svg';
 import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { elapsedTime } from '../util/returnTodayString';
+import { returnDiffTime } from '../util/returnTodayString';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
@@ -429,7 +429,7 @@ const Board = () => {
                           <div className='frontInfo'>
                             <span className='nickname'>{i.nickname}</span>
                             <div className='line'></div>
-                            <span className='date'>{elapsedTime(i.date)}</span>
+                            <span className='date'>{returnDiffTime(i.date)}</span>
                           </div>
                           <div className='secondInfo'>
                             <div className='comment'>
