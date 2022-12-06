@@ -16,11 +16,17 @@ const Sound = () => {
     console.log(payload);
     if (payload === true) {
       // audio.play();
-      audio.play();
-      // const promise = audio.play();
-      // if (promise !== undefined) {
-      //   promise.then(() => {}).catch((error) => console.error);
-      // }
+      // audio.play();
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise
+          .then(() => {
+            console.log('재생완료');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   });
 
