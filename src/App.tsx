@@ -26,6 +26,8 @@ import { userCountDispatch } from './store/userCountSlice';
 import 'moment/locale/ko';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import Sound from './components/Sound';
+import audios from '../img/피카츄.mp3';
+
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -133,6 +135,28 @@ function App() {
 
     return () => {
       document.removeEventListener('click', Check);
+    };
+  }, []);
+
+  useEffect(() => {
+    //사파리 알람 이슈 해결코드
+    function unlockAudio() {
+      const sound = new Audio(audios);
+
+      sound.play();
+      sound.pause();
+      sound.currentTime = 0;
+
+      document.body.removeEventListener('click', unlockAudio);
+      document.body.removeEventListener('touchstart', unlockAudio);
+    }
+
+    document.body.addEventListener('click', unlockAudio);
+    document.body.addEventListener('touchstart', unlockAudio);
+
+    return () => {
+      document.body.removeEventListener('click', unlockAudio);
+      document.body.removeEventListener('touchstart', unlockAudio);
     };
   }, []);
 
