@@ -4,8 +4,6 @@ import { socket } from '../App';
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
   const [audio] = useState(new Audio(audios));
-  audio.play();
-  audio.pause();
 
   audio.volume = 0.4;
   audio.autoplay = false;
@@ -18,7 +16,11 @@ const Sound = () => {
       console.log('여기는 사운드 컴포넌트');
       console.log(payload);
       if (payload === true) {
-        audio.play();
+        // audio.play();
+        const promise = audio.play();
+        if (promise !== undefined) {
+          promise.then(() => {}).catch((error) => console.error);
+        }
       }
     });
   }, []);
