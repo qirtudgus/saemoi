@@ -27,7 +27,7 @@ import 'moment/locale/ko';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import Sound from './components/Sound';
 import audios from './img/피카츄.mp3';
-
+const sound = new Audio(audios);
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -141,12 +141,12 @@ function App() {
   useEffect(() => {
     //사파리 알람 이슈 해결코드
     function unlockAudio() {
-      const sound = new Audio(audios);
-
+      sound.autoplay = true;
+      sound.volume = 1;
       sound.play();
-      sound.pause();
+      // sound.pause();
       sound.currentTime = 0;
-
+      console.log('삭제');
       document.body.removeEventListener('click', unlockAudio);
       document.body.removeEventListener('touchstart', unlockAudio);
     }
