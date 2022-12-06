@@ -17,7 +17,8 @@ const Sound = () => {
     console.log(payload);
     if (payload === true) {
       //강제로 상호작용시켜 소리를 낸다.
-      window.navigator.vibrate([200, 100, 200]);
+      navigator.vibrate([200, 100, 200]);
+
       document.getElementById('soundId')?.click();
       // test.current?.click();
       // audio.play();
