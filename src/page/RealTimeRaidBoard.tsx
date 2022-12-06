@@ -12,6 +12,8 @@ import RefRaidCard from '../components/RefRaidCard';
 import { Title } from './Board';
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { SoundtDispatch } from '../store/soundSlice';
+
 const RefreshAni = keyframes`
   to {
     transform: rotate(0deg);
@@ -186,30 +188,29 @@ const RealTimeRaidBoard = () => {
     //   setList(res.data);
     //   setIsLoading(true);
     // });
-    setTimeout(() => {
-      socket.on('raidList', function (payload) {
-        dispatch(RaidListDispatch(payload));
-        setIsLoading(true);
-        // setIsRefreshFunc(false);
-      });
-    }, 300);
+    socket.on('raidList', function (payload) {
+      dispatch(RaidListDispatch(payload));
+
+      // setIsRefreshFunc(false);
+    });
+    setIsLoading(true);
   }, []);
 
-  useEffect(() => {
-    setIsLoading(false);
-    // setIsRefreshFunc(true);
-    window.scrollTo({ top: 0 });
-    // customAxios('get', '/raidboard/list', {}).then((res) => {
-    //   console.log(res.data);
-    //   setList(res.data);
-    //   setIsLoading(true);
-    // });
-    setTimeout(() => {
-      socket.emit('RefreshraidList');
-      setIsLoading(true);
-      // setIsRefreshFunc(false);
-    }, 300);
-  }, [isLoad]);
+  // useEffect(() => {
+  //   setIsLoading(false);
+  //   // setIsRefreshFunc(true);
+  //   window.scrollTo({ top: 0 });
+  //   // customAxios('get', '/raidboard/list', {}).then((res) => {
+  //   //   console.log(res.data);
+  //   //   setList(res.data);
+  //   //   setIsLoading(true);
+  //   // });
+  //   setTimeout(() => {
+  //     socket.emit('RefreshraidList');
+  //     setIsLoading(true);
+  //     // setIsRefreshFunc(false);
+  //   }, 300);
+  // }, [isLoad]);
 
   const Refresh = () => {
     let a = imgRef.current;
@@ -229,7 +230,6 @@ const RealTimeRaidBoard = () => {
 
   return (
     <>
-      {' '}
       <PcBtnWrap>
         <Title>오늘 열린 레이드 {list.length}회</Title>
         <PcInnerBtnWrap>
@@ -281,7 +281,7 @@ const RealTimeRaidBoard = () => {
         list?.map((i: any, index: number) => (
           <RefRaidCard
             // ref={ref}
-            key={i.idx}
+            key={i.raidCode}
             monsterName={i.monsterName}
             raidDifficulty={i.raidDifficulty}
             raidCode={i.raidCode}
