@@ -32,66 +32,97 @@ const io = new Server(server, {
 });
 
 var userCount = 0;
+let deleteSeconds = 10;
 var userList: any = [];
+var raidList: {
+  monsterName: string;
+  raidDifficulty: string;
+  raidCode: string;
+  type: string;
+  date: string;
+  deleteDate: string;
+  raidText: string;
+  raidOption: string;
+}[] = [];
+
 io.on('connection', (socket) => {
+  const socketId = socket.id;
   userCount++;
   io.emit('userCount', userCount);
   console.log('a user connected');
-  console.log(socket.id);
-  const socketId = socket.id;
-  //접속 시 유저 수와 userList에 고유 소켓값을 넣어서 반환해준다.
-  // count++;
-  // userList.push(socketId);
-  // io.emit('users.count', { userList });
+  socket.emit('raidList', raidList);
+  socket.on('RefreshraidList', () => {
+    console.log('새로고침 요청');
+    io.emit('raidList', raidList);
+  });
+  socket.on('raidList', (payload) => {
+    console.log('raidList socket on 인자값');
+    //페이로드엔 등록한 레이드 객체가 들어있음
+    raidList.unshift(payload);
+    //등록시간이 3분(180초)지난것을 제외시킴.
+    // 1 - 삭제시간을 등록하여 로직을 변경할 수 있다 (삭제시간이 넘어간것)
+    // let three = raidList.filter((i, index) => {
+    //   if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+    // });
+    // raidList = [...three];
+    io.emit('raidList', raidList);
+    //db에 저장시켜주자..
+    let {
+      nickname,
+      raidCode,
+      monsterName,
+      type,
+      positionState = '',
+      difficultyState,
+      optionList,
+      etcText,
+      date,
+    } = payload;
+    let insertQuery =
+      'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
+    db.query(
+      insertQuery,
+      [nickname, raidCode, monsterName, type, positionState, difficultyState, optionList, etcText, date],
+      (err, rows) => {
+        console.log('게시물 등록 완료');
+        console.log(err);
+      },
+    );
+  });
 
-  // socket.on('users.count', ({ id }) => {
-  //   console.log('들어온 데이터');
-  //   console.log(id);
-  //   console.log(socketId);
-
-  //   if (id === '첫접속') {
-  //     io.emit('users.count', userList);
-  //   } else if (id === '로그아웃') {
-  //     //로그아웃시에도 해당 소켓을 삭제
-  //     let idx = userList.findIndex((i: any) => {
-  //       return i.socketId === socketId;
-  //     });
-  //     if (idx === -1) {
-  //       io.emit('users.count', userList);
-  //     } else {
-  //       userList.splice(idx, 1);
-  //       io.emit('users.count', userList);
-  //       console.log('연결끊겼을때 유저리스트');
-  //       console.log(userList);
-  //     }
-  //   } else {
-  //     userList.push({ id, socketId: socketId });
-  //     console.log('에밋전에 가공한 유저리스트 데이터');
-  //     console.log(userList);
-  //     io.emit('users.count', userList);
-  //   }
-  // });
-
+  //사용자 연결이 끊겼을 때..
   socket.on('disconnect', function () {
     userCount--;
     console.log('undecreas!', userCount);
     io.emit('userCount', userCount);
-    //소켓이 연결이 끊길 시 고유 소켓값과 유저수를 줄인다.
-    // let idx = userList.findIndex((i: any) => {
-    //   return i.socketId === socketId;
-    // });
-    // console.log('파인드인덱스로 찾은 번호');
-    // console.log(idx);
-    // if (idx === -1) {
-    //   io.emit('users.count', userList);
-    // } else {
-    //   userList.splice(idx, 1);
-    //   io.emit('users.count', userList);
-    //   console.log('연결끊겼을때 유저리스트');
-    //   console.log(userList);
-    // }
   });
 });
+
+//10초마다 한번씩 레이드 정리
+// setInterval(() => {
+//   //보내줄 레이드가 없을때는 stop
+//   if (raidList.length === 0) return;
+//   //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
+//   let check = raidList.findIndex((i) => {
+//     return moment().diff(i.date, 'seconds') > deleteSeconds;
+//   });
+//   if (check === -1) {
+//     console.log('삭제할 배열이 없습니다.');
+//     return;
+//   } else {
+//     let three = raidList.filter((i, index) => {
+//       if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+//     });
+//     // TimeOutDel(raidList)
+//     raidList = [...three];
+//     io.emit('raidList', raidList);
+//   }
+// }, 1000);
+
+setInterval(() => {
+  if (raidList.length === 0) return;
+  io.emit('raidList', raidList);
+}, 5000);
 
 db.connect((err: any) => {
   if (err) console.log('MySQL 연결 실패 : ', err);
