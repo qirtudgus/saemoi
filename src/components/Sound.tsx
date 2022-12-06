@@ -11,6 +11,12 @@ const Sound = () => {
     console.log('피카추!');
   };
 
+  let a = process.env.PUBLIC_URL;
+
+  let audio2 = new Audio();
+  audio2.src = `${a}/피카츄.mp3`;
+  audio2.volume = 0.1;
+  audio2.autoplay = false;
   socket.on('newPost', function (payload) {
     console.log('여기는 사운드 컴포넌트');
     console.log(payload);
@@ -18,8 +24,10 @@ const Sound = () => {
       // audio.play();
       // audio.play();
       const promise = audio.play();
-      if (promise !== undefined) {
-        promise
+      const promise2 = audio2.play();
+      // audio2.play();
+      if (promise2 !== undefined) {
+        promise2
           .then(() => {
             console.log('재생완료');
           })
