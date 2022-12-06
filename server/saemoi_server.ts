@@ -10,6 +10,7 @@ import { raidBoardRouter } from './router/raidBoard.js';
 import { commentRouter } from './router/comment.js';
 import { Server } from 'socket.io';
 import http from 'http';
+import schedule from 'node-schedule';
 
 const SERVER_PORT = 3002;
 const app = express();
@@ -48,6 +49,12 @@ var raidList: {
 io.on('connection', (socket) => {
   const socketId = socket.id;
   userCount++;
+
+  socket.emit('newPost', false);
+  // socket.on('newPost', () => {
+  //   io.emit('newPost', true);
+  // });
+
   io.emit('userCount', userCount);
   console.log('a user connected');
   socket.emit('raidList', raidList);
@@ -57,6 +64,8 @@ io.on('connection', (socket) => {
   });
   socket.on('raidList', (payload) => {
     console.log('raidList socket on 인자값');
+    //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
+    io.emit('newPost', true);
     //페이로드엔 등록한 레이드 객체가 들어있음
     raidList.unshift(payload);
     //등록시간이 3분(180초)지난것을 제외시킴.
@@ -168,6 +177,18 @@ app.post('/api/loginlist', (req, res) => {
   console.log(req.body);
   console.log(req);
   res.status(200).json('haha');
+});
+
+const Job = () => {
+  console.log('레이드리스트 정리');
+  raidList = [];
+  io.emit('raidList', raidList);
+};
+
+const job = schedule.scheduleJob('0 0 * * *', function () {
+  console.log(new Date());
+  console.log('노드 스케쥴 호출');
+  Job();
 });
 
 //socketio와 http 포트를 동일하게 사용하는 법

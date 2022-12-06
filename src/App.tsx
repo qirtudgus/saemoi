@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { userCountDispatch } from './store/userCountSlice';
 import 'moment/locale/ko';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
+import Sound from './components/Sound';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -138,6 +139,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
+      <Sound />
       <Routes>
         <Route element={<LayoutWrite />}>
           <Route

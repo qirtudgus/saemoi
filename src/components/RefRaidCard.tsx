@@ -79,7 +79,7 @@ const RaidText = styled.span`
 const RefRaidCard = forwardRef(function (props: any, ref: any) {
   return (
     <>
-      {moment().diff(props.date, 'seconds') > 10 ? (
+      {moment().diff(props.date, 'seconds') > 180 ? (
         <ExitListCard
           initial={{ opacity: 0.3 }}
           animate={{ opacity: 1, x: [5, -5, 0] }}

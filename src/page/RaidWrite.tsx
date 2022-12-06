@@ -168,7 +168,7 @@ const HeaderWrap = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
   box-sizing: border-box;
   ${({ theme }) => theme.common.flexCenter};
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `;
 const HeaderDiv = styled.div`
   max-width: 1280px;
