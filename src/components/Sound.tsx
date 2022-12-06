@@ -4,6 +4,8 @@ import { socket } from '../App';
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
   const [audio] = useState(new Audio(audios));
+  audio.play();
+  audio.pause();
 
   audio.volume = 0.4;
   audio.autoplay = false;
