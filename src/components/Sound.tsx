@@ -1,5 +1,5 @@
 import audios from '../img/피카츄.mp3';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { socket } from '../App';
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
@@ -11,6 +11,8 @@ const Sound = () => {
     console.log('피카추!');
   };
 
+  const start = useRef<HTMLDivElement>(null);
+
   let a = process.env.PUBLIC_URL;
 
   let audio2 = new Audio();
@@ -21,13 +23,16 @@ const Sound = () => {
     console.log('여기는 사운드 컴포넌트');
     console.log(payload);
     if (payload === true) {
+      //강제로 상호작용시켜 소리를 낸다.
+      // document.getElementById('soundId')?.click();
+      start.current?.click();
       // audio.play();
       // audio.play();
       const promise = audio.play();
       const promise2 = audio2.play();
       // audio2.play();
 
-      document.getElementById('soundId')?.click();
+      //대체코드
       // if (promise2 !== undefined) {
       //   promise2
       //     .then(() => {
@@ -42,22 +47,16 @@ const Sound = () => {
     }
   });
 
-  // useEffect(() => {
-  //   socket.on('newPost', function (payload) {
-  //     console.log('여기는 사운드 컴포넌트');
-  //     console.log(payload);
-  //     if (payload === true) {
-  //       // audio.play();
-  //       audio.play();
-  //       // const promise = audio.play();
-  //       // if (promise !== undefined) {
-  //       //   promise.then(() => {}).catch((error) => console.error);
-  //       // }
-  //     }
-  //   });
-  // }, []);
-
-  return <></>;
+  return (
+    <>
+      <div
+        ref={start}
+        onClick={() => {
+          audio.play();
+        }}
+      ></div>
+    </>
+  );
 };
 
 export default Sound;

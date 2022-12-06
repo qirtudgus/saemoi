@@ -215,7 +215,6 @@ const RealTimeRaidBoard = () => {
         <Title>오늘 열린 레이드 {list.length}회</Title>
         <PcInnerBtnWrap>
           <SoundCheck
-            id='soundId'
             onClick={() => {
               console.log('버튼클릭');
               audio.play();
@@ -223,7 +222,7 @@ const RealTimeRaidBoard = () => {
           >
             알람 켜기
           </SoundCheck>
-          <SoundCheck
+          {/* <SoundCheck
             onClick={() => {
               if (window.confirm('소켓을 켜시겠습니까?')) {
                 socket.emit('newPost', 'test');
@@ -231,7 +230,7 @@ const RealTimeRaidBoard = () => {
             }}
           >
             newPost 소켓 전송
-          </SoundCheck>
+          </SoundCheck> */}
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}
