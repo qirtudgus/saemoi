@@ -5,6 +5,7 @@ import user from './userSlice';
 import board from './boardSlice';
 import userList from './userListSlice';
 import userCount from './userCountSlice';
+import raidList from './raidListSlice';
 
 //굳이 루트리듀서로 작성하지않아도 자동으로 생성된다고 한다.
 const rooteReducer = combineReducers({
@@ -12,6 +13,7 @@ const rooteReducer = combineReducers({
   board,
   userList,
   userCount,
+  raidList,
 });
 
 export const store = configureStore({

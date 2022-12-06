@@ -18,6 +18,32 @@ export const returnTodayString = () => {
   return moment().format('YYYY/MM/DD HH:mm:ss');
 };
 
+export const returnTodayString180s = () => {
+  let seconds = 180;
+  //현재시간으로부터 180초 더 한 시간을 리턴
+  //  let now = moment().format('YYYY/MM/DD HH:mm:ss');
+  let add = moment().add(seconds, 's').format('HH:mm:ss');
+  return add;
+};
+
+export const returnTodayString180sMMSS = () => {
+  let seconds = 10;
+  //현재시간으로부터 180초 더 한 시간을 리턴
+  //  let now = moment().format('YYYY/MM/DD HH:mm:ss');
+  let add = moment().add(seconds, 's').format('HH:mm:ss');
+  return add;
+};
+
+//삭제시간이 몇 초 남았는지 현재 시간 - 과거 시간
+export const returnDeleteTime = (date: any) => {
+  //화면에는 1초가 바로 깎여보이기때문에 +1 해주자.
+  //현재시간으로부터 180초 더 한 시간을 리턴
+  let 삭제예정시간 = date;
+  let add = moment().diff(삭제예정시간, 'seconds');
+  return Math.abs(add) + 1;
+};
+
+//과거로부터 현재까지 얼마나 경과했는지
 export const returnDiffTime = (date: any) => {
   return moment(date).fromNow();
 };

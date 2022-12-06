@@ -7,8 +7,9 @@ import 뒤로가기 from '../img/뒤로가기.svg';
 import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { returnTodayString } from '../util/returnTodayString';
+import { returnTodayString, returnTodayString180s } from '../util/returnTodayString';
 import { SubmitTitle, Title } from './Board';
+import { socket } from '../App'; //이런식으로 가져와서 소켓 중복안되도록 구현
 
 const BtnList = styled.div`
   display: flex;
@@ -283,21 +284,41 @@ const RaidWrite = () => {
       // }
       else {
         let date = returnTodayString();
-        customAxios('post', '/raidboard/list', {
+        let deleteDate = returnTodayString180s();
+        console.log(optionList.join(', '));
+        console.log(etcTextRef.current.value);
+        socket.emit('raidList', {
           nickname,
           raidCode: codeRef.current.value,
           monsterName: nameRef.current.value,
           type: '',
-          // type: typeRef.current.value,
           positionState,
           difficultyState,
-          optionList,
+          optionList: optionList.join(', '),
           etcText: etcTextRef.current.value,
           date,
-        }).then((res) => {
-          console.log('완료');
-          navigate('/');
+          deleteDate,
         });
+        navigate('/');
+
+        // customAxios('post', '/raidboard/list', {
+        //   nickname,
+        //   raidCode: codeRef.current.value,
+        //   monsterName: nameRef.current.value,
+        //   type: '',
+        //   // type: typeRef.current.value,
+        //   positionState,
+        //   difficultyState,
+        //   optionList,
+        //   etcText: etcTextRef.current.value,
+        //   date,
+        // })
+        //   .then((res) => {
+        //     console.log('완료');
+        //   })
+        //   .then((res) => {
+        //     navigate('/');
+        //   });
       }
     }
 
@@ -305,34 +326,33 @@ const RaidWrite = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <HeaderWrap>
-          <HeaderDiv>
-            <TitleOrBackWrap>
-              <BackBtn
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <img
-                  src={뒤로가기}
-                  alt='뒤로가기'
-                />
-              </BackBtn>
-
-              <Title>레이드 등록</Title>
-            </TitleOrBackWrap>
-            <SubmitTitle
-              as='button'
-              onClick={submit}
+    <>
+      <HeaderWrap>
+        <HeaderDiv>
+          <TitleOrBackWrap>
+            <BackBtn
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                navigate(-1);
+              }}
             >
-              완료
-            </SubmitTitle>
-          </HeaderDiv>
-        </HeaderWrap>
-        {/* <BtnWrap>
+              <img
+                src={뒤로가기}
+                alt='뒤로가기'
+              />
+            </BackBtn>
+
+            <Title>레이드 등록</Title>
+          </TitleOrBackWrap>
+          <SubmitTitle
+            as='button'
+            onClick={submit}
+          >
+            완료
+          </SubmitTitle>
+        </HeaderDiv>
+      </HeaderWrap>
+      {/* <BtnWrap>
           <Title>레이드 등록</Title>
           <ButtonWrapMobile onClick={submit}>
             <img
@@ -343,52 +363,52 @@ const RaidWrite = () => {
           </ButtonWrapMobile>
         </BtnWrap> */}
 
-        <InputWrap>
-          <MultiInputWrap>
-            <div>
-              <ContentLabel htmlFor='title'>레이드 암호 6자</ContentLabel>
-              <TitleInput
-                id='title'
-                type={'text'}
-                ref={codeRef}
-                maxLength={6}
-                placeholder='레이드 암호를 입력'
-                value={code}
-                onKeyUp={(e) => {
-                  console.log(e.currentTarget!.value);
-                }}
-                onChange={(e) => {
-                  //자동으로 대문자로 변경
-                  // let trans = translate(e.target.value) as string;
-                  if (e.target.value.length >= 6) {
-                    nameRefFocus();
-                  }
-                  setCode(e.target.value.toUpperCase());
-                }}
-                // onKeyDown={(e) => {
-                //   if (e.keyCode === 13) {
-                //     codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
-                //   }
-                // }}
-              ></TitleInput>
-            </div>
-            <div>
-              <ContentLabel htmlFor='title'>포켓몬명 / 타입</ContentLabel>
-              <TitleInput
-                id='title'
-                type={'text'}
-                ref={nameRef}
-                maxLength={12}
-                placeholder='포켓몬 이름과 타입을 입력'
-                // onKeyDown={(e) => {
-                //   if (e.keyCode === 13) {
-                //     nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
-                //   }
-                // }}
-              ></TitleInput>
-            </div>
+      <InputWrap>
+        <MultiInputWrap>
+          <div>
+            <ContentLabel htmlFor='title'>레이드 암호 6자</ContentLabel>
+            <TitleInput
+              id='title'
+              type={'text'}
+              ref={codeRef}
+              maxLength={6}
+              placeholder='레이드 암호를 입력'
+              value={code}
+              onKeyUp={(e) => {
+                console.log(e.currentTarget!.value);
+              }}
+              onChange={(e) => {
+                //자동으로 대문자로 변경
+                // let trans = translate(e.target.value) as string;
+                if (e.target.value.length >= 6) {
+                  nameRefFocus();
+                }
+                setCode(e.target.value.toUpperCase());
+              }}
+              // onKeyDown={(e) => {
+              //   if (e.keyCode === 13) {
+              //     codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
+              //   }
+              // }}
+            ></TitleInput>
+          </div>
+          <div>
+            <ContentLabel htmlFor='title'>포켓몬명 / 타입</ContentLabel>
+            <TitleInput
+              id='title'
+              type={'text'}
+              ref={nameRef}
+              maxLength={12}
+              placeholder='포켓몬 이름과 타입을 입력'
+              // onKeyDown={(e) => {
+              //   if (e.keyCode === 13) {
+              //     nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
+              //   }
+              // }}
+            ></TitleInput>
+          </div>
 
-            {/* <div>
+          {/* <div>
               <ContentLabel htmlFor='title'>타입</ContentLabel>
               <TitleInput
                 id='title'
@@ -403,10 +423,10 @@ const RaidWrite = () => {
                 }}
               ></TitleInput>
             </div> */}
-          </MultiInputWrap>
-        </InputWrap>
+        </MultiInputWrap>
+      </InputWrap>
 
-        {/* <InputWrap>
+      {/* <InputWrap>
           <ContentLabel>자신의 포지션을 선택해주세요. - 선택</ContentLabel>
           <BtnList>
             {list.map((i, index) => {
@@ -428,72 +448,72 @@ const RaidWrite = () => {
             })}
           </BtnList>
         </InputWrap> */}
-        <InputWrap>
-          <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
-          <TitleInput
-            id='etcText'
-            type={'text'}
-            ref={etcTextRef}
-            maxLength={20}
-            placeholder='ex)방장 블래키...등'
-          ></TitleInput>
-        </InputWrap>
+      <InputWrap>
+        <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
+        <TitleInput
+          id='etcText'
+          type={'text'}
+          ref={etcTextRef}
+          maxLength={20}
+          placeholder='ex)방장 블래키...등'
+        ></TitleInput>
+      </InputWrap>
 
-        <InputWrap>
-          <ContentLabel>난이도를 선택해주세요. (기본 6성 선택)</ContentLabel>
-          <BtnList>
-            {difficultyList.map((i, index) => {
-              return (
-                <React.Fragment key={i}>
-                  <BtnRadio
-                    id={i.toString()}
-                    name='difficulty'
-                    onChange={() => {
-                      setDifficultyState(i);
-                    }}
-                    type={'radio'}
-                    value={i}
-                    checked={i === difficultyState}
-                  ></BtnRadio>
-                  <BtnLabel
-                    whileTap={{ scale: 0.95 }}
-                    htmlFor={i.toString()}
-                  >
-                    {' '}
-                    {i}
-                  </BtnLabel>
-                </React.Fragment>
-              );
-            })}
-          </BtnList>
-        </InputWrap>
+      <InputWrap>
+        <ContentLabel>난이도를 선택해주세요. (기본 6성 선택)</ContentLabel>
+        <BtnList>
+          {difficultyList.map((i, index) => {
+            return (
+              <React.Fragment key={i}>
+                <BtnRadio
+                  id={i.toString()}
+                  name='difficulty'
+                  onChange={() => {
+                    setDifficultyState(i);
+                  }}
+                  type={'radio'}
+                  value={i}
+                  checked={i === difficultyState}
+                ></BtnRadio>
+                <BtnLabel
+                  whileTap={{ scale: 0.95 }}
+                  htmlFor={i.toString()}
+                >
+                  {' '}
+                  {i}
+                </BtnLabel>
+              </React.Fragment>
+            );
+          })}
+        </BtnList>
+      </InputWrap>
 
-        <InputWrap>
-          <ContentLabel>필요한 태그를 선택해주세요. - 선택 (다중 선택 가능)</ContentLabel>
-          <BtnList>
-            {option.map((i, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <BtnRadio
-                    id={i.toString()}
-                    name='option'
-                    type={'checkBox'}
-                    defaultValue={i}
-                    // value={i}
-                  ></BtnRadio>
-                  <BtnRaidOptionLabel
-                    whileTap={{ scale: 0.95 }}
-                    htmlFor={i.toString()}
-                  >
-                    {' '}
-                    {i}
-                  </BtnRaidOptionLabel>
-                </React.Fragment>
-              );
-            })}
-          </BtnList>
-        </InputWrap>
-      </>
+      <InputWrap>
+        <ContentLabel>필요한 태그를 선택해주세요. - 선택 (다중 선택 가능)</ContentLabel>
+        <BtnList>
+          {option.map((i, index) => {
+            return (
+              <React.Fragment key={index}>
+                <BtnRadio
+                  id={i.toString()}
+                  name='option'
+                  type={'checkBox'}
+                  defaultValue={i}
+                  // value={i}
+                ></BtnRadio>
+                <BtnRaidOptionLabel
+                  whileTap={{ scale: 0.95 }}
+                  htmlFor={i.toString()}
+                >
+                  {' '}
+                  {i}
+                </BtnRaidOptionLabel>
+              </React.Fragment>
+            );
+          })}
+        </BtnList>
+      </InputWrap>
+
       <BtnWrap>
         <ButtonWrap
           whileTap={{ scale: 0.95 }}
@@ -510,7 +530,7 @@ const RaidWrite = () => {
       <HelpText>*레이드 코드에는 소문자 입력 시에도 자동으로 대문자로 변환됩니다.</HelpText>
       <HelpText>*전달 사항에는 파티원들이 알았으면 하는 내용을 적고, 아예 적지 않아도 됩니다.</HelpText>
       <HelpText>*태그는 쓰고 싶은 용어를 눌러놓으면 리스트에 표시됩니다.</HelpText>
-    </ThemeProvider>
+    </>
   );
 };
 

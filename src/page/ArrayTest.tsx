@@ -1,59 +1,73 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import ArrayTestObj from './ArrayTestObj';
+import { motion } from 'framer-motion';
+import styled, { css, keyframes } from 'styled-components';
+
+interface ListIn {
+  $id?: number;
+}
+
+const Ani = keyframes`
+  from{scale:0.5}
+  to{scale:1}
+`;
+
+const Lists = styled(motion.li)<ListIn>`
+  /* ${(props) =>
+    props.$id &&
+    css`
+      &:first-child {
+        animation: ${Ani} 1s;
+        font-size: 2em;
+      }
+    `} */
+`;
+
+const List = React.memo(function ({ i, index, $id }: { i: any; index?: number; $id?: number }) {
+  return (
+    <Lists
+      $id={id}
+      // initial={{ x: '-300px', opacity: 0 }}
+      // animate={{ x: 0, opacity: 1 }}
+
+      animate={{ x: 100 }}
+      transition={{ ease: 'easeOut', duration: 0.5 }}
+    >
+      {i.text}
+    </Lists>
+  );
+});
 
 var id = 0;
-
 const ArrayTest = () => {
-  const [arr, setArr] = useState([{ id: id, test: '테스트 박스' }]);
-  const [arr2, setArr2] = useState([{ id: id, test: '테스트 박스' }]);
-
-  let AddArr = () => {
-    //   let a = arr.concat({ test: '테스트 박스입니다' });
-    id = id += 1;
-    setArr([...arr, { id: id, test: '테스트 박스입니다' }]);
+  const [arr, setArr] = useState<{ text: string }[]>([{ text: '테스트 박스' }]);
+  let addArr = () => {
+    id++;
+    //앞쪽에 먼저 넣으면 기존 배열의 순서들이 전부 깨지니까 memo가 소용없고 전부 리렌더링 된다.
+    setArr([{ text: `테스트 박스 ${id}` }, ...arr]);
   };
 
-  let AddArr2 = () => {
-    //   let a = arr.concat({ test: '테스트 박스입니다' });
-    id = id += 1;
-    setArr2([...arr2, { id: id, test: '테스트 박스입니다' }]);
+  let concatArr = () => {
+    id++;
+    setArr(arr.concat({ text: `테스트 박스 ${id}` }));
   };
+
   return (
     <>
-      <button onClick={AddArr}>1번 오브젝트 박스 추가</button>
-      <button onClick={AddArr2}>2번 오브젝트 박스 추가</button>
-      {/* <button onClick={)}>박스 추가</button> */}
-
-      {arr2.map((i, index) => {
-        return (
-          <ArrayTestObj
-            key={i.id}
-            index={index}
-            i={i}
-          />
-          //   <Div>
-          //     {index}
-          //     {i.test}
-          //   </Div>
-        );
-      })}
-
-      {arr.map((i, index) => {
-        return (
-          <ArrayTestObj
-            key={i.id}
-            index={index}
-            i={i}
-          />
-          //   <Div>
-          //     {index}
-          //     {i.test}
-          //   </Div>
-        );
-      })}
+      <button onClick={addArr}>스프레드 문법 추가</button>
+      <button onClick={concatArr}>concat()추가</button>
+      <ul>
+        {arr.map((i, index) => {
+          return (
+            <List
+              // $id={id}
+              key={index}
+              i={i}
+            />
+          );
+        })}
+      </ul>
     </>
   );
 };
 
-export default React.memo(ArrayTest);
+export default ArrayTest;
