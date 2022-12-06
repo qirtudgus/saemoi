@@ -224,6 +224,15 @@ const RealTimeRaidBoard = () => {
           >
             알람 켜기
           </SoundCheck>
+          <SoundCheck
+            onClick={() => {
+              if (window.confirm('소켓을 켜시겠습니까?')) {
+                socket.emit('newPost', 'test');
+              }
+            }}
+          >
+            newPost 소켓 전송
+          </SoundCheck>
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}

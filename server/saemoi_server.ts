@@ -54,6 +54,9 @@ io.on('connection', (socket) => {
   // socket.on('newPost', () => {
   //   io.emit('newPost', true);
   // });
+  socket.on('newPost', (payload) => {
+    io.emit('newPost', true);
+  });
 
   io.emit('userCount', userCount);
   console.log('a user connected');
