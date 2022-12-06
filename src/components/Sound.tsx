@@ -32,6 +32,8 @@ const Sound = () => {
             console.log('재생완료');
           })
           .catch((error) => {
+            audio.play();
+            audio2.play();
             console.log(error);
           });
       }
