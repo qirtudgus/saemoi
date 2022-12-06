@@ -138,27 +138,27 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    //사파리 알람 이슈 해결코드
-    function unlockAudio() {
-      sound.autoplay = true;
-      sound.volume = 1;
-      sound.play();
-      // sound.pause();
-      sound.currentTime = 0;
-      console.log('삭제');
-      document.body.removeEventListener('click', unlockAudio);
-      document.body.removeEventListener('touchstart', unlockAudio);
-    }
+  // useEffect(() => {
+  //   //사파리 알람 이슈 해결코드
+  //   function unlockAudio() {
+  //     sound.autoplay = true;
+  //     sound.volume = 1;
+  //     sound.play();
+  //     // sound.pause();
+  //     sound.currentTime = 0;
+  //     console.log('삭제');
+  //     document.body.removeEventListener('click', unlockAudio);
+  //     document.body.removeEventListener('touchstart', unlockAudio);
+  //   }
 
-    document.body.addEventListener('click', unlockAudio);
-    document.body.addEventListener('touchstart', unlockAudio);
+  //   document.body.addEventListener('click', unlockAudio);
+  //   document.body.addEventListener('touchstart', unlockAudio);
 
-    return () => {
-      document.body.removeEventListener('click', unlockAudio);
-      document.body.removeEventListener('touchstart', unlockAudio);
-    };
-  }, []);
+  //   return () => {
+  //     document.body.removeEventListener('click', unlockAudio);
+  //     document.body.removeEventListener('touchstart', unlockAudio);
+  //   };
+  // }, []);
 
   return (
     <>

@@ -13,6 +13,7 @@ import { Title } from './Board';
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { SoundtDispatch } from '../store/soundSlice';
+import audios from '../img/피카츄.mp3';
 
 const RefreshAni = keyframes`
   to {
@@ -164,6 +165,12 @@ const LoadingText = styled.div`
   }
 `;
 
+const SoundCheck = styled.button`
+  width: 100px;
+  height: 60px;
+  background: #eee;
+`;
+
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -174,43 +181,17 @@ const RealTimeRaidBoard = () => {
   const dispatch = useAppDispatch();
   const list = useAppSelector((state) => state.raidList);
 
-  //   useEffect(() => {
-  //     socket.on('raidList', function (payload) {
-  //       dispatch(RaidListDispatch(payload));
-  //     });
-  //   }, []);
+  const [audio] = useState(new Audio(audios));
+
   useEffect(() => {
     setIsLoading(false);
-    // setIsRefreshFunc(true);
     window.scrollTo({ top: 0 });
-    // customAxios('get', '/raidboard/list', {}).then((res) => {
-    //   console.log(res.data);
-    //   setList(res.data);
-    //   setIsLoading(true);
-    // });
+
     socket.on('raidList', function (payload) {
       dispatch(RaidListDispatch(payload));
-
-      // setIsRefreshFunc(false);
     });
     setIsLoading(true);
   }, []);
-
-  // useEffect(() => {
-  //   setIsLoading(false);
-  //   // setIsRefreshFunc(true);
-  //   window.scrollTo({ top: 0 });
-  //   // customAxios('get', '/raidboard/list', {}).then((res) => {
-  //   //   console.log(res.data);
-  //   //   setList(res.data);
-  //   //   setIsLoading(true);
-  //   // });
-  //   setTimeout(() => {
-  //     socket.emit('RefreshraidList');
-  //     setIsLoading(true);
-  //     // setIsRefreshFunc(false);
-  //   }, 300);
-  // }, [isLoad]);
 
   const Refresh = () => {
     let a = imgRef.current;
@@ -233,6 +214,16 @@ const RealTimeRaidBoard = () => {
       <PcBtnWrap>
         <Title>오늘 열린 레이드 {list.length}회</Title>
         <PcInnerBtnWrap>
+          <SoundCheck
+            onClick={() => {
+              if (window.confirm('알림을 켜시겠습니까?')) {
+                console.log('알람킴');
+                audio.play();
+              }
+            }}
+          >
+            알람 켜기
+          </SoundCheck>
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}
