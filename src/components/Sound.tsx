@@ -26,17 +26,19 @@ const Sound = () => {
       const promise = audio.play();
       const promise2 = audio2.play();
       // audio2.play();
-      if (promise2 !== undefined) {
-        promise2
-          .then(() => {
-            console.log('재생완료');
-          })
-          .catch((error) => {
-            audio.play();
-            audio2.play();
-            console.log(error);
-          });
-      }
+
+      document.getElementById('soundId')?.click();
+      // if (promise2 !== undefined) {
+      //   promise2
+      //     .then(() => {
+      //       console.log('재생완료');
+      //     })
+      //     .catch((error) => {
+      //       audio.play();
+      //       audio2.play();
+      //       console.log(error);
+      //     });
+      // }
     }
   });
 

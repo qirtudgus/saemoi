@@ -215,11 +215,10 @@ const RealTimeRaidBoard = () => {
         <Title>오늘 열린 레이드 {list.length}회</Title>
         <PcInnerBtnWrap>
           <SoundCheck
+            id='soundId'
             onClick={() => {
-              if (window.confirm('알림을 켜시겠습니까?')) {
-                console.log('알람킴');
-                audio.play();
-              }
+              console.log('버튼클릭');
+              audio.play();
             }}
           >
             알람 켜기
