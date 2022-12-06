@@ -1,5 +1,5 @@
 import audios from '../img/피카츄.mp3';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { socket } from '../App';
 
 const Sound = () => {
@@ -17,8 +17,8 @@ const Sound = () => {
     console.log(payload);
     if (payload === true) {
       //강제로 상호작용시켜 소리를 낸다.
-      // document.getElementById('soundId')?.click();
-      test.current?.click();
+      document.getElementById('soundId')?.click();
+      // test.current?.click();
       // audio.play();
       // audio.play();
       // const promise = audio.play();
@@ -40,18 +40,7 @@ const Sound = () => {
     }
   });
 
-  let test = useRef<HTMLDivElement>(null);
-
-  return (
-    <>
-      <div
-        ref={test}
-        onClick={() => {
-          audio.play();
-        }}
-      ></div>
-    </>
-  );
+  return <></>;
 };
 
 export default Sound;
