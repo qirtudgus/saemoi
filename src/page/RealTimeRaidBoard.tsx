@@ -166,9 +166,11 @@ const LoadingText = styled.div`
 `;
 
 const SoundCheck = styled.button`
-  width: 100px;
-  height: 60px;
-  background: #eee;
+  width: 1px;
+  height: 1px;
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
 `;
 
 const RealTimeRaidBoard = () => {
