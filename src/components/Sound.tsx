@@ -17,8 +17,8 @@ const Sound = () => {
     console.log(payload);
     if (payload === true) {
       //강제로 상호작용시켜 소리를 낸다.
-      document.getElementById('soundId')?.click();
-      // audio.play();
+      // document.getElementById('soundId')?.click();
+      audio.play();
       // audio.play();
       // const promise = audio.play();
       // const promise2 = audio2.play();
