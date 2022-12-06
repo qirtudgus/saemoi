@@ -32,7 +32,7 @@ const UserList = createSlice({
   reducers: {
     connectedUser(state: UserListInterface[], action) {
       //[{id:'zxc',socketId:'1234'},{id:'qwe',socketId:'4555'},{id:'asd',socketId:'1222'}];
-      console.log(action.payload);
+
       return (state = action.payload);
     },
   },
