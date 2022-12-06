@@ -173,6 +173,27 @@ const SoundCheck = styled.button`
   left: -9999px;
 `;
 
+/* [진동 수행 실시 함수] */
+function callVibrate() {
+  console.log('');
+  console.log('[callVibrate] : [start]');
+  console.log('');
+
+  if (navigator.vibrate) {
+    console.log('');
+    console.log('[callVibrate] : [working]');
+    console.log('');
+
+    navigator.vibrate(2000); // 진동 수행 1000 = 1초
+    // navigator.vibrate(0); // 진동 정지
+  } else {
+    console.log('');
+    console.log('[callVibrate] : [not working]');
+    console.log('');
+    alert('진동을 지원하지 않는 디바이스입니다 ....');
+  }
+}
+
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -232,6 +253,7 @@ const RealTimeRaidBoard = () => {
           >
             newPost 소켓 전송
           </SoundCheck>
+          <button onClick={callVibrate}>진동 테스트</button>
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}
