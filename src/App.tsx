@@ -15,14 +15,18 @@ import BoardSearchResult from './page/BoardSearchResult';
 import ErrorPage from './page/ErrorPage';
 import Home from './page/Home';
 import PostEdit from './page/PostEdit';
+import List from './page/QueryTest';
 import RaidBoard from './page/RaidBoard';
 import RaidWrite from './page/RaidWrite';
+import SocketTest from './page/SocketTest';
 import View from './page/View';
 import Write from './page/Write';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { userCountDispatch } from './store/userCountSlice';
+import 'moment/locale/ko';
+import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
-const socket = io(port);
+export const socket = io(port);
 
 const CountBox = styled.div`
   width: auto;
@@ -118,7 +122,6 @@ function App() {
   useEffect(() => {
     let Check = (e: any) => {
       let uiBox = document.getElementById('OpenMenuCheck');
-      console.log(e.target.classList.value.match('menuOpenCheck'));
       if (!e.target.classList.value.match('menuOpenCheck')) {
         uiBox?.classList.remove('active');
       }
@@ -175,7 +178,20 @@ function App() {
             path='/board/list/search/:keyword'
             element={<BoardSearchResult />}
           /> */}
-
+          {/* 
+          <Route
+            path='/query'
+            element={<List />}
+          ></Route> */}
+          {/* 
+          <Route
+            path='/socket'
+            element={<SocketTest />}
+          ></Route> */}
+          <Route
+            path='/realtimeraidboard'
+            element={<RealTimeRaidBoard />}
+          ></Route>
           <Route
             path='/raidboard/list'
             element={<RaidBoard />}
@@ -186,10 +202,10 @@ function App() {
             element={<ErrorPage />}
           ></Route>
         </Route>
-        <Route
+        {/* <Route
           path='/test'
           element={<ArrayTest />}
-        ></Route>
+        ></Route> */}
       </Routes>
     </>
   );
