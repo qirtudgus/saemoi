@@ -206,10 +206,6 @@ function callVibrate() {
   }
 }
 
-function socketCheck() {
-  socket.emit('newPost', 'test');
-}
-
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -247,6 +243,10 @@ const RealTimeRaidBoard = () => {
     a?.classList.add('on');
     setIsLoad((prev) => !prev);
   };
+
+  function socketCheck() {
+    socket.emit('newPost', 'test');
+  }
 
   const onVibrate = () => {
     localStorage.setItem('onVibrate', 'true');

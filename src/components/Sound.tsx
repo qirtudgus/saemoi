@@ -28,7 +28,9 @@ const Sound = () => {
       let vibrateConfig = localStorage.getItem('onVibrate');
       let soundConfig = localStorage.getItem('onSound');
       console.log(vibrateConfig);
+      console.log(typeof vibrateConfig);
       console.log(soundConfig);
+      console.log(typeof soundConfig);
       notifi(vibrateConfig, soundConfig);
       //강제로 상호작용시켜 소리를 낸다.
 
