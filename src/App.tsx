@@ -164,7 +164,12 @@ function App() {
     <>
       <GlobalStyles />
       <Sound />
+
       <Routes>
+        <Route
+          path='/'
+          element={<Home />}
+        />
         <Route element={<LayoutWrite />}>
           <Route
             path='/raidboard/write'
@@ -172,10 +177,6 @@ function App() {
           ></Route>
         </Route>
         <Route element={<Layout />}>
-          <Route
-            path='/'
-            element={<Home />}
-          />
           <Route
             path='/login'
             element={<Login />}
