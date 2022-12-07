@@ -14,6 +14,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { SoundtDispatch } from '../store/soundSlice';
 import audios from '../img/피카츄.mp3';
+import { BasicButton } from '../components/BtnGroup';
 
 const RefreshAni = keyframes`
   to {
@@ -173,6 +174,17 @@ const SoundCheck = styled.button`
   left: -9999px;
 `;
 
+const TestBtnWrap = styled.div`
+  display: flex;
+  align-items: :center;
+  flex-direction: column;
+`;
+const TestBtn = styled(BasicButton)`
+  margin: 5px;
+  &:hover {
+    background-color: red;
+  }
+`;
 /* [진동 수행 실시 함수] */
 function callVibrate() {
   console.log('');
@@ -192,6 +204,10 @@ function callVibrate() {
     console.log('');
     alert('진동을 지원하지 않는 디바이스입니다 ....');
   }
+}
+
+function socketCheck() {
+  socket.emit('newPost', 'test');
 }
 
 const RealTimeRaidBoard = () => {
@@ -232,6 +248,19 @@ const RealTimeRaidBoard = () => {
     setIsLoad((prev) => !prev);
   };
 
+  const onVibrate = () => {
+    localStorage.setItem('onVibrate', 'true');
+  };
+  const onSound = () => {
+    localStorage.setItem('onSound', 'true');
+  };
+  const offVibrate = () => {
+    localStorage.removeItem('onVibrate');
+  };
+  const offSound = () => {
+    localStorage.removeItem('onSound');
+  };
+
   return (
     <>
       <PcBtnWrap>
@@ -244,16 +273,15 @@ const RealTimeRaidBoard = () => {
               audio.play();
             }}
           ></SoundCheck>
-          <SoundCheck
-            onClick={() => {
-              if (window.confirm('소켓을 켜시겠습니까?')) {
-                socket.emit('newPost', 'test');
-              }
-            }}
-          >
-            newPost 소켓 전송
-          </SoundCheck>
-          <button onClick={callVibrate}>진동 테스트</button>
+          <TestBtnWrap>
+            <TestBtn OnClick={socketCheck}>newPost 소켓 전송</TestBtn>
+            <TestBtn OnClick={callVibrate}>진동 테스트</TestBtn>
+
+            <TestBtn OnClick={onVibrate}>진동 On</TestBtn>
+            <TestBtn OnClick={offVibrate}>진동 Off</TestBtn>
+            <TestBtn OnClick={onSound}>사운드 On</TestBtn>
+            <TestBtn OnClick={offSound}>사운드 Off</TestBtn>
+          </TestBtnWrap>
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}

@@ -12,14 +12,26 @@ const Sound = () => {
     console.log('피카추!');
   };
 
-  socket.on('newPost', function (payload) {
-    console.log('여기는 사운드 컴포넌트');
-    console.log(payload);
-    if (payload === true) {
-      //강제로 상호작용시켜 소리를 낸다.
+  const notifi = (vibrate: string | null, sound: string | null) => {
+    if (vibrate === 'true') {
+      console.log('진동 재생');
       navigator.vibrate([200, 100, 200]);
-
+    }
+    if (sound === 'true') {
+      console.log('사운드 재생');
       document.getElementById('soundId')?.click();
+    }
+  };
+
+  socket.on('newPost', function (payload) {
+    if (payload === true) {
+      let vibrateConfig = localStorage.getItem('onVibrate');
+      let soundConfig = localStorage.getItem('onSound');
+      console.log(vibrateConfig);
+      console.log(soundConfig);
+      notifi(vibrateConfig, soundConfig);
+      //강제로 상호작용시켜 소리를 낸다.
+
       // test.current?.click();
       // audio.play();
       // audio.play();
