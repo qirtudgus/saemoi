@@ -28,6 +28,7 @@ import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import Sound from './components/Sound';
 import AlarmConfing from './page/AlarmConfig';
 import { RaidCountDispatch } from './store/soundSlice';
+import { RaidListDispatch } from './store/raidListSlice';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -110,6 +111,9 @@ export const UserCountMobile = () => {
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    socket.on('raidList', function (payload) {
+      dispatch(RaidListDispatch(payload));
+    });
     console.log('app 렌더링');
     socket.on('userCount', function (payload) {
       console.log(payload);

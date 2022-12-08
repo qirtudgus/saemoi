@@ -177,9 +177,9 @@ const RealTimeRaidBoard = () => {
   useEffect(() => {
     setIsLoading(false);
     window.scrollTo({ top: 0 });
-    socket.on('raidList', function (payload) {
-      dispatch(RaidListDispatch(payload));
-    });
+    // socket.on('raidList', function (payload) {
+    //   dispatch(RaidListDispatch(payload));
+    // });
     setIsLoading(true);
     // setInterval(() => {
     //   socket.on('pingOut', (payload) => {
