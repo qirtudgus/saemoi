@@ -132,12 +132,17 @@ function App() {
 
   useEffect(() => {
     //사파리 알람 이슈 해결코드
-    const play = () => {
+    const b = () => {
       let a = document.getElementById('alarmSound') as HTMLAudioElement;
-
-      a.load();
+      a.volume = 1;
+    };
+    const play = () => {
+      console.log('언락 오디오');
+      let a = document.getElementById('alarmSound') as HTMLAudioElement;
       a.volume = 0;
+      a.load();
       a.play();
+      b();
       document.body.removeEventListener('click', play);
       document.body.removeEventListener('touchstart', play);
     };
