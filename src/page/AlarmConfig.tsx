@@ -87,17 +87,7 @@ const AlarmConfing = () => {
   return (
     <>
       <Title>설정</Title>
-      <audio
-        onEnded={() => {
-          console.log('피카추!~');
-        }}
-        ref={audioRef}
-        preload='auto'
-        controls
-        // autoPlay={true}
-        src={audios}
-        id='haha'
-      ></audio>
+
       {/* <SoundCheck
         id='soundId'
         onClick={() => {
