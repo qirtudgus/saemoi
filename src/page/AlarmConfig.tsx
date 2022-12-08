@@ -3,7 +3,8 @@ import { socket } from '../App';
 import ToggleButton from '../components/ToggleButton';
 import { Title } from './Board';
 import { BasicButton } from '../components/BtnGroup';
-
+import audios from '../img/피카츄.mp3';
+import { useState } from 'react';
 const TestBtn = styled(BasicButton)`
   margin: 5px;
   &:hover {
@@ -37,7 +38,12 @@ const AlarmConfing = () => {
   //   audio.onended = (e) => {
   //     console.log('피카추!');
   //   };
-
+  const [audio] = useState(new Audio(audios));
+  audio.autoplay = false;
+  audio.volume = 0.3;
+  audio.onended = (e) => {
+    console.log('피카추!');
+  };
   function socketCheck() {
     socket.emit('newPost', 'test');
   }
@@ -53,6 +59,15 @@ const AlarmConfing = () => {
   };
   const offSound = () => {
     localStorage.removeItem('onSound');
+  };
+
+  const clickCheck = () => {
+    console.log('클릭하여 소리 함수 호출');
+    document.getElementById('soundId')?.click();
+  };
+  const playCheck = () => {
+    console.log('바로 소리 재생');
+    audio.play();
   };
 
   return (
@@ -84,6 +99,8 @@ const AlarmConfing = () => {
         />
       </ToggleButtonWarp>
       <TestBtn OnClick={socketCheck}>알람 테스트</TestBtn>
+      <TestBtn OnClick={clickCheck}>소리 테스트</TestBtn>
+      <TestBtn OnClick={playCheck}>소리 테스트</TestBtn>
     </>
   );
 };
