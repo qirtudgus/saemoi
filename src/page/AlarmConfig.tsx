@@ -3,6 +3,7 @@ import { socket } from '../App';
 import ToggleButton from '../components/ToggleButton';
 import { Title } from './Board';
 import { BasicButton } from '../components/BtnGroup';
+import { useState } from 'react';
 
 const TestBtn = styled(BasicButton)`
   margin: 5px;
@@ -47,6 +48,13 @@ const AlarmConfing = () => {
     localStorage.removeItem('onSound');
   };
 
+  // const [soundNumber, setSoundNumber] = useState(0);
+  // const soundArr = [1, 2, 3];
+  // const setSoundNumberSelected = (e: any) => {
+  //   localStorage.setItem('soundNumber', e.target.value.toString());
+  //   setSoundNumber(e.target.value);
+  // };
+
   return (
     <>
       <Title>설정</Title>
@@ -69,6 +77,16 @@ const AlarmConfing = () => {
           OffFunc={offSound}
           isOn={localStorage.getItem('onSound')}
         />
+        {/* <select
+          onChange={setSoundNumberSelected}
+          value={soundNumber}
+        >
+          <>
+            {soundArr.map((i, index) => {
+              return <option value={i}>{i}번 소리</option>;
+            })}
+          </>
+        </select> */}
       </ToggleButtonWarp>
       <ToggleButtonDesc>
         새로운 레이드가 등록됐을 때 알람 소리를 재생합니다. (백그라운드에 웹브라우저가 켜져 있다면 다른 앱을 사용할 때도
