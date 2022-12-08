@@ -136,8 +136,8 @@ function App() {
       console.log('언락 오디오');
       let a = document.getElementById('alarmSound') as HTMLAudioElement;
 
-      a.muted = true;
       a.load();
+      a.muted = true;
       a.play();
 
       document.body.removeEventListener('click', play);
