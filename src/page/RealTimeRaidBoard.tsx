@@ -13,8 +13,17 @@ import { Title } from './Board';
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { SoundtDispatch } from '../store/soundSlice';
-import audios from '../img/피카츄.mp3';
+// import audios from '../img/chu.mp3';
 import { BasicButton } from '../components/BtnGroup';
+import ToggleButton from '../components/ToggleButton';
+
+// let audio = new Audio();
+// audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
+// audio.volume = 0.4;
+// audio.autoplay = false;
+// audio.onended = (e) => {
+//   console.log('피카추!');
+// };
 
 const RefreshAni = keyframes`
   to {
@@ -216,8 +225,6 @@ const RealTimeRaidBoard = () => {
   const dispatch = useAppDispatch();
   const list = useAppSelector((state) => state.raidList);
 
-  const [audio] = useState(new Audio(audios));
-
   useEffect(() => {
     setIsLoading(false);
     window.scrollTo({ top: 0 });
@@ -266,21 +273,14 @@ const RealTimeRaidBoard = () => {
       <PcBtnWrap>
         <Title>오늘 열린 레이드 {list.length}회</Title>
         <PcInnerBtnWrap>
-          <SoundCheck
+          {/* <SoundCheck
             id='soundId'
             onClick={() => {
-              console.log('버튼클릭');
               audio.play();
             }}
-          ></SoundCheck>
+          ></SoundCheck> */}
           <TestBtnWrap>
             <TestBtn OnClick={socketCheck}>newPost 소켓 전송</TestBtn>
-            <TestBtn OnClick={callVibrate}>진동 테스트</TestBtn>
-
-            <TestBtn OnClick={onVibrate}>진동 On</TestBtn>
-            <TestBtn OnClick={offVibrate}>진동 Off</TestBtn>
-            <TestBtn OnClick={onSound}>사운드 On</TestBtn>
-            <TestBtn OnClick={offSound}>사운드 Off</TestBtn>
           </TestBtnWrap>
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
