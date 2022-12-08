@@ -12,7 +12,6 @@ import RefRaidCard from '../components/RefRaidCard';
 import { Title } from './Board';
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { SoundtDispatch } from '../store/soundSlice';
 import { BasicButton } from '../components/BtnGroup';
 import ToggleButton from '../components/ToggleButton';
 
@@ -166,27 +165,14 @@ const LoadingText = styled.div`
   }
 `;
 
-const TestBtnWrap = styled.div`
-  display: flex;
-  align-items: :center;
-  flex-direction: column;
-`;
-const TestBtn = styled(BasicButton)`
-  margin: 5px;
-  &:hover {
-    background-color: red;
-  }
-`;
-
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
-  const [isRefreshFunc, setIsRefreshFunc] = useState(true);
-  const imgRef = useRef() as RefObject<HTMLImageElement>;
-  const imgPcRef = useRef() as RefObject<HTMLImageElement>;
+  // const imgRef = useRef() as RefObject<HTMLImageElement>;
+  // const imgPcRef = useRef() as RefObject<HTMLImageElement>;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const list = useAppSelector((state) => state.raidList);
+  const raidCount = useAppSelector((state) => state.raidCount);
 
   useEffect(() => {
     setIsLoading(false);
@@ -197,30 +183,30 @@ const RealTimeRaidBoard = () => {
     setIsLoading(true);
   }, []);
 
-  const Refresh = () => {
-    let a = imgRef.current;
-    a?.classList.remove('on');
-    void a?.offsetWidth;
-    a?.classList.add('on');
-    setIsLoad((prev) => !prev);
-  };
+  // const Refresh = () => {
+  //   let a = imgRef.current;
+  //   a?.classList.remove('on');
+  //   void a?.offsetWidth;
+  //   a?.classList.add('on');
+  //   setIsLoad((prev) => !prev);
+  // };
 
-  const RefreshPc = () => {
-    let a = imgPcRef.current;
-    a?.classList.remove('on');
-    void a?.offsetWidth;
-    a?.classList.add('on');
-    setIsLoad((prev) => !prev);
-  };
+  // const RefreshPc = () => {
+  //   let a = imgPcRef.current;
+  //   a?.classList.remove('on');
+  //   void a?.offsetWidth;
+  //   a?.classList.add('on');
+  //   setIsLoad((prev) => !prev);
+  // };
 
-  function socketCheck() {
-    socket.emit('newPost', 'test');
-  }
+  // function socketCheck() {
+  //   socket.emit('newPost', 'test');
+  // }
 
   return (
     <>
       <PcBtnWrap>
-        <Title>오늘 열린 레이드 {list.length}회</Title>
+        <Title>오늘 열린 레이드 {raidCount}회</Title>
         <PcInnerBtnWrap>
           {/* <SoundCheck
             id='soundId'
@@ -228,9 +214,9 @@ const RealTimeRaidBoard = () => {
               audio.play();
             }}
           ></SoundCheck> */}
-          <TestBtnWrap>
+          {/* <TestBtnWrap>
             <TestBtn OnClick={socketCheck}>newPost 소켓 전송</TestBtn>
-          </TestBtnWrap>
+          </TestBtnWrap> */}
           {/* <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             $isLoading={isLoading}
