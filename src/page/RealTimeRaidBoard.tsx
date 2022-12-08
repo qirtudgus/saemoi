@@ -17,13 +17,13 @@ import { SoundtDispatch } from '../store/soundSlice';
 import { BasicButton } from '../components/BtnGroup';
 import ToggleButton from '../components/ToggleButton';
 
-// let audio = new Audio();
-// audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
-// audio.volume = 0.4;
-// audio.autoplay = false;
-// audio.onended = (e) => {
-//   console.log('피카추!');
-// };
+let audio = new Audio();
+audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
+audio.volume = 0.4;
+audio.autoplay = false;
+audio.onended = (e) => {
+  console.log('피카추!');
+};
 
 const RefreshAni = keyframes`
   to {
