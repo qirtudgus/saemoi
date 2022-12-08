@@ -64,6 +64,12 @@ const Home = () => {
         <Button
           whileHover={{ scale: 1.05 }}
           onClick={() => {
+            let a = document.getElementById('alarmSound') as HTMLAudioElement;
+
+            a.load();
+            a.muted = true;
+            a.play();
+
             navigate('/realtimeraidboard');
           }}
         >
