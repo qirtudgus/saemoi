@@ -19,6 +19,7 @@ const Switch = styled(motion.div)`
   padding: 7px;
   cursor: pointer;
   align-items: center;
+  flex-shrink: 0;
   &[data-ison='true'] {
     justify-content: flex-end;
     background-color: #ef5a34;
