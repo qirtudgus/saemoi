@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { socket } from '../App';
+import audios from '../img/피카츄.mp3';
 
 const SoundCheck = styled.button`
   width: 1px;
@@ -14,14 +15,14 @@ const SoundCheck = styled.button`
 
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
-  // const [audio] = useState(new Audio(audios));
-  let audio = new Audio();
-  audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
-  audio.volume = 0.4;
-  audio.autoplay = false;
-  audio.onended = (e) => {
-    console.log('피카추!');
-  };
+  const [audio] = useState(new Audio(audios));
+  // let audio = new Audio();
+  // audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
+  // audio.volume = 0.4;
+  // audio.autoplay = false;
+  // audio.onended = (e) => {
+  //   console.log('피카추!');
+  // };
 
   const notifi = (vibrate: string | null, sound: string | null) => {
     if (vibrate === 'true') {
