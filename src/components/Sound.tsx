@@ -9,8 +9,9 @@ const Sound = () => {
     if (sound === 'true') {
       console.log('사운드 재생');
       let a = document.getElementById('alarmSound') as HTMLAudioElement;
+      a.muted = false;
       a.load();
-      a.volume = 1;
+
       a.play();
     }
     if (vibrate === 'true') {
