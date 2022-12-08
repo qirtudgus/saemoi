@@ -24,7 +24,7 @@ const Sound = () => {
   //   console.log('피카추!');
   // };
 
-  audio.autoplay = true;
+  audio.autoplay = false;
   audio.volume = 0.3;
   audio.onended = (e) => {
     console.log('피카추!');
@@ -46,27 +46,29 @@ const Sound = () => {
     }
   };
 
-  socket.on('newPost', function (payload) {
-    if (payload === true) {
-      let vibrateConfig = localStorage.getItem('onVibrate');
-      let soundConfig = localStorage.getItem('onSound');
-      notifi(vibrateConfig, soundConfig);
-      //강제로 상호작용시켜 소리를 낸다.
+  useEffect(() => {
+    socket.on('newPost', function (payload) {
+      if (payload === true) {
+        let vibrateConfig = localStorage.getItem('onVibrate');
+        let soundConfig = localStorage.getItem('onSound');
+        notifi(vibrateConfig, soundConfig);
+        //강제로 상호작용시켜 소리를 낸다.
 
-      //대체코드
-      // if (promise2 !== undefined) {
-      //   promise2
-      //     .then(() => {
-      //       console.log('재생완료');
-      //     })
-      //     .catch((error) => {
-      //       audio.play();
-      //       audio2.play();
-      //       console.log(error);
-      //     });
-      // }
-    }
-  });
+        //대체코드
+        // if (promise2 !== undefined) {
+        //   promise2
+        //     .then(() => {
+        //       console.log('재생완료');
+        //     })
+        //     .catch((error) => {
+        //       audio.play();
+        //       audio2.play();
+        //       console.log(error);
+        //     });
+        // }
+      }
+    });
+  }, []);
 
   return (
     <>

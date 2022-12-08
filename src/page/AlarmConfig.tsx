@@ -39,7 +39,7 @@ const AlarmConfing = () => {
   //     console.log('피카추!');
   //   };
   const [audio] = useState(new Audio(audios));
-  audio.autoplay = true;
+  audio.autoplay = false;
   audio.volume = 0.3;
   audio.onended = (e) => {
     console.log('피카추!');
