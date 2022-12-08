@@ -13,17 +13,8 @@ import { Title } from './Board';
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { SoundtDispatch } from '../store/soundSlice';
-// import audios from '../img/chu.mp3';
 import { BasicButton } from '../components/BtnGroup';
 import ToggleButton from '../components/ToggleButton';
-
-let audio = new Audio();
-audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
-audio.volume = 0.4;
-audio.autoplay = false;
-audio.onended = (e) => {
-  console.log('피카추!');
-};
 
 const RefreshAni = keyframes`
   to {
@@ -175,14 +166,6 @@ const LoadingText = styled.div`
   }
 `;
 
-const SoundCheck = styled.button`
-  width: 1px;
-  height: 1px;
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
-`;
-
 const TestBtnWrap = styled.div`
   display: flex;
   align-items: :center;
@@ -194,26 +177,6 @@ const TestBtn = styled(BasicButton)`
     background-color: red;
   }
 `;
-/* [진동 수행 실시 함수] */
-function callVibrate() {
-  console.log('');
-  console.log('[callVibrate] : [start]');
-  console.log('');
-
-  if (navigator.vibrate) {
-    console.log('');
-    console.log('[callVibrate] : [working]');
-    console.log('');
-
-    navigator.vibrate(2000); // 진동 수행 1000 = 1초
-    // navigator.vibrate(0); // 진동 정지
-  } else {
-    console.log('');
-    console.log('[callVibrate] : [not working]');
-    console.log('');
-    alert('진동을 지원하지 않는 디바이스입니다 ....');
-  }
-}
 
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -228,7 +191,6 @@ const RealTimeRaidBoard = () => {
   useEffect(() => {
     setIsLoading(false);
     window.scrollTo({ top: 0 });
-
     socket.on('raidList', function (payload) {
       dispatch(RaidListDispatch(payload));
     });
@@ -254,19 +216,6 @@ const RealTimeRaidBoard = () => {
   function socketCheck() {
     socket.emit('newPost', 'test');
   }
-
-  const onVibrate = () => {
-    localStorage.setItem('onVibrate', 'true');
-  };
-  const onSound = () => {
-    localStorage.setItem('onSound', 'true');
-  };
-  const offVibrate = () => {
-    localStorage.removeItem('onVibrate');
-  };
-  const offSound = () => {
-    localStorage.removeItem('onSound');
-  };
 
   return (
     <>

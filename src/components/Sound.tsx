@@ -33,7 +33,7 @@ const Sound = () => {
   return (
     <>
       <audio
-        preload='auto'
+        // preload='auto'
         src={audios}
         id='alarmSound'
       ></audio>
