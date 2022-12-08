@@ -26,8 +26,7 @@ import { userCountDispatch } from './store/userCountSlice';
 import 'moment/locale/ko';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import Sound from './components/Sound';
-import audios from './img/피카츄.mp3';
-const sound = new Audio(audios);
+import AlarmConfing from './page/AlarmConfig';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -223,7 +222,10 @@ function App() {
             path='/raidboard/list'
             element={<RaidBoard />}
           ></Route>
-
+          <Route
+            path='/config'
+            element={<AlarmConfing />}
+          />
           <Route
             path='*'
             element={<ErrorPage />}
