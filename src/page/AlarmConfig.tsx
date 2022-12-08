@@ -30,13 +30,13 @@ const ToggleButtonLabel = styled.span`
 `;
 
 const AlarmConfing = () => {
-  let audio = new Audio();
-  audio.src = process.env.PUBLIC_URL + '/chu.mp3';
-  audio.volume = 0.4;
-  audio.autoplay = false;
-  audio.onended = (e) => {
-    console.log('피카추!');
-  };
+  //   let audio = new Audio();
+  //   audio.src = process.env.PUBLIC_URL + '/피카츄.mp3';
+  //   audio.volume = 0.4;
+  //   audio.autoplay = false;
+  //   audio.onended = (e) => {
+  //     console.log('피카추!');
+  //   };
 
   function socketCheck() {
     socket.emit('newPost', 'test');
@@ -59,13 +59,13 @@ const AlarmConfing = () => {
     <>
       <Title>설정</Title>
 
-      <SoundCheck
+      {/* <SoundCheck
         id='soundId'
         onClick={() => {
           console.log('버튼클릭');
           audio.play();
         }}
-      ></SoundCheck>
+      ></SoundCheck> */}
       <ToggleButtonWarp>
         <ToggleButtonLabel>진동</ToggleButtonLabel>
         <ToggleButton

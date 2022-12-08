@@ -1,7 +1,16 @@
 // import audios from '../img/chu.mp3';
 
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { socket } from '../App';
+
+const SoundCheck = styled.button`
+  width: 1px;
+  height: 1px;
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+`;
 
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
@@ -21,8 +30,11 @@ const Sound = () => {
     }
     if (sound === 'true') {
       console.log('사운드 재생');
-      audio.play();
-      // document.getElementById('soundId')?.click();
+      //pc 크롬과 모바일 크롬에서는 되는데, 애플에선 안된다.
+      // audio.play();
+
+      //이건 애플도 되나 테스트
+      document.getElementById('soundId')?.click();
     }
   };
 
@@ -48,7 +60,18 @@ const Sound = () => {
     }
   });
 
-  return <></>;
+  return (
+    <>
+      {' '}
+      <SoundCheck
+        id='soundId'
+        onClick={() => {
+          console.log('버튼클릭');
+          audio.play();
+        }}
+      ></SoundCheck>
+    </>
+  );
 };
 
 export default Sound;
