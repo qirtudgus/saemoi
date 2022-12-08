@@ -2,9 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { socket } from '../App';
-import audios from '../img/피카츄.mp3';
+import audios from '../img/bbong.mp3';
 
 const Sound = () => {
+  const soundArr = [audios];
+
   const notifi = (vibrate: string | null, sound: string | null) => {
     if (sound === 'true') {
       console.log('사운드 재생');
@@ -34,7 +36,7 @@ const Sound = () => {
     <>
       <audio
         preload='auto'
-        src={audios}
+        src={soundArr[0]}
         id='alarmSound'
       ></audio>
     </>
