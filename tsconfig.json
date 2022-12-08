@@ -16,7 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "custom_typings/*"],
+  "include": ["src"],
   "ts-node": {
     "esm": true
   }
