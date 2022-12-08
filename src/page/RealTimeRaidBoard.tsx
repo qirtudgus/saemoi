@@ -270,7 +270,7 @@ const RealTimeRaidBoard = () => {
         list?.map((i: any, index: number) => (
           <RefRaidCard
             // ref={ref}
-            key={i.raidCode}
+            key={index}
             monsterName={i.monsterName}
             raidDifficulty={i.raidDifficulty}
             raidCode={i.raidCode}
