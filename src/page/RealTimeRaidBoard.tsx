@@ -181,6 +181,11 @@ const RealTimeRaidBoard = () => {
       dispatch(RaidListDispatch(payload));
     });
     setIsLoading(true);
+    // setInterval(() => {
+    //   socket.on('pingOut', (payload) => {
+    //     console.log('ping timeout 방지');
+    //   });
+    // }, 1000);
   }, []);
 
   // const Refresh = () => {
