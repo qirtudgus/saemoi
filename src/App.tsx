@@ -27,6 +27,7 @@ import 'moment/locale/ko';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import Sound from './components/Sound';
 import AlarmConfing from './page/AlarmConfig';
+import { RaidCountDispatch } from './store/soundSlice';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -113,6 +114,9 @@ function App() {
     socket.on('userCount', function (payload) {
       console.log(payload);
       dispatch(userCountDispatch(payload));
+    });
+    socket.on('raidCount', function (payload) {
+      dispatch(RaidCountDispatch(payload));
     });
   }, []);
 
