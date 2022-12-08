@@ -67,21 +67,21 @@ const Home = () => {
   //   a.volume = 1;
   //   a.play();
   // });
-  useEffect(() => {
-    const play = () => {
-      let a = document.getElementById('haha') as HTMLAudioElement;
-      a.load();
-      a.volume = 1;
-      a.play();
-    };
-    document.addEventListener('click', play);
-    document.addEventListener('touchstart', play);
+  // useEffect(() => {
+  //   const play = () => {
+  //     let a = document.getElementById('haha') as HTMLAudioElement;
+  //     a.load();
+  //     a.volume = 1;
+  //     a.play();
+  //   };
+  //   document.addEventListener('click', play);
+  //   document.addEventListener('touchstart', play);
 
-    return () => {
-      document.removeEventListener('click', play);
-      document.removeEventListener('touchstart', play);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener('click', play);
+  //     document.removeEventListener('touchstart', play);
+  //   };
+  // }, []);
 
   return (
     <>
