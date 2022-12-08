@@ -11,6 +11,7 @@ import { commentRouter } from './router/comment.js';
 import { Server } from 'socket.io';
 import http from 'http';
 import schedule from 'node-schedule';
+import moment from 'moment';
 
 const SERVER_PORT = 3002;
 const app = express();
@@ -33,7 +34,8 @@ const io = new Server(server, {
 });
 
 var userCount = 0;
-let deleteSeconds = 10;
+var raidCount = 0;
+let deleteSeconds = 180;
 var userList: any = [];
 var raidList: {
   monsterName: string;
@@ -59,6 +61,8 @@ io.on('connection', (socket) => {
   });
 
   io.emit('userCount', userCount);
+  io.emit('raidCount', raidCount);
+
   console.log('a user connected');
   socket.emit('raidList', raidList);
   socket.on('RefreshraidList', () => {
@@ -66,7 +70,8 @@ io.on('connection', (socket) => {
     io.emit('raidList', raidList);
   });
   socket.on('raidList', (payload) => {
-    console.log('raidList socket on 인자값');
+    console.log('신규 레이드 등록!');
+    raidCount++;
     //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
     socket.broadcast.emit('newPost', true);
     //페이로드엔 등록한 레이드 객체가 들어있음
@@ -78,6 +83,8 @@ io.on('connection', (socket) => {
     // });
     // raidList = [...three];
     io.emit('raidList', raidList);
+    io.emit('raidCount', raidCount);
+
     //db에 저장시켜주자..
     let {
       nickname,
@@ -110,31 +117,35 @@ io.on('connection', (socket) => {
   });
 });
 
-//10초마다 한번씩 레이드 정리
-// setInterval(() => {
-//   //보내줄 레이드가 없을때는 stop
-//   if (raidList.length === 0) return;
-//   //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
-//   let check = raidList.findIndex((i) => {
-//     return moment().diff(i.date, 'seconds') > deleteSeconds;
-//   });
-//   if (check === -1) {
-//     console.log('삭제할 배열이 없습니다.');
-//     return;
-//   } else {
-//     let three = raidList.filter((i, index) => {
-//       if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
-//     });
-//     // TimeOutDel(raidList)
-//     raidList = [...three];
-//     io.emit('raidList', raidList);
-//   }
-// }, 1000);
-
+// 10초마다 한번씩 레이드 정리
 setInterval(() => {
-  if (raidList.length === 0) return;
-  io.emit('raidList', raidList);
-}, 5000);
+  //보내줄 레이드가 없을때는 stop
+  if (raidList.length === 0) {
+    console.log('등록된 리스트가 없습니다.');
+    return;
+  }
+  //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
+  let check = raidList.findIndex((i) => {
+    return moment().diff(i.date, 'seconds') > deleteSeconds;
+  });
+  if (check === -1) {
+    console.log('삭제할 배열이 없습니다.');
+    return;
+  } else {
+    let three = raidList.filter((i, index) => {
+      if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+    });
+    // TimeOutDel(raidList)
+    raidList = [...three];
+    io.emit('raidList', raidList);
+  }
+}, 10000);
+
+//5초마다 한번씩 종료된레이드 구분을 위해 보내주었지만 쓰지말자.
+// setInterval(() => {
+//   if (raidList.length === 0) return;
+//   io.emit('raidList', raidList);
+// }, 5000);
 
 db.connect((err: any) => {
   if (err) console.log('MySQL 연결 실패 : ', err);
