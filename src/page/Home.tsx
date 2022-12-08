@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import { useAppSelector } from '../store/store';
 import { motion } from 'framer-motion';
 import 로고 from '../img/logo_s.svg';
-import { useEffect, useLayoutEffect } from 'react';
 
 const Bg = styled.div`
   width: 100%;
@@ -54,35 +53,6 @@ const Home = () => {
   const navigate = useNavigate();
   const usersCount = useAppSelector((state) => state.userCount);
 
-  // useEffect(() => {
-  //   let a = document.getElementById('haha') as HTMLAudioElement;
-  //   a.load();
-  //   a.volume = 1;
-  //   a.play();
-  // }, []);
-
-  // document.addEventListener('click', () => {
-  //   let a = document.getElementById('haha') as HTMLAudioElement;
-  //   a.load();
-  //   a.volume = 1;
-  //   a.play();
-  // });
-  // useEffect(() => {
-  //   const play = () => {
-  //     let a = document.getElementById('haha') as HTMLAudioElement;
-  //     a.load();
-  //     a.volume = 1;
-  //     a.play();
-  //   };
-  //   document.addEventListener('click', play);
-  //   document.addEventListener('touchstart', play);
-
-  //   return () => {
-  //     document.removeEventListener('click', play);
-  //     document.removeEventListener('touchstart', play);
-  //   };
-  // }, []);
-
   return (
     <>
       <Bg>
@@ -94,11 +64,6 @@ const Home = () => {
         <Button
           whileHover={{ scale: 1.05 }}
           onClick={() => {
-            // audio.play();
-            // let a = document.getElementById('haha') as HTMLAudioElement;
-            // a.load();
-            // a.volume = 0;
-            // a.play();
             navigate('/realtimeraidboard');
           }}
         >

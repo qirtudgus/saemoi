@@ -110,11 +110,6 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     console.log('app 렌더링');
-    //소켓 이벤트마다 현재 접속자를 가져와준다..
-    // socket.on('users.count', function (payload) {
-    //   console.log(payload);
-    //   dispatch(connectedUser(payload));
-    // });
     socket.on('userCount', function (payload) {
       console.log(payload);
       dispatch(userCountDispatch(payload));
@@ -129,9 +124,7 @@ function App() {
       }
       return;
     };
-
     document.addEventListener('click', Check);
-
     return () => {
       document.removeEventListener('click', Check);
     };
@@ -140,10 +133,10 @@ function App() {
   useEffect(() => {
     //사파리 알람 이슈 해결코드
     const play = () => {
-      console.log('오디오 언락');
-      let a = document.getElementById('haha') as HTMLAudioElement;
+      let a = document.getElementById('alarmSound') as HTMLAudioElement;
+      a.volume = 0;
       a.load();
-      a.volume = 1;
+
       a.play();
 
       document.body.removeEventListener('click', play);

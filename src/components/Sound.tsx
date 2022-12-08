@@ -1,7 +1,6 @@
 // import audios from '../img/chu.mp3';
 
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { socket } from '../App';
 import audios from '../img/피카츄.mp3';
 
@@ -9,13 +8,15 @@ const Sound = () => {
   const notifi = (vibrate: string | null, sound: string | null) => {
     if (sound === 'true') {
       console.log('사운드 재생');
-      let a = document.getElementById('haha') as HTMLAudioElement;
+      let a = document.getElementById('alarmSound') as HTMLAudioElement;
+      a.load();
+      a.volume = 1;
       a.play();
     }
     if (vibrate === 'true') {
       //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
       console.log('진동 재생');
-      navigator.vibrate([200, 100, 200]);
+      navigator.vibrate([150, 80, 150]);
     }
   };
 
@@ -32,21 +33,10 @@ const Sound = () => {
   return (
     <>
       <audio
-        onEnded={() => {
-          console.log('피카추!~');
-        }}
         preload='auto'
-        // autoPlay={true}
         src={audios}
-        id='haha'
+        id='alarmSound'
       ></audio>
-      {/* <SoundCheck
-        id='soundId'
-        onClick={() => {
-          console.log('버튼클릭');
-          audio.play();
-        }}
-      ></SoundCheck> */}
     </>
   );
 };
