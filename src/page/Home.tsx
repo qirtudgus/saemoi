@@ -3,8 +3,8 @@ import styled, { keyframes } from 'styled-components';
 import { useAppSelector } from '../store/store';
 import { motion } from 'framer-motion';
 import 로고 from '../img/logo_s.svg';
-import audios from '../img/피카츄.mp3';
-import { useState } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
+
 const Bg = styled.div`
   width: 100%;
   height: 100%;
@@ -53,12 +53,35 @@ const Img = styled.img`
 const Home = () => {
   const navigate = useNavigate();
   const usersCount = useAppSelector((state) => state.userCount);
-  const [audio] = useState(new Audio(audios));
-  audio.autoplay = false;
-  audio.volume = 0.3;
-  audio.onended = (e) => {
-    console.log('피카추!');
-  };
+
+  // useEffect(() => {
+  //   let a = document.getElementById('haha') as HTMLAudioElement;
+  //   a.load();
+  //   a.volume = 1;
+  //   a.play();
+  // }, []);
+
+  // document.addEventListener('click', () => {
+  //   let a = document.getElementById('haha') as HTMLAudioElement;
+  //   a.load();
+  //   a.volume = 1;
+  //   a.play();
+  // });
+  useEffect(() => {
+    const play = () => {
+      let a = document.getElementById('haha') as HTMLAudioElement;
+      a.load();
+      a.volume = 1;
+      a.play();
+    };
+    document.addEventListener('click', play);
+    document.addEventListener('touchstart', play);
+
+    return () => {
+      document.removeEventListener('click', play);
+      document.removeEventListener('touchstart', play);
+    };
+  }, []);
 
   return (
     <>
@@ -72,10 +95,10 @@ const Home = () => {
           whileHover={{ scale: 1.05 }}
           onClick={() => {
             // audio.play();
-            let a = document.getElementById('haha') as HTMLAudioElement;
-            a.load();
-            a.volume = 1;
-            a.play();
+            // let a = document.getElementById('haha') as HTMLAudioElement;
+            // a.load();
+            // a.volume = 0;
+            // a.play();
             navigate('/realtimeraidboard');
           }}
         >
