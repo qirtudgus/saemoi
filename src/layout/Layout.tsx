@@ -17,8 +17,9 @@ const menuList2 = [
   // { name: '의류', link: '/clother' },
   // { name: '화장품', link: '/cosmetic' },
   // { name: '식품', link: '/food' },
-  { name: '레이드 리스트', link: '/' },
+  { name: '레이드 리스트', link: '/realtimeraidboard' },
   { name: '레이드 등록', link: '/raidboard/write' },
+  { name: '설정', link: '/config' },
   // { name: '자유 게시판', link: '/board/list' },
 ];
 
@@ -106,6 +107,7 @@ const HeaderLi = styled.li`
   cursor: pointer;
   width: auto;
   margin: 0px 20px;
+
   & > a:visited {
     color: #fff;
   }
