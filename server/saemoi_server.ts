@@ -126,6 +126,7 @@ setInterval(() => {
   }
   //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
   let check = raidList.findIndex((i) => {
+    console.log(moment().diff(i.date, 'seconds'));
     return moment().diff(i.date, 'seconds') > deleteSeconds;
   });
   if (check === -1) {
