@@ -299,7 +299,7 @@ const RaidWrite = () => {
           date,
           deleteDate,
         });
-        navigate('/');
+        navigate('/realtimeraidboard');
 
         // customAxios('post', '/raidboard/list', {
         //   nickname,
