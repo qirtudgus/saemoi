@@ -9,7 +9,7 @@ const Sound = () => {
     if (sound === 'true') {
       console.log('사운드 재생');
       let a = document.getElementById('alarmSound') as HTMLAudioElement;
-      a.currentTime = 0;
+      a.load();
       a.muted = false;
       a.play();
     }
@@ -33,7 +33,7 @@ const Sound = () => {
   return (
     <>
       <audio
-        // preload='auto'
+        preload='auto'
         src={audios}
         id='alarmSound'
       ></audio>
