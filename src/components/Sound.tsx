@@ -24,7 +24,7 @@ const Sound = () => {
   //   console.log('피카추!');
   // };
 
-  audio.autoplay = false;
+  audio.autoplay = true;
   audio.volume = 0.3;
   audio.onended = (e) => {
     console.log('피카추!');
