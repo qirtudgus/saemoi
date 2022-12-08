@@ -1,11 +1,13 @@
-import audios from '../img/피카츄.mp3';
+// import audios from '../img/chu.mp3';
+
 import React, { useEffect, useState } from 'react';
 import { socket } from '../App';
 
 const Sound = () => {
   //   const isPlay = useAppSelector((state) => state.sound);
   // const [audio] = useState(new Audio(audios));
-  let audio = new Audio(audios);
+  let audio = new Audio();
+  audio.src = process.env.PUBLIC_URL + '/chu.mp3';
   audio.volume = 0.4;
   audio.autoplay = false;
   audio.onended = (e) => {
@@ -19,7 +21,8 @@ const Sound = () => {
     }
     if (sound === 'true') {
       console.log('사운드 재생');
-      document.getElementById('soundId')?.click();
+      audio.play();
+      // document.getElementById('soundId')?.click();
     }
   };
 
@@ -27,10 +30,6 @@ const Sound = () => {
     if (payload === true) {
       let vibrateConfig = localStorage.getItem('onVibrate');
       let soundConfig = localStorage.getItem('onSound');
-      console.log(vibrateConfig);
-      console.log(typeof vibrateConfig);
-      console.log(soundConfig);
-      console.log(typeof soundConfig);
       notifi(vibrateConfig, soundConfig);
       //강제로 상호작용시켜 소리를 낸다.
 
