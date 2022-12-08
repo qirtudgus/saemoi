@@ -4,7 +4,9 @@ import ToggleButton from '../components/ToggleButton';
 import { Title } from './Board';
 import { BasicButton } from '../components/BtnGroup';
 import audios from '../img/피카츄.mp3';
-import { useState } from 'react';
+import { useState, useRef, LegacyRef, RefObject } from 'react';
+import { useAppSelector } from '../store/store';
+
 const TestBtn = styled(BasicButton)`
   margin: 5px;
   &:hover {
@@ -38,6 +40,7 @@ const AlarmConfing = () => {
   //   audio.onended = (e) => {
   //     console.log('피카추!');
   //   };
+  // let a = useAppSelector((state) => state.sound);
   const [audio] = useState(new Audio(audios));
   audio.autoplay = false;
   audio.volume = 0.3;
@@ -65,15 +68,36 @@ const AlarmConfing = () => {
     console.log('클릭하여 소리 함수 호출');
     document.getElementById('soundId')?.click();
   };
+  const audioRef = useRef() as RefObject<HTMLMediaElement>;
+
   const playCheck = () => {
     console.log('바로 소리 재생');
-    audio.play();
+    // audio.play();
+    // console.log(document.getElementById('haha'));
+    let a = document.getElementById('haha') as HTMLAudioElement;
+    a.play();
+
+    // if (audioRef !== null) {
+    //   if (audioRef.current !== null) {
+    //     audioRef.current.play();
+    //   }
+    // }
   };
 
   return (
     <>
       <Title>설정</Title>
-
+      <audio
+        onEnded={() => {
+          console.log('피카추!~');
+        }}
+        ref={audioRef}
+        preload='auto'
+        controls
+        // autoPlay={true}
+        src={audios}
+        id='haha'
+      ></audio>
       {/* <SoundCheck
         id='soundId'
         onClick={() => {

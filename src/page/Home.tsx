@@ -59,6 +59,7 @@ const Home = () => {
   audio.onended = (e) => {
     console.log('피카추!');
   };
+
   return (
     <>
       <Bg>
@@ -70,7 +71,11 @@ const Home = () => {
         <Button
           whileHover={{ scale: 1.05 }}
           onClick={() => {
-            audio.play();
+            // audio.play();
+            let a = document.getElementById('haha') as HTMLAudioElement;
+            a.load();
+            a.volume = 1;
+            a.play();
             navigate('/realtimeraidboard');
           }}
         >

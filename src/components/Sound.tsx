@@ -34,10 +34,14 @@ const Sound = () => {
     if (sound === 'true') {
       console.log('사운드 재생');
       //pc 크롬과 모바일 크롬에서는 되는데, 애플에선 안된다.
-      audio.play();
+      // audio.play();
 
       //이건 애플도 되나 테스트
       // document.getElementById('soundId')?.click();
+      let a = document.getElementById('haha') as HTMLAudioElement;
+      a.load();
+      a.volume = 1;
+      a.play();
     }
     if (vibrate === 'true') {
       //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
@@ -72,14 +76,22 @@ const Sound = () => {
 
   return (
     <>
-      {' '}
-      <SoundCheck
+      <audio
+        onEnded={() => {
+          console.log('피카추!~');
+        }}
+        preload='auto'
+        // autoPlay={true}
+        src={audios}
+        id='haha'
+      ></audio>
+      {/* <SoundCheck
         id='soundId'
         onClick={() => {
           console.log('버튼클릭');
           audio.play();
         }}
-      ></SoundCheck>
+      ></SoundCheck> */}
     </>
   );
 };
