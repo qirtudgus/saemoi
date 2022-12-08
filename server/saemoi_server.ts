@@ -27,8 +27,8 @@ app.use(cookieParser());
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  pingInterval: 40000,
-  pingTimeout: 30000,
+  pingInterval: 30000,
+  pingTimeout: 40000,
   cors: {
     origin: '*',
     credentials: true,
