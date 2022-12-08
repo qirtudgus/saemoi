@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
   socket.on('raidList', (payload) => {
     console.log('raidList socket on 인자값');
     //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
-    io.emit('newPost', true);
+    socket.broadcast.emit('newPost', true);
     //페이로드엔 등록한 레이드 객체가 들어있음
     raidList.unshift(payload);
     //등록시간이 3분(180초)지난것을 제외시킴.
