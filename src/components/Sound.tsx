@@ -25,10 +25,6 @@ const Sound = () => {
   // };
 
   const notifi = (vibrate: string | null, sound: string | null) => {
-    if (vibrate === 'true') {
-      console.log('진동 재생');
-      navigator.vibrate([200, 100, 200]);
-    }
     if (sound === 'true') {
       console.log('사운드 재생');
       //pc 크롬과 모바일 크롬에서는 되는데, 애플에선 안된다.
@@ -36,6 +32,11 @@ const Sound = () => {
 
       //이건 애플도 되나 테스트
       document.getElementById('soundId')?.click();
+    }
+    if (vibrate === 'true') {
+      //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
+      console.log('진동 재생');
+      navigator.vibrate([200, 100, 200]);
     }
   };
 
