@@ -27,6 +27,8 @@ app.use(cookieParser());
 
 const server = http.createServer(app);
 const io = new Server(server, {
+  pingInterval: 40000,
+  pingTimeout: 30000,
   cors: {
     origin: '*',
     credentials: true,
@@ -58,6 +60,13 @@ io.on('connection', (socket) => {
   // });
   socket.on('newPost', (payload) => {
     io.emit('newPost', true);
+  });
+
+  socket.on('soundTest', (payload) => {
+    socket.emit('soundTest', 'test');
+  });
+  socket.on('pingOut', (payload) => {
+    socket.emit('pingOut', 'test');
   });
 
   io.emit('userCount', userCount);
