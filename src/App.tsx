@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styled from 'styled-components';
+import GaTracker from './components/GaTracker';
 import Login from './components/Login';
 import Register from './components/Register';
 import Sound from './components/Sound';
@@ -145,6 +146,7 @@ function App() {
     <>
       <GlobalStyles />
       <Sound />
+      <GaTracker />
 
       <Routes>
         <Route
