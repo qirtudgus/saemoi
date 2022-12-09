@@ -53,12 +53,15 @@ const HeaderLogo = styled.div`
   width: 150px;
   cursor: pointer;
   & img {
-    width: auto;
+    width: 150px;
+    height: 38px;
   }
   @media ${({ theme }) => theme.device.tablet} {
     width: 100px;
+
     & img {
       max-width: 100px;
+      height: 27px;
     }
   }
 `;
@@ -143,6 +146,7 @@ const MenuBtn = styled.div`
 
   & img {
     width: 45px;
+    height: 450px;
     filter: invert(49%) sepia(20%) saturate(7074%) hue-rotate(340deg) brightness(96%) contrast(95%);
 
     /* filter: invert(65%) sepia(14%) saturate(1866%) hue-rotate(74deg) brightness(91%) contrast(90%); */
@@ -151,6 +155,7 @@ const MenuBtn = styled.div`
     width: 40px;
     & img {
       width: 35px;
+      height: 35px;
     }
     ${({ theme }) => theme.common.flexCenter};
   }

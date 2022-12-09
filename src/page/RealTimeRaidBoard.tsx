@@ -90,7 +90,8 @@ const WriteBtn = styled(motion.button)`
   border-radius: 100%;
   box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
   & img {
-    width: 70%;
+    width: 35px;
+    height: 35px;
   }
 `;
 

@@ -66,14 +66,14 @@ const CountBoxMobile = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-
+  & img {
+    width: 9px;
+    height: 9px;
+    margin-right: 3px;
+  }
   @media ${({ theme }) => theme.device.tablet} {
     display: flex;
     /* height: 25px; */
-  }
-  & img {
-    width: 9px;
-    margin-right: 3px;
   }
 `;
 
