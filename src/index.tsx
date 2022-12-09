@@ -1,5 +1,6 @@
 import { Cookies } from 'react-cookie';
 import ReactDOM from 'react-dom/client';
+import ReactGA from 'react-ga';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -11,6 +12,8 @@ import theme from './layout/theme';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store/store';
 import { UserServiceAutoLogin } from './store/userSlice';
+const GA_ID = process.env.REACT_APP_GA_ID as string;
+ReactGA.initialize(GA_ID);
 
 // replace console.* for disable log on production
 // if (process.env.NODE_ENV === 'production') {
