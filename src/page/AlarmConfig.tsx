@@ -92,10 +92,7 @@ const AlarmConfing = () => {
           </>
         </select> */}
       </ToggleButtonWarp>
-      <ToggleButtonDesc>
-        새로운 레이드가 등록됐을 때 알람 소리를 재생합니다. (백그라운드에 웹브라우저가 켜져 있다면 다른 앱을 이용하거나
-        화면을 꺼놔도 재생됩니다.)
-      </ToggleButtonDesc>
+      <ToggleButtonDesc>새로운 레이드가 등록됐을 때 알람 소리를 재생합니다.</ToggleButtonDesc>
       <ToggleButtonWarp>
         <ToggleButtonLabel>진동</ToggleButtonLabel>
         <ToggleButton
@@ -105,7 +102,7 @@ const AlarmConfing = () => {
         />
       </ToggleButtonWarp>
       <ToggleButtonDesc>
-        화면을 켜놓으면 새로운 레이드가 등록됐을 때 핸드폰 진동이 울리게 합니다. (ios 미지원)
+        화면을 켜놓으면 새로운 레이드가 등록됐을 때 핸드폰 진동이 울립니다. (ios 미지원)
       </ToggleButtonDesc>
 
       <TestBtn OnClick={socketCheck}>알람 테스트</TestBtn>
