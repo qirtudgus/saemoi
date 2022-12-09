@@ -132,14 +132,10 @@ setInterval(() => {
     console.log('등록된 리스트가 없습니다.');
     return;
   } else {
-    //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
-    let check = raidList.findIndex((i) => {
-      console.log(moment().diff(i.date, 'seconds'));
-      return moment().diff(i.date, 'seconds') > deleteSeconds;
-    });
-    if (check === -1) {
-      console.log('삭제할 배열이 없습니다.');
-      return;
+    //마지막 요소만 검사하며 된다.
+    if (moment().diff(raidList[raidList.length - 1].date, 'seconds') < deleteSeconds) {
+      console.log(moment().diff(raidList[raidList.length - 1].date, 'seconds'));
+      console.log('마지막 요소가 아직 180초가 안됐습니다.');
     } else {
       let three = raidList.filter((i, index) => {
         if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
@@ -148,6 +144,22 @@ setInterval(() => {
       raidList = [...three];
       io.emit('raidList', raidList);
     }
+
+    //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
+    // let check = raidList.findIndex((i) => {
+    //   return moment().diff(i.date, 'seconds') > deleteSeconds;
+    // });
+    // if (check === -1) {
+    //   console.log('삭제할 배열이 없습니다.');
+    //   return;
+    // } else {
+    //   let three = raidList.filter((i, index) => {
+    //     if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+    //   });
+    //   // TimeOutDel(raidList)
+    //   raidList = [...three];
+    //   io.emit('raidList', raidList);
+    // }
   }
 }, 10000);
 
