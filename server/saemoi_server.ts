@@ -115,7 +115,9 @@ io.on('connection', (socket) => {
   });
 
   //사용자 연결이 끊겼을 때..
-  socket.on('disconnect', function () {
+  socket.on('disconnect', function (reason) {
+    console.log('소켓 끊긴 이유');
+    console.log(reason);
     userCount--;
     console.log('undecreas!', userCount);
     io.emit('userCount', userCount);
