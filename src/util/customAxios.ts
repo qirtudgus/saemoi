@@ -12,7 +12,7 @@ export const customAxios = async (method: AxiosMethod, url: string, data?: any):
   }).catch((err) => {
     console.log(err.response.status);
     if (err.response.status === 401) {
-      alert('토큰이 만료되었습니다. 로그인 후 이용해주세요!');
+      alert('세션이 만료되었습니다. 로그인을 다시 해주세요!');
       window.location.replace('/login');
     }
   });

@@ -1,28 +1,12 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import customAxios from '../util/customAxios';
-import { useAppSelector, useAppDispatch } from '../store/store';
-import { socket } from '../App'; //이런식으로 가져와서 소켓 중복안되도록 구현
-import { RaidListDispatch } from '../store/raidListSlice';
-import { returnDeleteTime, returnTodayString, returnTodayString180s } from '../util/returnTodayString';
-import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
-import 새로고침이미지 from '../img/refresh_white_24dp.svg';
-import 뮤 from '../img/뮤.png';
-import RefRaidCard from '../components/RefRaidCard';
-import { Title } from './Board';
-import styled, { css, keyframes } from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BasicButton } from '../components/BtnGroup';
-import ToggleButton from '../components/ToggleButton';
-
-const RefreshAni = keyframes`
-  to {
-    transform: rotate(0deg);
-  }
-  from {
-    transform: rotate(-360deg) ;
-  }
-`;
+import styled, { css, keyframes } from 'styled-components';
+import RefRaidCard from '../components/RefRaidCard';
+import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
+import 뮤 from '../img/뮤.png';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { Title } from './Board';
 
 interface RefreshInterface {
   isRefresh?: boolean;
@@ -49,44 +33,12 @@ const BtnWrap = styled.div`
   }
 `;
 
-const RefreshBtn = styled(motion.button)<RefreshInterface>`
-  cursor: pointer;
-  position: relative;
-  width: 50px;
-  height: 50px;
-  background-color: ${({ theme }) => theme.colors.main};
-  /* bottom: 20px;
-  right: 20px; */
-  ${(props) =>
-    !props.$isRefreshFunc
-      ? css`
-          background-color: ${({ theme }) => theme.colors.main};
-        `
-      : css`
-          cursor: default;
-          background-color: #9e9e9e;
-        `}
-
-  border-radius: 100%;
-  box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
-
-  & img {
-    width: 70%;
-  }
-
-  & img.on {
-    animation: ${RefreshAni} 0.8s ease;
-  }
-`;
-
 const WriteBtn = styled(motion.button)`
   cursor: pointer;
   position: relative;
   width: 50px;
   height: 50px;
   background-color: ${({ theme }) => theme.colors.main};
-  /* bottom: 90px;
-  right: 20px; */
   border-radius: 100%;
   box-shadow: 0px 2px 4px 3px rgb(0 0 0 / 20%);
   & img {
@@ -133,9 +85,6 @@ const ButtonWrapPc = styled(motion.button)<RefreshInterface>`
   & img {
     max-width: 25px;
   }
-  & img.on {
-    animation: ${RefreshAni} 0.8s ease;
-  }
 
   @media ${({ theme }) => theme.device.tablet} {
     display: none;
@@ -168,8 +117,6 @@ const LoadingText = styled.div`
 
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // const imgRef = useRef() as RefObject<HTMLImageElement>;
-  // const imgPcRef = useRef() as RefObject<HTMLImageElement>;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const list = useAppSelector((state) => state.raidList);
@@ -178,64 +125,14 @@ const RealTimeRaidBoard = () => {
   useEffect(() => {
     setIsLoading(false);
     window.scrollTo({ top: 0 });
-    // socket.on('raidList', function (payload) {
-    //   dispatch(RaidListDispatch(payload));
-    // });
     setIsLoading(true);
-    // setInterval(() => {
-    //   socket.on('pingOut', (payload) => {
-    //     console.log('ping timeout 방지');
-    //   });
-    // }, 1000);
   }, []);
-
-  // const Refresh = () => {
-  //   let a = imgRef.current;
-  //   a?.classList.remove('on');
-  //   void a?.offsetWidth;
-  //   a?.classList.add('on');
-  //   setIsLoad((prev) => !prev);
-  // };
-
-  // const RefreshPc = () => {
-  //   let a = imgPcRef.current;
-  //   a?.classList.remove('on');
-  //   void a?.offsetWidth;
-  //   a?.classList.add('on');
-  //   setIsLoad((prev) => !prev);
-  // };
-
-  // function socketCheck() {
-  //   socket.emit('newPost', 'test');
-  // }
 
   return (
     <>
       <PcBtnWrap>
         <Title>오늘 열린 레이드 {raidCount}회</Title>
         <PcInnerBtnWrap>
-          {/* <SoundCheck
-            id='soundId'
-            onClick={() => {
-              audio.play();
-            }}
-          ></SoundCheck> */}
-          {/* <TestBtnWrap>
-            <TestBtn OnClick={socketCheck}>newPost 소켓 전송</TestBtn>
-          </TestBtnWrap> */}
-          {/* <ButtonWrapPc
-            whileTap={{ scale: 0.95 }}
-            $isLoading={isLoading}
-            $isRefreshFunc={isRefreshFunc}
-            onClick={isRefreshFunc ? undefined : RefreshPc}
-          >
-            <img
-              ref={imgPcRef}
-              src={새로고침이미지}
-              alt='새로고침'
-            />
-            새로고침
-          </ButtonWrapPc> */}
           <ButtonWrapPc
             whileTap={{ scale: 0.95 }}
             onClick={() => {
@@ -250,27 +147,9 @@ const RealTimeRaidBoard = () => {
           </ButtonWrapPc>
         </PcInnerBtnWrap>
       </PcBtnWrap>
-      {/* <button
-        onClick={() => {
-          console.log(returnTodayString());
-          socket.emit('raidList', {
-            monsterName: '하하하',
-            raidDifficulty: '움하하',
-            raidCode: Math.random().toString(),
-            type: '하하하',
-            date: returnTodayString(),
-            deleteDate: returnTodayString180s(),
-            raidText: '하하하하',
-            raidOption: ['ㅋㅋㅋ', 'ㅎㅎㅎ'],
-          });
-        }}
-      >
-        레이드 전송
-      </button> */}
       {isLoading ? (
         list?.map((i: any, index: number) => (
           <RefRaidCard
-            // ref={ref}
             key={index}
             monsterName={i.monsterName}
             raidDifficulty={i.raidDifficulty}
@@ -292,20 +171,6 @@ const RealTimeRaidBoard = () => {
         </LoadingText>
       )}
       <BtnWrap>
-        {/* <RefreshBtn
-          whileTap={{ scale: 0.95 }}
-          $isLoading={isLoading}
-          $isRefreshFunc={isRefreshFunc}
-          onClick={isRefreshFunc ? undefined : Refresh}
-        >
-          <img
-            ref={imgRef}
-            // animate={{ rotate: isLoad ? 360 : 0 }}
-            // transition={{ duration: 0.5 }}
-            src={새로고침이미지}
-            alt='새로고침'
-          ></img>
-        </RefreshBtn> */}
         <WriteBtn
           whileTap={{ scale: 0.95 }}
           onClick={() => {
@@ -313,8 +178,6 @@ const RealTimeRaidBoard = () => {
           }}
         >
           <img
-            // animate={{ rotate: isLoad ? 360 : 0 }}
-            // transition={{ duration: 0.5 }}
             src={작성하기이미지}
             alt='등록하기'
           ></img>

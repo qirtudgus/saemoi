@@ -1,34 +1,26 @@
+import 'moment/locale/ko';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styled, { ThemeProvider } from 'styled-components';
 import Login from './components/Login';
 import Register from './components/Register';
+import Sound from './components/Sound';
 import 초록불 from './img/onboard.svg';
 import GlobalStyles from './layout/GlobalStyles';
 import Layout from './layout/Layout';
 import LayoutWrite from './layout/LayoutWrite';
 import theme from './layout/theme';
-import ArrayTest from './page/ArrayTest';
-import Board from './page/Board';
-import BoardSearchResult from './page/BoardSearchResult';
+import AlarmConfing from './page/AlarmConfig';
 import ErrorPage from './page/ErrorPage';
 import Home from './page/Home';
-import PostEdit from './page/PostEdit';
-import List from './page/QueryTest';
 import RaidBoard from './page/RaidBoard';
 import RaidWrite from './page/RaidWrite';
-import SocketTest from './page/SocketTest';
-import View from './page/View';
-import Write from './page/Write';
+import RealTimeRaidBoard from './page/RealTimeRaidBoard';
+import { RaidListDispatch } from './store/raidListSlice';
+import { RaidCountDispatch } from './store/soundSlice';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { userCountDispatch } from './store/userCountSlice';
-import 'moment/locale/ko';
-import RealTimeRaidBoard from './page/RealTimeRaidBoard';
-import Sound from './components/Sound';
-import AlarmConfing from './page/AlarmConfig';
-import { RaidCountDispatch } from './store/soundSlice';
-import { RaidListDispatch } from './store/raidListSlice';
 const port = process.env.REACT_APP_IO_SERVER_API as string;
 export const socket = io(port);
 
@@ -114,9 +106,7 @@ function App() {
     socket.on('raidList', function (payload) {
       dispatch(RaidListDispatch(payload));
     });
-    console.log('app 렌더링');
     socket.on('userCount', function (payload) {
-      console.log(payload);
       dispatch(userCountDispatch(payload));
     });
     socket.on('raidCount', function (payload) {

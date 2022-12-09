@@ -1,17 +1,17 @@
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import { db } from './saemoi_db.js';
-import { registerRouter } from './router/register.js';
-import { loginRouter } from './router/login.js';
-import { jwtCheck } from './middleware/CheckToken.js';
 import cookieParser from 'cookie-parser';
-import { boardRouter } from './router/board.js';
-import { raidBoardRouter } from './router/raidBoard.js';
-import { commentRouter } from './router/comment.js';
-import { Server } from 'socket.io';
+import cors from 'cors';
+import express from 'express';
 import http from 'http';
-import schedule from 'node-schedule';
 import moment from 'moment';
+import schedule from 'node-schedule';
+import { Server } from 'socket.io';
+import { jwtCheck } from './middleware/CheckToken.js';
+import { boardRouter } from './router/board.js';
+import { commentRouter } from './router/comment.js';
+import { loginRouter } from './router/login.js';
+import { raidBoardRouter } from './router/raidBoard.js';
+import { registerRouter } from './router/register.js';
+import { db } from './saemoi_db.js';
 
 const SERVER_PORT = 3002;
 const app = express();
@@ -65,10 +65,6 @@ io.on('connection', (socket) => {
   socket.on('soundTest', (payload) => {
     socket.emit('soundTest', 'test');
   });
-  socket.on('pingOut', (payload) => {
-    socket.emit('pingOut', 'test');
-  });
-
   io.emit('userCount', userCount);
   io.emit('raidCount', raidCount);
 
@@ -132,22 +128,23 @@ setInterval(() => {
   if (raidList.length === 0) {
     console.log('등록된 리스트가 없습니다.');
     return;
-  }
-  //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
-  let check = raidList.findIndex((i) => {
-    console.log(moment().diff(i.date, 'seconds'));
-    return moment().diff(i.date, 'seconds') > deleteSeconds;
-  });
-  if (check === -1) {
-    console.log('삭제할 배열이 없습니다.');
-    return;
   } else {
-    let three = raidList.filter((i, index) => {
-      if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+    //데드라인을 넘긴게 있는지 확인한 뒤 없다면 return
+    let check = raidList.findIndex((i) => {
+      console.log(moment().diff(i.date, 'seconds'));
+      return moment().diff(i.date, 'seconds') > deleteSeconds;
     });
-    // TimeOutDel(raidList)
-    raidList = [...three];
-    io.emit('raidList', raidList);
+    if (check === -1) {
+      console.log('삭제할 배열이 없습니다.');
+      return;
+    } else {
+      let three = raidList.filter((i, index) => {
+        if (moment().diff(i.date, 'seconds') < deleteSeconds) return i;
+      });
+      // TimeOutDel(raidList)
+      raidList = [...three];
+      io.emit('raidList', raidList);
+    }
   }
 }, 10000);
 

@@ -1,15 +1,13 @@
 import { motion } from 'framer-motion';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
+import { socket } from '../App'; //이런식으로 가져와서 소켓 중복안되도록 구현
 import 등록하기 from '../img/post_add_white_24dp.svg';
 import 뒤로가기 from '../img/뒤로가기.svg';
-import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
-import customAxios from '../util/customAxios';
 import { returnTodayString, returnTodayString180s } from '../util/returnTodayString';
 import { SubmitTitle, Title } from './Board';
-import { socket } from '../App'; //이런식으로 가져와서 소켓 중복안되도록 구현
 
 const BtnList = styled.div`
   display: flex;
@@ -42,7 +40,6 @@ const BtnLabel = styled(motion.label)`
   text-align: center;
   border: 2px solid#929292;
   border-radius: 10px;
-  /* margin-bottom: 10px; */
   margin-right: 10px;
 
   &:hover {
@@ -133,9 +130,9 @@ const ButtonWrap = styled(motion.button)<ButtonInterface>`
   }
 `;
 
-// const list = ['어태커', '서포터', '올라운더'];
 const difficultyList = ['7성', '6성', '5성', '4성', '3성↓'];
 
+// 자동완성
 // const property = [
 //   '노말',
 //   '불꽃',
@@ -277,12 +274,7 @@ const RaidWrite = () => {
       } else if (nameRef.current.value === '' && nameRef.current.value.length === 0) {
         alert('포켓몬의 이름을 입력해주세요.');
         nameRef.current.focus();
-      }
-      // else if (typeRef.current.value === '' && typeRef.current.value.length === 0) {
-      //   alert('포켓몬의 타입을 입력해주세요.');
-      //   typeRef.current.focus();
-      // }
-      else {
+      } else {
         let date = returnTodayString();
         let deleteDate = returnTodayString180s();
         console.log(optionList.join(', '));
@@ -300,25 +292,6 @@ const RaidWrite = () => {
           deleteDate,
         });
         navigate('/realtimeraidboard');
-
-        // customAxios('post', '/raidboard/list', {
-        //   nickname,
-        //   raidCode: codeRef.current.value,
-        //   monsterName: nameRef.current.value,
-        //   type: '',
-        //   // type: typeRef.current.value,
-        //   positionState,
-        //   difficultyState,
-        //   optionList,
-        //   etcText: etcTextRef.current.value,
-        //   date,
-        // })
-        //   .then((res) => {
-        //     console.log('완료');
-        //   })
-        //   .then((res) => {
-        //     navigate('/');
-        //   });
       }
     }
 
@@ -352,16 +325,6 @@ const RaidWrite = () => {
           </SubmitTitle>
         </HeaderDiv>
       </HeaderWrap>
-      {/* <BtnWrap>
-          <Title>레이드 등록</Title>
-          <ButtonWrapMobile onClick={submit}>
-            <img
-              src={등록하기}
-              alt='등록하기'
-            />
-            등록
-          </ButtonWrapMobile>
-        </BtnWrap> */}
 
       <InputWrap>
         <MultiInputWrap>
@@ -378,18 +341,11 @@ const RaidWrite = () => {
                 console.log(e.currentTarget!.value);
               }}
               onChange={(e) => {
-                //자동으로 대문자로 변경
-                // let trans = translate(e.target.value) as string;
                 if (e.target.value.length >= 6) {
                   nameRefFocus();
                 }
                 setCode(e.target.value.toUpperCase());
               }}
-              // onKeyDown={(e) => {
-              //   if (e.keyCode === 13) {
-              //     codeRef.current!.value.length > 0 ? nameRefFocus() : console.log('땡');
-              //   }
-              // }}
             ></TitleInput>
           </div>
           <div>
@@ -398,56 +354,13 @@ const RaidWrite = () => {
               id='title'
               type={'text'}
               ref={nameRef}
-              maxLength={12}
+              maxLength={10}
               placeholder='포켓몬 이름과 타입을 입력'
-              // onKeyDown={(e) => {
-              //   if (e.keyCode === 13) {
-              //     nameRef.current!.value.length > 0 ? typeRefFocus() : console.log('땡');
-              //   }
-              // }}
             ></TitleInput>
           </div>
-
-          {/* <div>
-              <ContentLabel htmlFor='title'>타입</ContentLabel>
-              <TitleInput
-                id='title'
-                type={'text'}
-                ref={typeRef}
-                placeholder='타입'
-                maxLength={3}
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    typeRef.current!.value.length > 0 ? console.log('엔터') : console.log('땡');
-                  }
-                }}
-              ></TitleInput>
-            </div> */}
         </MultiInputWrap>
       </InputWrap>
 
-      {/* <InputWrap>
-          <ContentLabel>자신의 포지션을 선택해주세요. - 선택</ContentLabel>
-          <BtnList>
-            {list.map((i, index) => {
-              return (
-                <React.Fragment key={i}>
-                  <BtnRadio
-                    id={i}
-                    name='position'
-                    onChange={() => {
-                      setPositionState(i);
-                    }}
-                    type={'radio'}
-                    value={i}
-                    checked={i === positionState}
-                  ></BtnRadio>
-                  <BtnLabel htmlFor={i}> {i}</BtnLabel>
-                </React.Fragment>
-              );
-            })}
-          </BtnList>
-        </InputWrap> */}
       <InputWrap>
         <ContentLabel htmlFor='etcText'>전달 사항 최대 20자 - 선택</ContentLabel>
         <TitleInput
