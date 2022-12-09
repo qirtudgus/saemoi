@@ -2,7 +2,7 @@ import 'moment/locale/ko';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import Login from './components/Login';
 import Register from './components/Register';
 import Sound from './components/Sound';
@@ -10,7 +10,6 @@ import 초록불 from './img/onboard.svg';
 import GlobalStyles from './layout/GlobalStyles';
 import Layout from './layout/Layout';
 import LayoutWrite from './layout/LayoutWrite';
-import theme from './layout/theme';
 import AlarmConfing from './page/AlarmConfig';
 import ErrorPage from './page/ErrorPage';
 import Home from './page/Home';
@@ -73,30 +72,26 @@ export const UserCount = () => {
   // const userCount = useAppSelector((state) => state.userList.length);
   const userCount2 = useAppSelector((state) => state.userCount);
   return (
-    <ThemeProvider theme={theme}>
-      <CountBox>
-        <img
-          src={초록불}
-          alt='접속중'
-        />
-        {userCount2}명 접속중
-      </CountBox>
-    </ThemeProvider>
+    <CountBox>
+      <img
+        src={초록불}
+        alt='접속중'
+      />
+      {userCount2}명 접속중
+    </CountBox>
   );
 };
 export const UserCountMobile = () => {
   // const userCount = useAppSelector((state) => state.userList.length);
   const userCount2 = useAppSelector((state) => state.userCount);
   return (
-    <ThemeProvider theme={theme}>
-      <CountBoxMobile>
-        <img
-          src={초록불}
-          alt='접속중'
-        />
-        {userCount2}명 접속중
-      </CountBoxMobile>
-    </ThemeProvider>
+    <CountBoxMobile>
+      <img
+        src={초록불}
+        alt='접속중'
+      />
+      {userCount2}명 접속중
+    </CountBoxMobile>
   );
 };
 

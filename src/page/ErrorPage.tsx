@@ -1,7 +1,5 @@
-import TitleText from '../components/TitleText';
 import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
-import theme from '../layout/theme';
+import TitleText from '../components/TitleText';
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
@@ -17,11 +15,9 @@ const Wrap = styled.div`
 
 const ErrorPage = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Wrap>
-        <TitleText text='권한이 없거나 존재하지 않는 페이지입니다.'></TitleText>
-      </Wrap>
-    </ThemeProvider>
+    <Wrap>
+      <TitleText text='권한이 없거나 존재하지 않는 페이지입니다.'></TitleText>
+    </Wrap>
   );
 };
 

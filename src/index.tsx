@@ -1,14 +1,16 @@
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
 import { Cookies } from 'react-cookie';
-import { UserServiceAutoLogin } from './store/userSlice';
-import ScrollToTop from './components/pageMoveTopScroll';
+import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import App from './App';
+import ScrollToTop from './components/pageMoveTopScroll';
+import theme from './layout/theme';
+import reportWebVitals from './reportWebVitals';
+import { store } from './store/store';
+import { UserServiceAutoLogin } from './store/userSlice';
 
 // replace console.* for disable log on production
 // if (process.env.NODE_ENV === 'production') {
@@ -34,10 +36,12 @@ root.render(
       position='bottom-right'
     />
     <Provider store={store}>
-      <BrowserRouter>
-        <ScrollToTop />
-        <App />
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <ScrollToTop />
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </QueryClientProvider>,
 );

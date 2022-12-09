@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from './theme';
+import styled from 'styled-components';
 
 import React from 'react';
 
@@ -13,13 +12,11 @@ const MainWrap = styled.main`
 
 const LayoutWrite = () => {
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <MainWrap>
-          <Outlet />
-        </MainWrap>
-      </ThemeProvider>
-    </div>
+    <>
+      <MainWrap>
+        <Outlet />
+      </MainWrap>
+    </>
   );
 };
 

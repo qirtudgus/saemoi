@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import theme from '../layout/theme';
 
 interface ButtonInterface {
@@ -51,30 +51,26 @@ interface ButtonPropsInterface {
 
 export const BasicButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
-      <ButtonWrap
-        whileTap={{ scale: 0.95 }}
-        className={ClassName}
-        onClick={OnClick}
-      >
-        {children}
-      </ButtonWrap>
-    </ThemeProvider>
+    <ButtonWrap
+      whileTap={{ scale: 0.95 }}
+      className={ClassName}
+      onClick={OnClick}
+    >
+      {children}
+    </ButtonWrap>
   );
 };
 
 export const SolidButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
-      <ButtonWrap
-        whileTap={{ scale: 0.95 }}
-        className={ClassName}
-        onClick={OnClick}
-        $ButtonBG={theme.colors.main}
-        $ButtonTextColor='#fff'
-      >
-        {children}
-      </ButtonWrap>
-    </ThemeProvider>
+    <ButtonWrap
+      whileTap={{ scale: 0.95 }}
+      className={ClassName}
+      onClick={OnClick}
+      $ButtonBG={theme.colors.main}
+      $ButtonTextColor='#fff'
+    >
+      {children}
+    </ButtonWrap>
   );
 };

@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { MutableRefObject, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from '../layout/theme';
+import styled from 'styled-components';
 import customAxios from '../util/customAxios';
 import { errorCode } from '../util/errorCode';
 import TitleText from './TitleText';
@@ -161,56 +160,54 @@ const Register = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <RegisterWrap>
-        <TitleText text='회원 가입'></TitleText>
+    <RegisterWrap>
+      <TitleText text='회원 가입'></TitleText>
 
-        <InputDiv>
-          <InputTitle>
-            아이디 <InputWarning>{idWarning}</InputWarning>
-          </InputTitle>
-          <Input
-            ref={idRef}
-            // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setId)}
-          ></Input>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>
-            닉네임 <InputWarning>{nickWarning}</InputWarning>
-          </InputTitle>
-          <Input
-            ref={nicknameRef}
-            // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setNickname)}
-          ></Input>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>
-            비밀번호 <InputWarning>{pwWarning}</InputWarning>
-          </InputTitle>
-          <Input
-            type={'password'}
-            ref={passwordRef}
-            // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setPassword)}
-          ></Input>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>
-            비밀번호 확인 <InputWarning>{cpwWarning}</InputWarning>
-          </InputTitle>
-          <Input
-            type={'password'}
-            ref={confirmPasswordRef}
-            // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setConfirmPassword)}
-          ></Input>
-        </InputDiv>
-        <Button
-          whileTap={{ scale: 0.95 }}
-          onClick={join}
-        >
-          가입
-        </Button>
-      </RegisterWrap>
-    </ThemeProvider>
+      <InputDiv>
+        <InputTitle>
+          아이디 <InputWarning>{idWarning}</InputWarning>
+        </InputTitle>
+        <Input
+          ref={idRef}
+          // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setId)}
+        ></Input>
+      </InputDiv>
+      <InputDiv>
+        <InputTitle>
+          닉네임 <InputWarning>{nickWarning}</InputWarning>
+        </InputTitle>
+        <Input
+          ref={nicknameRef}
+          // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setNickname)}
+        ></Input>
+      </InputDiv>
+      <InputDiv>
+        <InputTitle>
+          비밀번호 <InputWarning>{pwWarning}</InputWarning>
+        </InputTitle>
+        <Input
+          type={'password'}
+          ref={passwordRef}
+          // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setPassword)}
+        ></Input>
+      </InputDiv>
+      <InputDiv>
+        <InputTitle>
+          비밀번호 확인 <InputWarning>{cpwWarning}</InputWarning>
+        </InputTitle>
+        <Input
+          type={'password'}
+          ref={confirmPasswordRef}
+          // onChange={(e: React.FormEvent<HTMLInputElement>): void => inputChange(e, setConfirmPassword)}
+        ></Input>
+      </InputDiv>
+      <Button
+        whileTap={{ scale: 0.95 }}
+        onClick={join}
+      >
+        가입
+      </Button>
+    </RegisterWrap>
   );
 };
 export default Register;

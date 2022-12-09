@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const spring = {
@@ -45,7 +44,6 @@ export default function ToggleButton(props: any) {
     setIsOn(!isOn);
   };
   useEffect(() => {
-    console.log(props.isOn);
     if (props.isOn === 'true') {
       setIsOn(true);
     }

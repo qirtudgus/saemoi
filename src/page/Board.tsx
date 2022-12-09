@@ -1,6 +1,6 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled, { css, ThemeProvider } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
 import add_like from '../img/add_like.svg';
@@ -9,7 +9,6 @@ import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import 돋보기 from '../img/돋보기.svg';
 import 오른쪽화살표 from '../img/오른쪽화살표.svg';
 import 왼쪽화살표 from '../img/왼쪽화살표.svg';
-import theme from '../layout/theme';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
 import { returnDiffTime } from '../util/returnTodayString';
@@ -373,7 +372,6 @@ const Board = () => {
   // }
 
   return (
-    <ThemeProvider theme={theme}>
       <BoardWrap>
         <WriteButton>
           <Title>게시판</Title>
@@ -508,7 +506,6 @@ const Board = () => {
           </PageBtn>
         </PageWrap>
       </BoardWrap>
-    </ThemeProvider>
   );
 };
 

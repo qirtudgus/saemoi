@@ -1,6 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from '../layout/theme';
+import styled from 'styled-components';
 
 const Title = styled.h1`
   font-size: 2em;
@@ -20,10 +19,6 @@ const Title = styled.h1`
 `;
 
 const TitleText = ({ text }: { text: string }) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Title>{text}</Title>
-    </ThemeProvider>
-  );
+  return <Title>{text}</Title>;
 };
 export default React.memo(TitleText);

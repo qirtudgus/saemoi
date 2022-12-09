@@ -1,6 +1,5 @@
 import moment from 'moment';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from '../layout/theme';
+import styled from 'styled-components';
 import { returnDiffTime } from '../util/returnTodayString';
 
 const ListCard = styled.div`
@@ -60,30 +59,28 @@ let m = (date: any) => {
 
 const RaidCard = (props: any) => {
   return (
-    <ThemeProvider theme={theme}>
-      <ListCard>
-        <ListTop>
-          <span>{props.raidDifficulty}</span>
-          <span>{props.monsterName}</span>
-          <VerticalLine />
+    <ListCard>
+      <ListTop>
+        <span>{props.raidDifficulty}</span>
+        <span>{props.monsterName}</span>
+        <VerticalLine />
 
-          <span className='raidCode'>{props.raidCode}</span>
-          <ListFooterTime> {returnDiffTime(props.date)}</ListFooterTime>
-        </ListTop>
-        {props.raidText !== '' && (
-          <p>
-            <RaidText>- </RaidText>
-            {props.raidText}
-          </p>
-        )}
-        {props.raidOption !== '' && (
-          <p>
-            <RaidText>- </RaidText>
-            {props.raidOption}
-          </p>
-        )}
-      </ListCard>
-    </ThemeProvider>
+        <span className='raidCode'>{props.raidCode}</span>
+        <ListFooterTime> {returnDiffTime(props.date)}</ListFooterTime>
+      </ListTop>
+      {props.raidText !== '' && (
+        <p>
+          <RaidText>- </RaidText>
+          {props.raidText}
+        </p>
+      )}
+      {props.raidOption !== '' && (
+        <p>
+          <RaidText>- </RaidText>
+          {props.raidOption}
+        </p>
+      )}
+    </ListCard>
   );
 };
 

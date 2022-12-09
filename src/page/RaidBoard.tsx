@@ -2,12 +2,11 @@ import { motion } from 'framer-motion';
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
-import styled, { css, keyframes, ThemeProvider } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import RefRaidCard from '../components/RefRaidCard';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
 import 새로고침이미지 from '../img/refresh_white_24dp.svg';
 import 뮤 from '../img/뮤.png';
-import theme from '../layout/theme';
 import customAxios from '../util/customAxios';
 import { Title } from './Board';
 
@@ -233,7 +232,7 @@ const RaidBoard = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <PcBtnWrap>
         <Title>레이드 리스트</Title>
         <PcInnerBtnWrap>
@@ -316,7 +315,7 @@ const RaidBoard = () => {
           ></img>
         </WriteBtn>
       </BtnWrap>
-    </ThemeProvider>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from './theme';
+import styled from 'styled-components';
 // import 로고 from '../img/saemoiSVG2.svg';
 import 로고 from '../img/logo_s.svg';
 // import 로고 from '../img/logo_w.svg';
@@ -225,160 +224,158 @@ const Layout = () => {
   const { isLogin } = useAppSelector((state) => state.user);
   // const userCount = useAppSelector((state) => state.userList.length);
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <HeaderWrap>
-          <HeaderDiv>
-            <HeaderLogo
-              onClick={() => {
-                navigate('/');
+    <>
+      <HeaderWrap>
+        <HeaderDiv>
+          <HeaderLogo
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <img
+              src={로고}
+              alt='logo'
+            ></img>
+          </HeaderLogo>
+          <HeaderUl>
+            {menuList2.map((i, index) => (
+              <HeaderLi key={index}>
+                <NavLink
+                  to={`${i.link}`}
+                  className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
+                >
+                  {i.name}
+                </NavLink>
+              </HeaderLi>
+            ))}
+          </HeaderUl>
+          <UserCountandMenu>
+            <UserCountMobile />
+            <MenuBtn
+              className='menuOpenCheck'
+              onClick={(e) => {
+                if (menu != null) {
+                  menu.current!.classList.toggle('active');
+                } else {
+                  return;
+                }
               }}
             >
               <img
-                src={로고}
-                alt='logo'
+                className='menuOpenCheck'
+                src={햄버거메뉴}
+                alt='메뉴'
               ></img>
-            </HeaderLogo>
-            <HeaderUl>
-              {menuList2.map((i, index) => (
-                <HeaderLi key={index}>
-                  <NavLink
-                    to={`${i.link}`}
-                    className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
-                  >
-                    {i.name}
-                  </NavLink>
-                </HeaderLi>
-              ))}
-            </HeaderUl>
-            <UserCountandMenu>
-              <UserCountMobile />
-              <MenuBtn
-                className='menuOpenCheck'
-                onClick={(e) => {
-                  if (menu != null) {
-                    menu.current!.classList.toggle('active');
-                  } else {
-                    return;
-                  }
-                }}
-              >
-                <img
-                  className='menuOpenCheck'
-                  src={햄버거메뉴}
-                  alt='메뉴'
-                ></img>
-              </MenuBtn>
-            </UserCountandMenu>
-            {isLogin ? (
-              <LoginBtnWrap>
-                <UserCount />
-                <BasicButton
-                  OnClick={() => {
-                    console.log('로그아웃 시도');
-
-                    dispatch(UserService.logoutUser());
-                  }}
-                >
-                  로그아웃
-                </BasicButton>
-              </LoginBtnWrap>
-            ) : (
-              <LoginBtnWrap>
-                <UserCount />
-                <SolidButton
-                  ClassName={'ml_10 mr_10'}
-                  OnClick={() => {
-                    navigate('/login');
-                  }}
-                >
-                  로그인
-                </SolidButton>
-                <BasicButton
-                  ClassName={'ml_10'}
-                  OnClick={() => {
-                    navigate('/register');
-                  }}
-                >
-                  회원가입
-                </BasicButton>
-              </LoginBtnWrap>
-            )}
-          </HeaderDiv>
-        </HeaderWrap>
-        <SlideWrap
-          id={'OpenMenuCheck'}
-          isLogin={isLogin}
-          ref={menu}
-        >
-          <SlideUl>
-            {menuList2.map((i, index) => {
-              return (
-                <SlideLi
-                  key={index}
-                  className='menuOpenCheck'
-                >
-                  <NavLink
-                    onClick={(e) => {
-                      menu.current!.classList.toggle('active');
-                    }}
-                    to={`${i.link}`}
-                    className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
-                  >
-                    {i.name}
-                  </NavLink>
-                </SlideLi>
-              );
-            })}
-            {isLogin ? (
-              <SlideLi
-                className='menuOpenCheck'
-                onClick={() => {
+            </MenuBtn>
+          </UserCountandMenu>
+          {isLogin ? (
+            <LoginBtnWrap>
+              <UserCount />
+              <BasicButton
+                OnClick={() => {
                   console.log('로그아웃 시도');
-                  dispatch(logout());
+
+                  dispatch(UserService.logoutUser());
                 }}
               >
                 로그아웃
+              </BasicButton>
+            </LoginBtnWrap>
+          ) : (
+            <LoginBtnWrap>
+              <UserCount />
+              <SolidButton
+                ClassName={'ml_10 mr_10'}
+                OnClick={() => {
+                  navigate('/login');
+                }}
+              >
+                로그인
+              </SolidButton>
+              <BasicButton
+                ClassName={'ml_10'}
+                OnClick={() => {
+                  navigate('/register');
+                }}
+              >
+                회원가입
+              </BasicButton>
+            </LoginBtnWrap>
+          )}
+        </HeaderDiv>
+      </HeaderWrap>
+      <SlideWrap
+        id={'OpenMenuCheck'}
+        isLogin={isLogin}
+        ref={menu}
+      >
+        <SlideUl>
+          {menuList2.map((i, index) => {
+            return (
+              <SlideLi
+                key={index}
+                className='menuOpenCheck'
+              >
+                <NavLink
+                  onClick={(e) => {
+                    menu.current!.classList.toggle('active');
+                  }}
+                  to={`${i.link}`}
+                  className={({ isActive }) => (isActive ? 'active' : undefined) + ' menuOpenCheck'}
+                >
+                  {i.name}
+                </NavLink>
               </SlideLi>
-            ) : (
-              <>
-                <SlideLi
-                  className='menuOpenCheck'
-                  onClick={() => {
-                    menu.current!.classList.toggle('active');
-                    navigate('/login');
-                  }}
-                >
-                  로그인
-                </SlideLi>
-                <SlideLi
-                  className='menuOpenCheck'
-                  onClick={() => {
-                    menu.current!.classList.toggle('active');
-                    navigate('/register');
-                  }}
-                >
-                  회원가입
-                </SlideLi>
-              </>
-            )}
-          </SlideUl>
-        </SlideWrap>
-        <MainWrap>
-          <Outlet />
-        </MainWrap>
-        <FooterWrap>
-          <FooterContent>
-            Poraid
-            <br />
-            포켓몬스터 스칼렛/바이올렛 테라 레이드 배틀 파티원 모집을 위한 사이트입니다.
-            <br />
-            문의 및 건의 이메일 : poraid.official@google.com
-            <br />ⓒ 2022 Poraid., INC. All rights reserved.
-          </FooterContent>
-        </FooterWrap>
-      </ThemeProvider>
-    </div>
+            );
+          })}
+          {isLogin ? (
+            <SlideLi
+              className='menuOpenCheck'
+              onClick={() => {
+                console.log('로그아웃 시도');
+                dispatch(logout());
+              }}
+            >
+              로그아웃
+            </SlideLi>
+          ) : (
+            <>
+              <SlideLi
+                className='menuOpenCheck'
+                onClick={() => {
+                  menu.current!.classList.toggle('active');
+                  navigate('/login');
+                }}
+              >
+                로그인
+              </SlideLi>
+              <SlideLi
+                className='menuOpenCheck'
+                onClick={() => {
+                  menu.current!.classList.toggle('active');
+                  navigate('/register');
+                }}
+              >
+                회원가입
+              </SlideLi>
+            </>
+          )}
+        </SlideUl>
+      </SlideWrap>
+      <MainWrap>
+        <Outlet />
+      </MainWrap>
+      <FooterWrap>
+        <FooterContent>
+          Poraid
+          <br />
+          포켓몬스터 스칼렛/바이올렛 테라 레이드 배틀 파티원 모집을 위한 사이트입니다.
+          <br />
+          문의 및 건의 이메일 : poraid.official@google.com
+          <br />ⓒ 2022 Poraid., INC. All rights reserved.
+        </FooterContent>
+      </FooterWrap>
+    </>
   );
 };
 
