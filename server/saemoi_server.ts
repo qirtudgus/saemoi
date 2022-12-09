@@ -51,7 +51,8 @@ var raidList: {
 }[] = [];
 
 io.on('connection', (socket) => {
-  const socketId = socket.id;
+  const ip = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+  console.log(`클라이언트 연결 성공 - 클라이언트IP: ${ip}, 소켓ID: ${socket.id}`);
   userCount++;
 
   socket.emit('newPost', false);
