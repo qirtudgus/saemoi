@@ -54,7 +54,7 @@ const Home = () => {
   const usersCount = useAppSelector((state) => state.userCount);
   let a = null;
   // replace console.* for disable log on production
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'production') {
     console.log = () => {};
     console.error = () => {};
     console.debug = () => {};
