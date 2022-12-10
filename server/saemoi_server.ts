@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
       optionList,
       etcText,
       date,
-      ip,
+      ip = '?.?.?.?',
     } = payload;
     let insertQuery =
       'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date,ip) VALUES (?,?,?,?,?,?,?,?,?,?)';
