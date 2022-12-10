@@ -229,7 +229,7 @@ const Layout = () => {
         <HeaderDiv>
           <HeaderLogo
             onClick={() => {
-              navigate('/');
+              navigate('/realtimeraidboard');
             }}
           >
             <img
