@@ -12,11 +12,16 @@ import GlobalStyles from './layout/GlobalStyles';
 import Layout from './layout/Layout';
 import LayoutWrite from './layout/LayoutWrite';
 import AlarmConfing from './page/AlarmConfig';
+import Board from './page/Board';
+import BoardSearchResult from './page/BoardSearchResult';
 import ErrorPage from './page/ErrorPage';
 import Home from './page/Home';
+import PostEdit from './page/PostEdit';
 import RaidBoard from './page/RaidBoard';
 import RaidWrite from './page/RaidWrite';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
+import View from './page/View';
+import Write from './page/Write';
 import { RaidListDispatch } from './store/raidListSlice';
 import { RaidCountDispatch } from './store/soundSlice';
 import { useAppDispatch, useAppSelector } from './store/store';
@@ -168,7 +173,7 @@ function App() {
             path='/register'
             element={<Register />}
           />
-          {/* <Route
+          <Route
             path='/board/list'
             element={<Board />}
           ></Route>
@@ -187,7 +192,7 @@ function App() {
           <Route
             path='/board/list/search/:keyword'
             element={<BoardSearchResult />}
-          /> */}
+          />
           {/* 
           <Route
             path='/query'
