@@ -2,11 +2,15 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
-import RefRaidCard from '../components/RefRaidCard';
+import RefRaidCard, { ExitDiv, ExitListCard } from '../components/RefRaidCard';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
 import 뮤 from '../img/뮤.png';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { Title } from './Board';
+
+const SkeletonCard = styled(ExitListCard)`
+  height: 50px;
+`;
 
 interface RefreshInterface {
   isRefresh?: boolean;
@@ -147,7 +151,15 @@ const RealTimeRaidBoard = () => {
           </ButtonWrapPc>
         </PcInnerBtnWrap>
       </PcBtnWrap>
-      {isLoading ? (
+      {list.length === 0 ? (
+        <SkeletonCard
+          initial={{ opacity: 0.3 }}
+          animate={{ opacity: 1, x: [5, -5, 0] }}
+          transition={{ duration: 0.4 }}
+        >
+          <ExitDiv>현재 등록된 레이드가 없습니다..😥</ExitDiv>
+        </SkeletonCard>
+      ) : isLoading ? (
         list?.map((i: any, index: number) => (
           <RefRaidCard
             key={index}
@@ -170,6 +182,7 @@ const RealTimeRaidBoard = () => {
           불러오는 중...
         </LoadingText>
       )}
+
       <BtnWrap>
         <WriteBtn
           whileTap={{ scale: 0.95 }}

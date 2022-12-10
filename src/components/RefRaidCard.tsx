@@ -19,9 +19,9 @@ const ListCard = styled(motion.div)`
   }
 `;
 
-const ExitListCard = styled(ListCard)``;
+export const ExitListCard = styled(ListCard)``;
 
-const ExitDiv = styled.div`
+export const ExitDiv = styled.div`
   position: absolute;
   top: 0;
   left: 0;
