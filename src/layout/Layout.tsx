@@ -273,10 +273,13 @@ const Layout = () => {
               ></img>
             </MenuBtn>
           </UserCountandMenu>
+          <LoginBtnWrap>
+            <UserCount />
+          </LoginBtnWrap>
           {/* 로그인 기능 추가 시 아래 주석 해제할 것*/}
           {/* {isLogin ? (
             <LoginBtnWrap>
-              <UserCount />
+     
               <BasicButton
                 OnClick={() => {
                   console.log('로그아웃 시도');
