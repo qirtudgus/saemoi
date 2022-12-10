@@ -121,6 +121,7 @@ const LoadingText = styled.div`
   & img {
     margin-right: 15px;
     width: 45px;
+    height: 43px;
     animation: ${LoadingAni} 1.3s ease-out infinite;
   }
 `;
