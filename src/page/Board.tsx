@@ -3,120 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
-import add_like from '../img/add_like.svg';
-import comment_img from '../img/commentLine_img.svg';
+
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
-import 돋보기 from '../img/돋보기.svg';
+import 돋보기 from '../img/search_white_24dp.svg';
 import 오른쪽화살표 from '../img/오른쪽화살표.svg';
 import 왼쪽화살표 from '../img/왼쪽화살표.svg';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
 import { returnDiffTime } from '../util/returnTodayString';
+import BoardList from '../components/BoardList';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
   min-height: calc(100vh - 310px);
   /* height: calc(100vh - 310px); */
-`;
-
-const BoardLi = styled.li`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 15px 15px 10px;
-
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
-
-  width: 100%;
-  justify-content: space-around;
-
-  & .title > span:hover {
-    font-weight: bold;
-  }
-
-  & .title {
-    width: 90%;
-    padding: 10px 0;
-    display: flex;
-    align-items: center;
-  }
-  & .title > span {
-    font-size: 1.1em;
-    display: block;
-    height: 20px;
-    cursor: pointer;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  @media ${({ theme }) => theme.device.tablet} {
-    & .title > span {
-      width: 100%;
-    }
-    & .title {
-      width: 100%;
-    }
-  }
-
-  & .topInfo {
-    width: 100%;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.9em;
-  }
-
-  & .frontInfo {
-    display: flex;
-    align-items: center;
-  }
-
-  & .nickname {
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  & .secondInfo {
-    display: flex;
-    align-items: center;
-  }
-  & .date {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  & .comment {
-    display: flex;
-    align-items: center;
-  }
-  & .like {
-    display: flex;
-    align-items: center;
-  }
-  & .comment img {
-    width: 20px;
-  }
-  & .like img {
-    width: 20px;
-  }
-  & .comment span {
-    margin-left: 5px;
-  }
-  & .like span {
-    margin-left: 5px;
-  }
-
-  & .line {
-    display: inline-block;
-    border-left: 1px solid ${({ theme }) => theme.colors.borderColor};
-    margin: 0 10px;
-    height: 15px;
-  }
 `;
 
 const WriteSearchWrap = styled.div`
@@ -318,43 +218,9 @@ const Board = () => {
     likes: string;
   }
 
-  // const [list, setList] = useState([
-  //   {
-  //     index: '',
-  //     title: '',
-  //     nickname: '',
-  //     date: '',
-  //     commentCount: '',
-  //     view: '',
-  //     likes: '',
-  //   },
-  // ]);
-
   useEffect(() => {
     call(currentPageNum);
   }, [currentPageNum]);
-
-  // useEffect(() => {
-  //   customAxios('get', '/board', {}).then((res) => {
-  //     console.log(res.data);
-  //     if (res.data.length === 0) {
-  //       setList([
-  //         {
-  //           index: '',
-  //           title: '',
-  //           nickname: '',
-  //           date: '',
-  //           commentCount: '',
-  //           view: '',
-  //           likes: '',
-  //         },
-  //       ]);
-  //       return;
-  //     } else {
-  //       setList(res.data);
-  //     }
-  //   });
-  // }, []);
 
   const searchBoardFunc = () => {
     console.log(searchInputRef.current!.value);
@@ -366,146 +232,150 @@ const Board = () => {
     }
   };
 
-  //데이터가 들어왔을 때 한번에 렌더링해준다.
-  // if (list === null) {
-  //   return null;
-  // }
-
   return (
-      <BoardWrap>
-        <WriteButton>
-          <Title>게시판</Title>
-          <WriteSearchWrap>
-            <SearchInputWrap>
-              <img
-                src={돋보기}
-                alt='검색'
-              />
-              <input
-                ref={searchInputRef}
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    searchBoardFunc();
-                  } else {
-                    return;
-                  }
-                }}
-              ></input>
-              {/* <BasicButton OnClick={searchBoardFunc}>검색</BasicButton> */}
-            </SearchInputWrap>
-            <SolidButton
-              ClassName='ml_10'
-              text='작성하기'
-              OnClick={() => {
-                if (isLogin) {
-                  navigate('/board/write');
+    <BoardWrap>
+      <WriteButton>
+        <Title>게시판</Title>
+        <WriteSearchWrap>
+          <SearchInputWrap>
+            <img
+              src={돋보기}
+              alt='검색'
+            />
+            <input
+              ref={searchInputRef}
+              onKeyDown={(e) => {
+                if (e.keyCode === 13) {
+                  searchBoardFunc();
                 } else {
-                  alert('로그인 후 이용 가능합니다!');
                   return;
                 }
               }}
-            >
-              <img
-                src={edit_document_white_24dp}
-                alt='작성하기'
-              />
-              작성하기
-            </SolidButton>
-          </WriteSearchWrap>
-        </WriteButton>
-        {list === null ? null : (
-          <>
-            {list[0].index === '' ? (
-              <TitleText text='게시글이 없습니다.' />
-            ) : (
-              <>
-                {list.map((i) => {
-                  return (
-                    <React.Fragment key={i.index}>
-                      <BoardLi>
-                        <div className='topInfo'>
-                          <div className='frontInfo'>
-                            <span className='nickname'>{i.nickname}</span>
-                            <div className='line'></div>
-                            <span className='date'>{returnDiffTime(i.date)}</span>
-                          </div>
-                          <div className='secondInfo'>
-                            <div className='comment'>
-                              <img
-                                src={comment_img}
-                                alt='댓글'
-                              />
-                              <span>{i.commentCount}</span>
-                            </div>
-                            <div className='line'></div>
-                            <div className='like'>
-                              <img
-                                src={add_like}
-                                alt='좋아요'
-                              />
-                              <span>{i.likes}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <p className='title'>
-                          <span
-                            onClick={() => {
-                              //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
-                              //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
-                              // dispatch(BoardViewService.getBoard({ number: i.index }))
-                              customAxios('put', `/board/view?number=${i.index}`);
-                              navigate(`/board/posts/${i.index}`);
-                            }}
-                          >
-                            {i.title}
-                          </span>
-                        </p>
-                      </BoardLi>
-                    </React.Fragment>
-                  );
-                })}
-              </>
-            )}
-          </>
-        )}
-        <PageWrap>
-          <PageBtn
-            disabled={currentPageNum === 1}
-            data-prev='backward'
-            onClick={() => {
-              setCurrentPageNum((prev) => prev - 1);
+            ></input>
+            {/* <BasicButton OnClick={searchBoardFunc}>검색</BasicButton> */}
+          </SearchInputWrap>
+          <SolidButton
+            ClassName='ml_10'
+            text='작성하기'
+            OnClick={() => {
+              if (isLogin) {
+                navigate('/board/write');
+              } else {
+                alert('로그인 후 이용 가능합니다!');
+                return;
+              }
             }}
           >
             <img
-              src={왼쪽화살표}
-              alt='뒤로'
-            ></img>
-          </PageBtn>
-          {pageList!.map((i: any, index: any) => (
-            <PageBtn
-              key={i}
-              active={currentPageNum === i}
-              onClick={(e) => {
-                setCurrentPageNum(i);
-              }}
-            >
-              {i}
-            </PageBtn>
-          ))}
+              src={edit_document_white_24dp}
+              alt='작성하기'
+            />
+            작성하기
+          </SolidButton>
+        </WriteSearchWrap>
+      </WriteButton>
+      {list === null ? null : (
+        <>
+          {list[0].index === '' ? (
+            <TitleText text='게시글이 없습니다.' />
+          ) : (
+            <>
+              {list.map((i) => {
+                return (
+                  <BoardList
+                    key={i.index}
+                    index={i.index}
+                    title={i.title}
+                    nickname={i.nickname}
+                    date={i.date}
+                    commentCount={i.commentCount}
+                    likes={i.likes}
+                  />
+                  // <React.Fragment key={i.index}>
+                  //   <BoardLi>
+                  //     <div className='topInfo'>
+                  //       <div className='frontInfo'>
+                  //         <span className='nickname'>{i.nickname}</span>
+                  //         <div className='line'></div>
+                  //         <span className='date'>{returnDiffTime(i.date)}</span>
+                  //       </div>
+                  //       <div className='secondInfo'>
+                  //         <div className='comment'>
+                  //           <img
+                  //             src={comment_img}
+                  //             alt='댓글'
+                  //           />
+                  //           <span>{i.commentCount}</span>
+                  //         </div>
+                  //         <div className='line'></div>
+                  //         <div className='like'>
+                  //           <img
+                  //             src={add_like}
+                  //             alt='좋아요'
+                  //           />
+                  //           <span>{i.likes}</span>
+                  //         </div>
+                  //       </div>
+                  //     </div>
+                  //     <p className='title'>
+                  //       <span
+                  //         onClick={() => {
+                  //           //여기서 디스패치해서 제목과 콘텐츠를 가져와야할듯?
+                  //           //해당 페이지에서 새로고침 시 값을 가져오질못함..해당컴포넌트에서 useEffect를 이용해야 새로고침에도 데이터 획득가능
+                  //           // dispatch(BoardViewService.getBoard({ number: i.index }))
+                  //           customAxios('put', `/board/view?number=${i.index}`);
+                  //           navigate(`/board/posts/${i.index}`);
+                  //         }}
+                  //       >
+                  //         {i.title}
+                  //       </span>
+                  //     </p>
+                  //   </BoardLi>
+                  // </React.Fragment>
+                );
+              })}
+            </>
+          )}
+        </>
+      )}
+      <PageWrap>
+        <PageBtn
+          disabled={currentPageNum === 1}
+          data-prev='backward'
+          onClick={() => {
+            setCurrentPageNum((prev) => prev - 1);
+          }}
+        >
+          <img
+            src={왼쪽화살표}
+            alt='뒤로'
+          ></img>
+        </PageBtn>
+        {pageList!.map((i: any, index: any) => (
           <PageBtn
-            data-prev='forward'
-            disabled={currentPageNum === pages.length}
-            onClick={() => {
-              setCurrentPageNum((prev) => prev + 1);
+            key={i}
+            active={currentPageNum === i}
+            onClick={(e) => {
+              setCurrentPageNum(i);
             }}
           >
-            <img
-              src={오른쪽화살표}
-              alt='앞으로'
-            ></img>
+            {i}
           </PageBtn>
-        </PageWrap>
-      </BoardWrap>
+        ))}
+        <PageBtn
+          data-prev='forward'
+          disabled={currentPageNum === pages.length}
+          onClick={() => {
+            setCurrentPageNum((prev) => prev + 1);
+          }}
+        >
+          <img
+            src={오른쪽화살표}
+            alt='앞으로'
+          ></img>
+        </PageBtn>
+      </PageWrap>
+    </BoardWrap>
   );
 };
 
