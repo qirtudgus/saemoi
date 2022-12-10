@@ -102,12 +102,13 @@ io.on('connection', (socket) => {
       optionList,
       etcText,
       date,
+      ip,
     } = payload;
     let insertQuery =
-      'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
+      'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date,ip) VALUES (?,?,?,?,?,?,?,?,?,?)';
     db.query(
       insertQuery,
-      [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList, etcText, date],
+      [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList, etcText, date, ip],
       (err, rows) => {
         console.log('게시물 등록 완료');
         console.log(err);
