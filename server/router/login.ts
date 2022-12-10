@@ -54,9 +54,9 @@ loginRouter.post('/autologin', async (req, res, next) => {
       res.clearCookie('RT');
       res.clearCookie('nickname');
       res.status(401).json({
-        id: '',
+        id: '비회원',
         isLogin: false,
-        nickname: '',
+        nickname: '비회원',
       });
     } else {
       const newAT = createAccessToken(req.cookies.id) as string;
@@ -83,8 +83,8 @@ loginRouter.post('/logout', async (req, res, next) => {
   res.clearCookie('RT');
   res.clearCookie('nickname');
   res.status(401).json({
-    id: '',
+    id: '비회원',
     isLogin: false,
-    nickname: '',
+    nickname: '비회원',
   });
 });
