@@ -131,7 +131,8 @@ commentRouter.post('/write/nested', (req, res) => {
       commentWriteQuery,
       [board_index, content, date, nickname, id, orders, depth, comment_index],
       (err, rows) => {
-        db.query(commentCountCreate, [], (err, rows) => {
+        db.query(commentCountCreate, [board_index], (err, rows) => {
+          console.log('대댓글 등록완료');
           res.status(200).json('대댓글 등록 완료');
         });
       },
