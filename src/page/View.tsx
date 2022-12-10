@@ -6,7 +6,7 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import add_like from '../img/add_like2.svg';
-import more_horiz from '../img/more_horiz.svg';
+import more_horiz from '../img/more_horiz_white_24dp.svg';
 import nestedCommentArrow from '../img/nestedCommentArrow.svg';
 import remove_like from '../img/remove_like.svg';
 import { useAppSelector } from '../store/store';
@@ -391,6 +391,8 @@ const View = () => {
   //데이터가 들어왔을 때 한번에 렌더링해준다.
   if (content.index === '') return null;
 
+  let 추천유무 = content.likeUserList.includes(id + ',');
+
   return (
     <ViewWrap>
       {undifinedContent ? (
@@ -415,9 +417,9 @@ const View = () => {
           </div>
           <CommentLikeWrap>
             <LikeButtonBox
-              title={content.likeUserList.includes(id + ',') ? '추천 취소' : '추천'}
+              title={추천유무 ? '추천 취소' : '추천'}
               onClick={
-                content.likeUserList.includes(id + ',')
+                추천유무
                   ? () => {
                       if (isLogin) {
                         customAxios('put', `/board/like?number=${number}&&behavior=0&&id=${id}`).then((res) => {
@@ -441,9 +443,9 @@ const View = () => {
                       }
                     }
               }
-              isLike={content.likeUserList.includes(id + ',')}
+              isLike={추천유무}
             >
-              {content.likeUserList.includes(id + ',') ? (
+              {추천유무 ? (
                 <img
                   src={add_like}
                   alt='추천 취소'

@@ -24,19 +24,16 @@ loginRouter.post('/', async (req, res, next) => {
       } else {
         let nickname = result[0].nickname;
 
-        console.log('로그인 체크 성공!');
         const AT = createAccessToken(req.body.id) as string;
-        const RT = createRefreshToken(req.body.id);
+        const RT = createRefreshToken(req.body.id) as string;
         req.decoded = verifyToken(AT);
-        console.log(req.decoded);
         //쿠키설정
         res.cookie('id', id);
         res.cookie('AT', AT);
         res.cookie('RT', RT);
         res.cookie('nickname', nickname);
-        console.log(req.cookies);
-
         db.query(insertTokenQuery, [RT, id]);
+        console.log(`${id}님이 로그인하셨습니다.`);
         res.status(200).json({ id, AT, RT, isLogin: true, nickname });
         // next();
       }
@@ -45,10 +42,9 @@ loginRouter.post('/', async (req, res, next) => {
 });
 
 loginRouter.post('/autologin', async (req, res, next) => {
-  console.log('자동로그인이 받아온 쿠키의 토큰');
   let ATresult = verifyToken(req.cookies.AT);
   let RTresult = verifyToken(req.cookies.RT);
-  console.log('자동 로그인 토큰 만료 유무');
+  console.log('자동 로그인 토큰 만료 유무 null일 경우 만료된 것');
   console.log(ATresult);
 
   if (ATresult === null) {
@@ -58,9 +54,9 @@ loginRouter.post('/autologin', async (req, res, next) => {
       res.clearCookie('RT');
       res.clearCookie('nickname');
       res.status(401).json({
-        id: '',
+        id: '비회원',
         isLogin: false,
-        nickname: '',
+        nickname: '비회원',
       });
     } else {
       const newAT = createAccessToken(req.cookies.id) as string;
@@ -87,8 +83,8 @@ loginRouter.post('/logout', async (req, res, next) => {
   res.clearCookie('RT');
   res.clearCookie('nickname');
   res.status(401).json({
-    id: '',
+    id: '비회원',
     isLogin: false,
-    nickname: '',
+    nickname: '비회원',
   });
 });

@@ -52,12 +52,20 @@ const Img = styled.img`
 const Home = () => {
   const navigate = useNavigate();
   const usersCount = useAppSelector((state) => state.userCount);
+  let a = null;
+  // replace console.* for disable log on production
+  if (process.env.NODE_ENV === 'production') {
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
+    a = process.env.REACT_APP_DEV_TITLE;
+  }
 
   return (
     <>
       <Bg>
         <Img src={로고}></Img>
-        <SelfText>실시간 테라레이드 파티원 모집!</SelfText>
+        <SelfText>실시간 테라레이드 파티원 모집!{a}</SelfText>
         <UsersCountText>
           현재 접속자 <UsersCount>{usersCount}</UsersCount> 명
         </UsersCountText>

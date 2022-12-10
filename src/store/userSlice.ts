@@ -38,8 +38,8 @@ interface UserStateInterface {
 }
 
 let initialState: UserStateInterface = {
-  id: '',
-  nickname: '',
+  id: '비회원',
+  nickname: '비회원',
   isLogin: false,
 };
 
@@ -49,8 +49,8 @@ const user = createSlice({
   reducers: {
     logout(state: UserStateInterface) {
       state.isLogin = false;
-      state.id = '';
-      state.nickname = '';
+      state.id = '비회원';
+      state.nickname = '비회원';
       cookies.remove('AT');
       cookies.remove('RT');
       cookies.remove('id');
@@ -64,9 +64,9 @@ const user = createSlice({
     builder
       .addCase(UserService.logoutUser.fulfilled, (state, actions) => {
         console.log('로그아웃 시도');
-        state.isLogin = actions.payload.isLogin;
-        state.id = actions.payload.id;
-        state.nickname = actions.payload.nickname;
+        state.isLogin = false;
+        state.id = '비회원';
+        state.nickname = '비회원';
         //로그아웃 시 아이디를 담아 전송
         // socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
         //   console.log('로그인 에밋 후');

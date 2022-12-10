@@ -208,7 +208,10 @@ const RaidWrite = () => {
   const [difficultyState, setDifficultyState] = useState('6성');
 
   const option = [
+    '방장 딜러',
+    '방장 서폿',
     '1턴 도발',
+    '1턴 스킬스왑',
     '3턴 공격',
     '디버프❌',
     '1딜러 3서폿',

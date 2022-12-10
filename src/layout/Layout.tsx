@@ -178,8 +178,8 @@ const SlideWrap = styled.div<SlideInterface>`
   &.active {
     /*
     기존에 회원가입, 로그인 기능이 있을때의 height 값
-    height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px);
     */
+    /* height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px); */
     height: calc(${menuList2.length * 50}px);
 
     box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
@@ -279,7 +279,7 @@ const Layout = () => {
           {/* 로그인 기능 추가 시 아래 주석 해제할 것*/}
           {/* {isLogin ? (
             <LoginBtnWrap>
-     
+              <UserCount />
               <BasicButton
                 OnClick={() => {
                   console.log('로그아웃 시도');

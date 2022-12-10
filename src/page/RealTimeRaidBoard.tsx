@@ -9,7 +9,13 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { Title } from './Board';
 
 const SkeletonCard = styled(ExitListCard)`
-  height: 50px;
+  height: 120px;
+`;
+const SkeletonDiv = styled(ExitDiv)`
+  flex-direction: column;
+  & p {
+    padding: 10px;
+  }
 `;
 
 interface RefreshInterface {
@@ -106,23 +112,23 @@ const LoadingAni = keyframes`
 
 const LoadingText = styled.div`
   width: 100%;
-  height: calc(50vh);
-  font-size: 2em;
+  margin-right: 10px;
+  font-size: 1em;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   & img {
-    margin-right: 20px;
-    width: 50px;
-    animation: ${LoadingAni} 1s ease-out infinite;
+    margin-right: 15px;
+    width: 45px;
+    height: 43px;
+    animation: ${LoadingAni} 1.3s ease-out infinite;
   }
 `;
 
 const RealTimeRaidBoard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const list = useAppSelector((state) => state.raidList);
   const raidCount = useAppSelector((state) => state.raidCount);
 
@@ -157,7 +163,16 @@ const RealTimeRaidBoard = () => {
           animate={{ opacity: 1, x: [5, -5, 0] }}
           transition={{ duration: 0.4 }}
         >
-          <ExitDiv>현재 등록된 레이드가 없습니다..😥</ExitDiv>
+          <SkeletonDiv>
+            <p>현재 등록된 레이드가 없습니다..😥</p>
+            <LoadingText>
+              <img
+                src={뮤}
+                alt='로딩중'
+              />
+              실시간 대기중!
+            </LoadingText>
+          </SkeletonDiv>
         </SkeletonCard>
       ) : isLoading ? (
         list?.map((i: any, index: number) => (

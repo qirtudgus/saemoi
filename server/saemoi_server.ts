@@ -51,8 +51,8 @@ var raidList: {
 }[] = [];
 
 io.on('connection', (socket) => {
-  const ip = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
-  console.log(`클라이언트 연결 성공 - 클라이언트IP: ${ip}, 소켓ID: ${socket.id}`);
+  const userip = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+  console.log(`클라이언트 연결 성공 - 클라이언트IP: ${userip}, 소켓ID: ${socket.id}`);
   userCount++;
 
   socket.emit('newPost', false);
@@ -76,7 +76,9 @@ io.on('connection', (socket) => {
     io.emit('raidList', raidList);
   });
   socket.on('raidList', (payload) => {
-    console.log('신규 레이드 등록!');
+    console.log(
+      `${userip}님께서 새로운 레이드를 등록했습니다. 몬스터명:${payload.monsterName} 코드:${payload.raidCode} 내용:${payload.etcText}`,
+    );
     raidCount++;
     //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
     socket.broadcast.emit('newPost', true);
@@ -104,10 +106,10 @@ io.on('connection', (socket) => {
       date,
     } = payload;
     let insertQuery =
-      'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
+      'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date,ip) VALUES (?,?,?,?,?,?,?,?,?,?)';
     db.query(
       insertQuery,
-      [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList, etcText, date],
+      [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList, etcText, date, userip],
       (err, rows) => {
         console.log('게시물 등록 완료');
         console.log(err);
