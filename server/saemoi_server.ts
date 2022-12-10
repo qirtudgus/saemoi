@@ -217,7 +217,9 @@ app.post('/api/loginlist', (req, res) => {
 
 const Job = () => {
   console.log('레이드리스트 정리');
+  raidCount = 0;
   raidList = [];
+  io.emit('raidCount', raidCount);
   io.emit('raidList', raidList);
 };
 
