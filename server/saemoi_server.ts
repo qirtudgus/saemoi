@@ -76,7 +76,9 @@ io.on('connection', (socket) => {
     io.emit('raidList', raidList);
   });
   socket.on('raidList', (payload) => {
-    console.log(`${userip}님께서 새로운 레이드를 등록했습니다. 코드:${payload.raidCode} 내용:${payload.etcText}`);
+    console.log(
+      `${userip}님께서 새로운 레이드를 등록했습니다. 몬스터명:${payload.monsterName} 코드:${payload.raidCode} 내용:${payload.etcText}`,
+    );
     raidCount++;
     //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
     socket.broadcast.emit('newPost', true);
