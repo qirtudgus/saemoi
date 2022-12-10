@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
       monsterName,
       type,
       positionState = '',
-      difficultyState,
+      raidDifficulty,
       optionList,
       etcText,
       date,
@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
       'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
     db.query(
       insertQuery,
-      [nickname, raidCode, monsterName, type, positionState, difficultyState, optionList, etcText, date],
+      [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList, etcText, date],
       (err, rows) => {
         console.log('게시물 등록 완료');
         console.log(err);

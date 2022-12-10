@@ -285,7 +285,7 @@ const RaidWrite = () => {
           monsterName: nameRef.current.value,
           type: '',
           positionState,
-          difficultyState,
+          raidDifficulty: difficultyState,
           optionList: optionList.join(', '),
           etcText: etcTextRef.current.value,
           date,

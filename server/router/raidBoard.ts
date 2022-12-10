@@ -10,17 +10,16 @@ raidBoardRouter.post('/list', (req, res) => {
     monsterName,
     type,
     positionState = '',
-    difficultyState,
+    raidDifficulty,
     optionList,
     etcText,
     date,
   } = req.body;
-
   let insertQuery =
     'INSERT INTO raidboard (nickname,raidCode,monsterName,type,raidPosition, raidDifficulty, raidOption,raidText,date) VALUES (?,?,?,?,?,?,?,?,?)';
   db.query(
     insertQuery,
-    [nickname, raidCode, monsterName, type, positionState, difficultyState, optionList.join(', '), etcText, date],
+    [nickname, raidCode, monsterName, type, positionState, raidDifficulty, optionList.join(', '), etcText, date],
     (err, rows) => {
       console.log('게시물 등록 완료');
       console.log(err);
