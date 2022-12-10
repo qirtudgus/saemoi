@@ -94,10 +94,12 @@ const PostEdit = () => {
               initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
               hideModeSwitch={true}
               language='ko-KR'
-              toolbarItems={[
-                // 툴바 옵션 설정
-                ['image', 'link'],
-              ]}
+              toolbarItems={
+                [
+                  // 툴바 옵션 설정
+                  // ['image', 'link'],
+                ]
+              }
             ></Editor>
           )}{' '}
         </InputWrap>
