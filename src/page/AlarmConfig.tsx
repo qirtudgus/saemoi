@@ -27,6 +27,9 @@ const ToggleButtonDesc = styled.p`
   margin-bottom: 30px;
   word-break: keep-all;
   font-size: 1.2em;
+  &:last-child {
+    margin-top: 7px;
+  }
 `;
 
 const AlarmConfing = () => {
@@ -106,7 +109,9 @@ const AlarmConfing = () => {
       </ToggleButtonDesc>
 
       <TestBtn OnClick={socketCheck}>알람 테스트</TestBtn>
-      <ToggleButtonDesc>알람이 안들릴 때 눌러주면 됩니다.(위에 소리설정을 꺼놔도 재생됩니다.)</ToggleButtonDesc>
+      <ToggleButtonDesc>
+        알람을 들어보고싶거나 설정해도 안들릴 때 눌러줍니다.(위에 소리설정을 꺼놔도 재생됩니다.)
+      </ToggleButtonDesc>
     </>
   );
 };
