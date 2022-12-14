@@ -233,6 +233,18 @@ const RaidWrite = () => {
     }
   };
 
+  const etcTextRefFocus = () => {
+    if (etcTextRef === null) {
+      return;
+    } else {
+      if (etcTextRef.current === null) {
+        return;
+      } else {
+        etcTextRef.current.focus();
+      }
+    }
+  };
+
   const typeRefFocus = () => {
     if (typeRef === null) {
       return;
@@ -246,13 +258,13 @@ const RaidWrite = () => {
   };
 
   useEffect(() => {
-    if (codeRef === null) {
+    if (nameRef === null) {
       return;
     } else {
-      if (codeRef.current === null) {
+      if (nameRef.current === null) {
         return;
       } else {
-        codeRef.current.focus();
+        nameRef.current.focus();
       }
     }
   }, []);
@@ -355,7 +367,7 @@ const RaidWrite = () => {
               }}
               onChange={(e) => {
                 if (e.target.value.length >= 6) {
-                  nameRefFocus();
+                  etcTextRefFocus();
                 }
                 setCode(e.target.value.toUpperCase());
               }}
