@@ -1,17 +1,16 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
 
+import BoardList from '../components/BoardList';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
+import 왼쪽화살표 from '../img/navigate_before_white_24dp.svg';
+import 오른쪽화살표 from '../img/navigate_next_white_24dp.svg';
 import 돋보기 from '../img/search_white_24dp.svg';
-import 오른쪽화살표 from '../img/오른쪽화살표.svg';
-import 왼쪽화살표 from '../img/왼쪽화살표.svg';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { returnDiffTime } from '../util/returnTodayString';
-import BoardList from '../components/BoardList';
 const BoardWrap = styled.div`
   width: 100%;
   height: auto;
@@ -79,6 +78,7 @@ const PageBtn = styled.button<PageBtnInterface>`
   align-items: center;
   padding: 10px;
   height: 30px;
+  color: #fff;
   /* border-left: 1px solid #dadde6; */
   &:hover {
     color: ${({ theme }) => theme.colors.main};
