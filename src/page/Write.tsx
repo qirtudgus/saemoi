@@ -1,13 +1,13 @@
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import { RefObject, useEffect, useRef } from 'react';
-import customAxios from '../util/customAxios';
-import { useNavigate } from 'react-router-dom';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { useAppSelector } from '../store/store';
-import { returnTodayString } from '../util/returnTodayString';
-import { BasicButton, SolidButton } from '../components/BtnGroup';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { Editor } from '@toast-ui/react-editor';
+import { RefObject, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { returnTodayString } from '../util/returnTodayString';
 import { Title } from './Board';
 const InputWrap = styled.div`
   margin-bottom: 20px;
@@ -61,6 +61,12 @@ const Write = () => {
   useEffect(() => {
     titleRef.current?.focus();
   }, []);
+  useEffect(() => {
+    // 이미지 업로드 막기
+    if (editorRef.current !== null) {
+      editorRef.current.getInstance().removeHook('addImageBlobHook');
+    }
+  }, []);
 
   return (
     <>
@@ -86,12 +92,11 @@ const Write = () => {
             hideModeSwitch={true}
             autofocus={false}
             language='ko-KR'
-            toolbarItems={
-              [
-                // 툴바 옵션 설정
-                // ['image', 'link'],
-              ]
-            }
+            toolbarItems={[
+              // 툴바 옵션 설정
+              // ['image', 'link'],
+              ['bold', 'strike', 'italic'],
+            ]}
           ></Editor>
         </InputWrap>
       </div>
