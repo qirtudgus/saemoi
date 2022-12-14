@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 // Toast-UI Viewer 임포트
+import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
 import { Editor } from '@toast-ui/react-editor';
+
 import { RefObject, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
@@ -58,19 +62,38 @@ const PostEdit = () => {
   const handleRegisterButton = () => {
     let latestEditDate = returnTodayString();
     let title = titleRef!.current!.value;
-    let content = editorRef!.current!.getInstance().getHTML();
-    customAxios('put', `/board/edit?number=${number}`, { title, content, latestEditDate }).then((res) => {
-      if (res.status === 200) {
-        alert('게시물이 수정되었습니다!');
-        navigate('/board/list');
-      }
-    });
+    let content = editorRef!.current!.getInstance()!.getHTML();
+
+    if (title === '') {
+      alert('제목을 입력해주세요!');
+      titleRef!.current!.focus();
+      return;
+    } else {
+      customAxios('put', `/board/edit?number=${number}`, { title, content, latestEditDate }).then((res) => {
+        if (res.status === 200) {
+          alert('게시물이 수정되었습니다!');
+          navigate('/board/list');
+        }
+      });
+    }
   };
 
   useEffect(() => {
     customAxios('get', `/board/posts?number=${number}`, {}).then((res) => {
       setContent(res.data);
-      titleRef!.current!.value = res.data.title;
+      console.log(res.data.content);
+      console.log(id);
+      console.log(res.data.id);
+      if (id !== res.data.id) {
+        alert('수정할 수 없는 게시물입니다.');
+        navigate(-1);
+        return;
+      }
+
+      if (titleRef.current !== null) {
+        titleRef.current.value = res.data.title;
+      }
+      editorRef.current?.getInstance().insertText(res.data.content);
     });
   }, [number]);
   useEffect(() => {
@@ -90,23 +113,21 @@ const PostEdit = () => {
         </InputWrap>
         <InputWrap>
           <ContentLabel>내용</ContentLabel>
-          {content.id === '' ? null : (
-            <Editor
-              initialValue={content.content}
-              ref={editorRef} // DOM 선택용 useRef
-              placeholder='내용을 입력해주세요.'
-              previewStyle='vertical' // 미리보기 스타일 지정
-              height='350px' // 에디터 창 높이
-              initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
-              hideModeSwitch={true}
-              language='ko-KR'
-              toolbarItems={[
-                // 툴바 옵션 설정
-                // ['image', 'link'],
-                ['bold', 'strike', 'italic'],
-              ]}
-            ></Editor>
-          )}{' '}
+
+          <Editor
+            ref={editorRef} // DOM 선택용 useRef
+            placeholder='내용을 입력해주세요.'
+            previewStyle='vertical' // 미리보기 스타일 지정
+            height='350px' // 에디터 창 높이
+            initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
+            hideModeSwitch={true}
+            language='ko-KR'
+            toolbarItems={[
+              // 툴바 옵션 설정
+              // ['image', 'link'],
+              ['bold', 'strike', 'italic'],
+            ]}
+          ></Editor>
         </InputWrap>
       </div>
       {content.id === id ? (
