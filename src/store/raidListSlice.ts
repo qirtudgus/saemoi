@@ -10,6 +10,7 @@ interface RaidListInterface {
   deleteDate: string;
   raidText: string;
   raidOption: string;
+  socketId: string;
 }
 
 // let initialState: RaidListInterface[] | null = [

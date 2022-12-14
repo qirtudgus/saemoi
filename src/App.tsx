@@ -23,6 +23,7 @@ import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import View from './page/View';
 import Write from './page/Write';
 import { RaidListDispatch } from './store/raidListSlice';
+import { MySocKetIdDispatch } from './store/mySocketIdSlice';
 import { RaidCountDispatch } from './store/soundSlice';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { userCountDispatch } from './store/userCountSlice';
@@ -112,6 +113,9 @@ function App() {
     });
     socket.on('raidCount', function (payload) {
       dispatch(RaidCountDispatch(payload));
+    });
+    socket.on('mySocketId', function (payload) {
+      dispatch(MySocKetIdDispatch(payload));
     });
   }, []);
 

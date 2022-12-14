@@ -48,6 +48,7 @@ var raidList: {
   deleteDate: string;
   raidText: string;
   raidOption: string;
+  socketId: string;
 }[] = [];
 
 io.on('connection', (socket) => {
@@ -66,6 +67,9 @@ io.on('connection', (socket) => {
   socket.on('soundTest', (payload) => {
     socket.emit('soundTest', 'test');
   });
+
+  socket.emit('mySocketId', socket.id);
+
   io.emit('userCount', userCount);
   io.emit('raidCount', raidCount);
 
@@ -83,6 +87,8 @@ io.on('connection', (socket) => {
     //값이 들어오면 소리를 내기위해 newPost에 메시지를 쏜다
     socket.broadcast.emit('newPost', true);
     //페이로드엔 등록한 레이드 객체가 들어있음
+    payload.socketId = socket.id;
+    console.log(payload);
     raidList.unshift(payload);
     //등록시간이 3분(180초)지난것을 제외시킴.
     // 1 - 삭제시간을 등록하여 로직을 변경할 수 있다 (삭제시간이 넘어간것)
@@ -115,6 +121,16 @@ io.on('connection', (socket) => {
         console.log(err);
       },
     );
+  });
+
+  //삭제 요청
+  socket.on('DeleteRaidList', (clientRaidCode) => {
+    raidList.forEach((i, index) => {
+      if (i.raidCode === clientRaidCode) {
+        raidList.splice(index, 1);
+      }
+    });
+    io.emit('raidList', raidList);
   });
 
   //사용자 연결이 끊겼을 때..

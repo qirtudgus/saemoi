@@ -7,7 +7,7 @@ import userList from './userListSlice';
 import userCount from './userCountSlice';
 import raidList from './raidListSlice';
 import raidCount from './soundSlice';
-import soundNumber from './soundNumberSlice';
+import MySocketId from './mySocketIdSlice';
 
 //굳이 루트리듀서로 작성하지않아도 자동으로 생성된다고 한다.
 const rooteReducer = combineReducers({
@@ -17,7 +17,7 @@ const rooteReducer = combineReducers({
   userCount,
   raidList,
   raidCount,
-  soundNumber,
+  MySocketId,
 });
 
 export const store = configureStore({

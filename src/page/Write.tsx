@@ -47,15 +47,22 @@ const Write = () => {
     console.log(editorRef!.current!.getInstance().getMarkdown());
 
     console.log(titleRef!.current!.value);
+
     let title = titleRef!.current!.value;
-    let content = editorRef!.current!.getInstance().getHTML();
-    customAxios('post', '/board', { title, content, date, nickname, id }).then((res) => {
-      console.log(res.data);
-      console.log(res.status);
-      if (res.status === 200) {
-        navigate('/board/list');
-      }
-    });
+    if (title === '') {
+      alert('제목을 입력해주세요!');
+      titleRef!.current!.focus();
+      return;
+    } else {
+      let content = editorRef!.current!.getInstance().getHTML();
+      customAxios('post', '/board', { title, content, date, nickname, id }).then((res) => {
+        console.log(res.data);
+        console.log(res.status);
+        if (res.status === 200) {
+          navigate('/board/list');
+        }
+      });
+    }
   };
 
   useEffect(() => {

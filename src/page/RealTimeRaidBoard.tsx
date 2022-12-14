@@ -186,6 +186,7 @@ const RealTimeRaidBoard = () => {
             deleteDate={i.deleteDate}
             raidText={i.etcText}
             raidOption={i.optionList}
+            socketId={i.socketId}
           ></RefRaidCard>
         ))
       ) : (

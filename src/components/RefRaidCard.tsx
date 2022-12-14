@@ -3,6 +3,9 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
+import { socket } from '../App';
+import { useAppSelector } from '../store/store';
+import close from '../img/close_black_24dp.svg';
 const ListCard = styled(motion.div)`
   width: 100%;
   height: auto;
@@ -39,7 +42,7 @@ const ListTop = styled.p`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
   font-size: 1.3em;
   & span:first-child {
     margin-right: 5px;
@@ -59,6 +62,25 @@ const ListFooterTime = styled.span`
   text-align: right;
   margin-right: 0px !important;
   font-size: 0.85em;
+  display: flex;
+  align-items: center;
+  & span {
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 0px !important;
+    display: flex;
+    align-items: center;
+  }
+  & img {
+    filter: invert(49%) sepia(20%) saturate(7074%) hue-rotate(340deg) brightness(96%) contrast(95%);
+    width: 20px;
+    height: 20px;
+  }
+  & span:hover {
+    & img {
+      filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(22deg) brightness(110%) contrast(99%);
+    }
+  }
 `;
 
 const VerticalLine = styled.span`
@@ -73,6 +95,8 @@ const RaidText = styled.span`
 `;
 
 const RefRaidCard = forwardRef(function (props: any, ref: any) {
+  const socketId = useAppSelector((state) => state.MySocketId);
+
   return (
     <>
       {moment().diff(props.date, 'seconds') > 180 ? (
@@ -120,7 +144,23 @@ const RefRaidCard = forwardRef(function (props: any, ref: any) {
               <VerticalLine />
               <span className='raidCode'>{props.raidCode}</span>
             </div>
-            <ListFooterTime> {props.date.slice(-9)}</ListFooterTime>
+            <ListFooterTime>
+              {props.date.slice(-9)}
+              {socketId === props.socketId && (
+                <span
+                  onClick={() => {
+                    if (window.confirm('레이드를 삭제하겠습니까?')) {
+                      socket.emit('DeleteRaidList', props.raidCode);
+                    }
+                  }}
+                >
+                  <img
+                    src={close}
+                    alt='레이드 삭제'
+                  ></img>
+                </span>
+              )}
+            </ListFooterTime>
           </ListTop>
           {props.raidText !== '' && (
             <p>
