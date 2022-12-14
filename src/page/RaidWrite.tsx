@@ -332,6 +332,16 @@ const RaidWrite = () => {
       <InputWrap>
         <MultiInputWrap>
           <div>
+            <ContentLabel htmlFor='title'>포켓몬명 / 타입</ContentLabel>
+            <TitleInput
+              id='title'
+              type={'text'}
+              ref={nameRef}
+              maxLength={10}
+              placeholder='포켓몬 이름과 타입을 입력'
+            ></TitleInput>
+          </div>
+          <div>
             <ContentLabel htmlFor='title'>레이드 암호 6자</ContentLabel>
             <TitleInput
               id='title'
@@ -349,16 +359,6 @@ const RaidWrite = () => {
                 }
                 setCode(e.target.value.toUpperCase());
               }}
-            ></TitleInput>
-          </div>
-          <div>
-            <ContentLabel htmlFor='title'>포켓몬명 / 타입</ContentLabel>
-            <TitleInput
-              id='title'
-              type={'text'}
-              ref={nameRef}
-              maxLength={10}
-              placeholder='포켓몬 이름과 타입을 입력'
             ></TitleInput>
           </div>
         </MultiInputWrap>
