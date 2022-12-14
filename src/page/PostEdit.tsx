@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 // Toast-UI Viewer 임포트
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { RefObject, useEffect, useRef, useState } from 'react';
-import customAxios from '../util/customAxios';
-import { useAppSelector } from '../store/store';
 import { Editor } from '@toast-ui/react-editor';
-import { returnTodayString } from '../util/returnTodayString';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
+import { useAppSelector } from '../store/store';
+import customAxios from '../util/customAxios';
+import { returnTodayString } from '../util/returnTodayString';
 import { Title } from './Board';
 
 const TitleInput = styled.input`
@@ -73,6 +73,12 @@ const PostEdit = () => {
       titleRef!.current!.value = res.data.title;
     });
   }, [number]);
+  useEffect(() => {
+    // 이미지 업로드 막기
+    if (editorRef.current !== null) {
+      editorRef.current.getInstance().removeHook('addImageBlobHook');
+    }
+  }, []);
 
   return (
     <>
@@ -94,12 +100,11 @@ const PostEdit = () => {
               initialEditType='wysiwyg' // 초기 입력모드 설정(디폴트 markdown)
               hideModeSwitch={true}
               language='ko-KR'
-              toolbarItems={
-                [
-                  // 툴바 옵션 설정
-                  // ['image', 'link'],
-                ]
-              }
+              toolbarItems={[
+                // 툴바 옵션 설정
+                // ['image', 'link'],
+                ['bold', 'strike', 'italic'],
+              ]}
             ></Editor>
           )}{' '}
         </InputWrap>

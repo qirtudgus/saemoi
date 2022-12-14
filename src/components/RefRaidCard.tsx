@@ -1,9 +1,8 @@
-import { forwardRef, useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import React from 'react';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { forwardRef } from 'react';
+import styled from 'styled-components';
 const ListCard = styled(motion.div)`
   width: 100%;
   height: auto;
@@ -41,19 +40,16 @@ const ListTop = styled.p`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
-  font-size: 1.1em;
-  /* flex-shrink: 0; */
+  font-size: 1.3em;
   & span:first-child {
     margin-right: 5px;
     flex-shrink: 0;
   }
   & span {
-    /* width: auto; */
   }
   & .raidCode {
     color: #77ff77;
     letter-spacing: 0.5px;
-    /* color: ${({ theme }) => theme.colors.main}; */
   }
 `;
 
