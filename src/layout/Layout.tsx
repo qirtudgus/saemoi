@@ -6,8 +6,10 @@ import 로고 from '../img/logo_s.svg';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { UserCount, UserCountMobile } from '../App';
+import { BasicButton, SolidButton } from '../components/BtnGroup';
 import 햄버거메뉴 from '../img/menu_black.svg';
 import { useAppDispatch, useAppSelector } from '../store/store';
+import { logout, UserService } from '../store/userSlice';
 
 const menuList2 = [
   // { name: '홈', link: '/' },
@@ -17,7 +19,7 @@ const menuList2 = [
   { name: '레이드 리스트', link: '/realtimeraidboard' },
   { name: '레이드 등록', link: '/raidboard/write' },
   { name: '설정', link: '/config' },
-  // { name: '자유 게시판', link: '/board/list' },
+  { name: '자유 게시판', link: '/board/list' },
 ];
 
 const HeaderWrap = styled.header`
@@ -177,8 +179,8 @@ const SlideWrap = styled.div<SlideInterface>`
     /*
     기존에 회원가입, 로그인 기능이 있을때의 height 값
     */
-    /* height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px); */
-    height: calc(${menuList2.length * 50}px);
+    height: calc(${menuList2.length * 50}px + ${(props) => (props.isLogin ? 50 : 100)}px);
+    /* height: calc(${menuList2.length * 50}px); */
 
     box-shadow: 1px 1px 11px -2px rgb(0 0 0 / 30%);
   }
@@ -271,11 +273,11 @@ const Layout = () => {
               ></img>
             </MenuBtn>
           </UserCountandMenu>
-          <LoginBtnWrap>
+          {/* <LoginBtnWrap>
             <UserCount />
-          </LoginBtnWrap>
+          </LoginBtnWrap> */}
           {/* 로그인 기능 추가 시 아래 주석 해제할 것*/}
-          {/* {isLogin ? (
+          {isLogin ? (
             <LoginBtnWrap>
               <UserCount />
               <BasicButton
@@ -308,7 +310,7 @@ const Layout = () => {
                 회원가입
               </BasicButton>
             </LoginBtnWrap>
-          )} */}
+          )}
         </HeaderDiv>
       </HeaderWrap>
       <SlideWrap
@@ -336,7 +338,7 @@ const Layout = () => {
             );
           })}
           {/* 로그인 기능 추가 시 아래 주석 해제할 것*/}
-          {/* {isLogin ? (
+          {isLogin ? (
             <SlideLi
               className='menuOpenCheck'
               onClick={() => {
@@ -367,7 +369,7 @@ const Layout = () => {
                 회원가입
               </SlideLi>
             </>
-          )} */}
+          )}
         </SlideUl>
       </SlideWrap>
       <MainWrap>
