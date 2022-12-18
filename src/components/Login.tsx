@@ -87,10 +87,7 @@ const Login = () => {
   const login = () => {
     let id = idRef.current.value;
     let pw = passwordRef.current.value;
-    console.log(id);
     dispatch(UserService.getUser({ id, pw })).then((res) => {
-      console.log(res.payload);
-      console.log(res.payload.errorcode);
       if (res.payload.errorcode === 100) {
         setIdWarning(res.payload.error);
       }
