@@ -9,7 +9,6 @@ const Sound = () => {
 
   const notifi = (vibrate: string | null, sound: string | null) => {
     if (sound === 'true') {
-      console.log('사운드 재생');
       let a = document.getElementById('alarmSound') as HTMLAudioElement;
       a.load();
       a.muted = false;
@@ -17,7 +16,6 @@ const Sound = () => {
     }
     if (vibrate === 'true') {
       //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
-      console.log('진동 재생');
       navigator.vibrate([150, 80, 150]);
     }
   };
