@@ -271,9 +271,9 @@ const RaidWrite = () => {
 
   const submit = () => {
     let optionList: any[] = [];
-    let a = document.getElementsByName('option') as NodeListOf<HTMLInputElement>;
+    let isOptionCheck = document.getElementsByName('option') as NodeListOf<HTMLInputElement>;
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    a.forEach((i) => {
+    isOptionCheck.forEach((i) => {
       if (i.checked === true) {
         optionList.push(i.value);
       }
