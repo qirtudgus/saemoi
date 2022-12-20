@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
 import { returnDiffTime } from '../util/returnTodayString';
-import customAxios from '../util/customAxios';
 import { useNavigate } from 'react-router';
 import add_like from '../img/thumb_up_white_24dp.svg';
 import comment_img from '../img/commentLine_img_white.svg';
