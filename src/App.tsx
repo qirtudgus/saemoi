@@ -135,20 +135,18 @@ function App() {
 
   useEffect(() => {
     //사파리 알람 이슈 해결코드
-    const play = () => {
-      console.log('언락 오디오');
-      let a = document.getElementById('alarmSound') as HTMLAudioElement;
+    const playZeroVolumeAudio = () => {
+      let audioElement = document.getElementById('alarmSound') as HTMLAudioElement;
+      audioElement.load();
+      audioElement.muted = true;
+      audioElement.play();
 
-      a.load();
-      a.muted = true;
-      a.play();
-
-      document.body.removeEventListener('click', play);
-      document.body.removeEventListener('touchstart', play);
+      document.body.removeEventListener('click', playZeroVolumeAudio);
+      document.body.removeEventListener('touchstart', playZeroVolumeAudio);
     };
 
-    document.body.addEventListener('click', play);
-    document.body.addEventListener('touchstart', play);
+    document.body.addEventListener('click', playZeroVolumeAudio);
+    document.body.addEventListener('touchstart', playZeroVolumeAudio);
   }, []);
 
   return (
