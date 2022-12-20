@@ -9,10 +9,10 @@ const Sound = () => {
 
   const notifi = (vibrate: string | null, sound: string | null) => {
     if (sound === 'true') {
-      let a = document.getElementById('alarmSound') as HTMLAudioElement;
-      a.load();
-      a.muted = false;
-      a.play();
+      let audioElement = document.getElementById('alarmSound') as HTMLAudioElement;
+      audioElement.load();
+      audioElement.muted = false;
+      audioElement.play();
     }
     if (vibrate === 'true') {
       //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
