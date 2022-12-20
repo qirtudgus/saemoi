@@ -2,12 +2,6 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const spring = {
-  type: 'spring',
-  stiffness: 300,
-  damping: 20,
-};
-
 const Switch = styled(motion.div)`
   width: 65px;
   height: 30px;
@@ -32,7 +26,13 @@ const Switch = styled(motion.div)`
   }
 `;
 
-export default function ToggleButton(props: any) {
+interface ToggleButtonInterface {
+  OnFunc: () => void;
+  OffFunc: () => void;
+  isOn: string | null;
+}
+
+export default function ToggleButton(props: ToggleButtonInterface) {
   const [isOn, setIsOn] = useState(false);
 
   const toggleSwitchOn = () => {
@@ -62,7 +62,7 @@ export default function ToggleButton(props: any) {
   );
 }
 
-export function PcNotificationToggleButton(props: any) {
+export function PcNotificationToggleButton(props: { isOn: string | boolean }) {
   const [isOn, setIsOn] = useState(props.isOn);
 
   // const toggleSwitchOn = () => {
@@ -99,18 +99,6 @@ export function PcNotificationToggleButton(props: any) {
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (Notification.permission === 'granted') {
-  //     setIsOn(true);
-  //   }
-  //   if (Notification.permission === 'default') {
-  //     setIsOn(false);
-  //   }
-  //   if (Notification.permission === 'denied') {
-  //     setIsOn(false);
-  //   }
-  // }, [Notification.permission]);
 
   return (
     <>
