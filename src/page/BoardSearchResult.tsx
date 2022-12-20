@@ -4,13 +4,10 @@ import styled from 'styled-components';
 import BoardList from '../components/BoardList';
 import { SolidButton } from '../components/BtnGroup';
 import TitleText from '../components/TitleText';
-import add_like from '../img/add_like.svg';
-import comment_img from '../img/commentLine_img.svg';
 import edit_document_white_24dp from '../img/edit_document_white_24dp.svg';
 import 돋보기 from '../img/돋보기.svg';
 import { useAppSelector } from '../store/store';
 import customAxios from '../util/customAxios';
-import { returnDiffTime } from '../util/returnTodayString';
 import { Title } from './Board';
 
 const BoardWrap = styled.div`
@@ -133,7 +130,7 @@ const BoardSearchResult = () => {
             />
             <input
               ref={searchInputRef}
-              onKeyDown={(e) => {
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.keyCode === 13) {
                   searchBoardFunc();
                 } else {
