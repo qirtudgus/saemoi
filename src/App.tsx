@@ -132,21 +132,21 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    // 브라우저가 알림을 지원하는지 확인
-    if (!('Notification' in window)) {
-      alert('이 브라우저는 알림을 지원하지 않습니다.');
-    } else {
-      Notification.requestPermission().then((permission) => {
-        console.log(permission);
-        if (permission === 'granted') {
-          alert('알람이 허용되어있습니다!');
-        } else {
-          alert('알람이 거절되어있습니다!');
-        }
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 브라우저가 알림을 지원하는지 확인
+  //   if (!('Notification' in window)) {
+  //     alert('이 브라우저는 알림을 지원하지 않습니다.');
+  //   } else {
+  //     Notification.requestPermission().then((permission) => {
+  //       console.log(permission);
+  //       if (permission === 'granted') {
+  //         alert('알람이 허용되어있습니다!');
+  //       } else {
+  //         alert('알람이 거절되어있습니다!');
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     //사파리 알람 이슈 해결코드
@@ -169,13 +169,6 @@ function App() {
       <GlobalStyles />
       <Sound />
       <GaTracker />
-      {/* <button
-        onClick={() => {
-          new Notification('안녕!');
-        }}
-      >
-        웹 알람테스트
-      </button> */}
       <Routes>
         <Route
           path='/'

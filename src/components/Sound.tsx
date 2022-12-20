@@ -18,9 +18,13 @@ const Sound = () => {
       //진동은 지원되지 않는 기기가 많아서 꼭 소리재생 후에 실행
       navigator.vibrate([150, 80, 150]);
     }
-    if (Notification.permission === 'granted') {
-      new Notification('새로운 레이드가 등록되었습니다!');
-    }
+    // if (Notification.permission === 'granted') {
+    //   const notification = new Notification('새로운 레이드가 등록되었습니다!', { tag: '새로움', renotify: true });
+    //   notification.onclick = (event) => {
+    //     event.preventDefault(); // prevent the browser from focusing the Notification's tab
+    //     window.open('http://www.mozilla.org', '_blank');
+    //   };
+    // }
   };
 
   useEffect(() => {
