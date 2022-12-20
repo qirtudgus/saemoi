@@ -17,7 +17,6 @@ import BoardSearchResult from './page/BoardSearchResult';
 import ErrorPage from './page/ErrorPage';
 import Home from './page/Home';
 import PostEdit from './page/PostEdit';
-import RaidBoard from './page/RaidBoard';
 import RaidWrite from './page/RaidWrite';
 import RealTimeRaidBoard from './page/RealTimeRaidBoard';
 import View from './page/View';
@@ -134,6 +133,22 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // 브라우저가 알림을 지원하는지 확인
+    if (!('Notification' in window)) {
+      alert('이 브라우저는 알림을 지원하지 않습니다.');
+    } else {
+      Notification.requestPermission().then((permission) => {
+        console.log(permission);
+        if (permission === 'granted') {
+          alert('알람이 허용되어있습니다!');
+        } else {
+          alert('알람이 거절되어있습니다!');
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     //사파리 알람 이슈 해결코드
     const playZeroVolumeAudio = () => {
       let audioElement = document.getElementById('alarmSound') as HTMLAudioElement;
@@ -154,7 +169,13 @@ function App() {
       <GlobalStyles />
       <Sound />
       <GaTracker />
-
+      {/* <button
+        onClick={() => {
+          new Notification('안녕!');
+        }}
+      >
+        웹 알람테스트
+      </button> */}
       <Routes>
         <Route
           path='/'
@@ -209,10 +230,10 @@ function App() {
             path='/realtimeraidboard'
             element={<RealTimeRaidBoard />}
           ></Route>
-          <Route
+          {/* <Route
             path='/raidboard/list'
             element={<RaidBoard />}
-          ></Route>
+          ></Route> */}
           <Route
             path='/config'
             element={<AlarmConfing />}
