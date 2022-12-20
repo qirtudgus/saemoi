@@ -120,7 +120,6 @@ function App() {
 
   useEffect(() => {
     let isOpenSlideMenuCheck = (e: globalThis.MouseEvent) => {
-      console.log(e);
       let uiBox = document.getElementById('OpenMenuCheck');
       if (!(e.target as HTMLElement).classList.value.match('menuOpenCheck')) {
         uiBox?.classList.remove('active');
