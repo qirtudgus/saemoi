@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { socket } from '../App';
-import ToggleButton from '../components/ToggleButton';
+import ToggleButton, { PcNotificationToggleButton } from '../components/ToggleButton';
 import { Title } from './Board';
 import { BasicButton } from '../components/BtnGroup';
 import { useEffect, useState } from 'react';
@@ -97,7 +97,15 @@ const AlarmConfing = () => {
       </ToggleButtonWarp>
       <ToggleButtonDesc>새로운 레이드가 등록됐을 때 알람 소리를 재생합니다.</ToggleButtonDesc>
       <ToggleButtonWarp>
-        <ToggleButtonLabel>진동</ToggleButtonLabel>
+        <ToggleButtonLabel>PC 알림 권한 요청</ToggleButtonLabel>
+        <PcNotificationToggleButton isOn={Notification.permission === 'granted' ? true : false} />
+      </ToggleButtonWarp>
+      <ToggleButtonDesc>
+        PC일 때 새로운 레이드가 등록되면 알람을 띄워줍니다. 사이트 권한에 알림을 허용해주셔야 가능합니다.{' '}
+      </ToggleButtonDesc>
+
+      <ToggleButtonWarp>
+        <ToggleButtonLabel>진동 (모바일 전용)</ToggleButtonLabel>
         <ToggleButton
           OnFunc={onVibrate}
           OffFunc={offVibrate}
