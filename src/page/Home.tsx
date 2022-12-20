@@ -52,31 +52,31 @@ const Img = styled.img`
 const Home = () => {
   const navigate = useNavigate();
   const usersCount = useAppSelector((state) => state.userCount);
-  let a = null;
+  let DEV_TITLE = null;
   // replace console.* for disable log on production
   if (process.env.NODE_ENV === 'production') {
     console.log = () => {};
     console.error = () => {};
     console.debug = () => {};
-    a = process.env.REACT_APP_DEV_TITLE;
+    DEV_TITLE = process.env.REACT_APP_DEV_TITLE;
   }
 
   return (
     <>
       <Bg>
         <Img src={로고}></Img>
-        <SelfText>실시간 테라레이드 파티원 모집!{a}</SelfText>
+        <SelfText>실시간 테라레이드 파티원 모집!{DEV_TITLE}</SelfText>
         <UsersCountText>
           현재 접속자 <UsersCount>{usersCount}</UsersCount> 명
         </UsersCountText>
         <Button
           whileHover={{ scale: 1.05 }}
           onClick={() => {
-            let a = document.getElementById('alarmSound') as HTMLAudioElement;
+            let audioElement = document.getElementById('alarmSound') as HTMLAudioElement;
 
-            a.load();
-            a.muted = true;
-            a.play();
+            audioElement.load();
+            audioElement.muted = true;
+            audioElement.play();
 
             navigate('/realtimeraidboard');
           }}

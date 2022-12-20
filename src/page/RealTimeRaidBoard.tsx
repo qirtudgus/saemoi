@@ -5,6 +5,7 @@ import styled, { css, keyframes } from 'styled-components';
 import RefRaidCard, { ExitDiv, ExitListCard } from '../components/RefRaidCard';
 import 작성하기이미지 from '../img/edit_document_white_24dp.svg';
 import 뮤 from '../img/뮤.png';
+import { RaidListInterface } from '../store/raidListSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { Title } from './Board';
 
@@ -175,7 +176,7 @@ const RealTimeRaidBoard = () => {
           </SkeletonDiv>
         </SkeletonCard>
       ) : isLoading ? (
-        list?.map((i: any, index: number) => (
+        list?.map((i: RaidListInterface, index: number) => (
           <RefRaidCard
             key={index}
             monsterName={i.monsterName}

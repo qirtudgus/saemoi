@@ -256,7 +256,6 @@ const Board = () => {
           </SearchInputWrap>
           <SolidButton
             ClassName='ml_10'
-            text='작성하기'
             OnClick={() => {
               if (isLogin) {
                 navigate('/board/write');

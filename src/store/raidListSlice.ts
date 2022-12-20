@@ -1,15 +1,15 @@
 //View컴포넌트에서 useEffect를 사용하는것으로 변경하여 현재 사용하지않는 파일임
 import { createSlice } from '@reduxjs/toolkit';
 
-interface RaidListInterface {
+export interface RaidListInterface {
   monsterName: string;
   raidDifficulty: string;
   raidCode: string;
   type: string;
   date: string;
   deleteDate: string;
-  raidText: string;
-  raidOption: string;
+  etcText: string;
+  optionList: string;
   socketId: string;
 }
 

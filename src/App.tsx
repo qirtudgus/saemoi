@@ -1,5 +1,5 @@
 import 'moment/locale/ko';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import styled from 'styled-components';
@@ -119,34 +119,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let Check = (e: any) => {
+    let isOpenSlideMenuCheck = (e: globalThis.MouseEvent) => {
       let uiBox = document.getElementById('OpenMenuCheck');
-      if (!e.target.classList.value.match('menuOpenCheck')) {
+      if (!(e.target as HTMLElement).classList.value.match('menuOpenCheck')) {
         uiBox?.classList.remove('active');
       }
       return;
     };
-    document.addEventListener('click', Check);
+    document.addEventListener('click', isOpenSlideMenuCheck);
     return () => {
-      document.removeEventListener('click', Check);
+      document.removeEventListener('click', isOpenSlideMenuCheck);
     };
   }, []);
-
-  // useEffect(() => {
-  //   // 브라우저가 알림을 지원하는지 확인
-  //   if (!('Notification' in window)) {
-  //     alert('이 브라우저는 알림을 지원하지 않습니다.');
-  //   } else {
-  //     Notification.requestPermission().then((permission) => {
-  //       console.log(permission);
-  //       if (permission === 'granted') {
-  //         alert('알람이 허용되어있습니다!');
-  //       } else {
-  //         alert('알람이 거절되어있습니다!');
-  //       }
-  //     });
-  //   }
-  // }, []);
 
   useEffect(() => {
     //사파리 알람 이슈 해결코드

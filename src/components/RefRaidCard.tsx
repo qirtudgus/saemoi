@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { socket } from '../App';
 import { useAppSelector } from '../store/store';
@@ -94,7 +94,19 @@ const RaidText = styled.span`
   font-size: 0.9em;
 `;
 
-const RefRaidCard = forwardRef(function (props: any, ref: any) {
+interface RefRaidCardPropsInterface {
+  monsterName: string;
+  raidDifficulty: string;
+  raidCode: string;
+  type: string;
+  date: string;
+  deleteDate: string;
+  raidText: string;
+  raidOption: string;
+  socketId: string;
+}
+
+const RefRaidCard = forwardRef(function (props: RefRaidCardPropsInterface, ref: React.Ref<HTMLDivElement> | undefined) {
   const socketId = useAppSelector((state) => state.MySocketId);
 
   return (
