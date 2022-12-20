@@ -4,8 +4,8 @@
 
 ## Stacks
 ### Frontend
-React / TypeScript / Styled-Components / Redux / Redux-Saga
+React / TypeScript / Styled-Components / Redux / Redux-Toolkit
 ### Backend
 Node / MySQL
 ### Deploy
-AWS-EC2-Linux /  Nginx / Git Actions
+AWS-EC2-Linux /  Nginx / Git Actions / GA
