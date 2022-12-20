@@ -41,13 +41,12 @@ const ButtonWrap = styled(motion.button)<ButtonInterface>`
 `;
 
 interface ButtonPropsInterface {
-  text?: string;
   ClassName?: string;
   OnClick: () => void;
-  children?: any;
+  children: JSX.Element | JSX.Element[] | React.ReactNode;
 }
 
-export const BasicButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
+export const BasicButton = ({ ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
     <ButtonWrap
       whileTap={{ scale: 0.95 }}
@@ -59,7 +58,7 @@ export const BasicButton = ({ text, ClassName, OnClick, children }: ButtonPropsI
   );
 };
 
-export const SolidButton = ({ text, ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
+export const SolidButton = ({ ClassName, OnClick, children }: ButtonPropsInterface): JSX.Element => {
   return (
     <ButtonWrap
       whileTap={{ scale: 0.95 }}
