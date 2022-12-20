@@ -40,8 +40,6 @@ const ButtonWrap = styled(motion.button)<ButtonInterface>`
   }
 `;
 
-// type ButtonClassNameType = 'mr_10' | 'ml_10' | 'mt_10' | 'mb_10';
-
 interface ButtonPropsInterface {
   text?: string;
   ClassName?: string;

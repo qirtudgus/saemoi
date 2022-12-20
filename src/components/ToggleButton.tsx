@@ -61,3 +61,66 @@ export default function ToggleButton(props: any) {
     </>
   );
 }
+
+export function PcNotificationToggleButton(props: any) {
+  const [isOn, setIsOn] = useState(props.isOn);
+
+  // const toggleSwitchOn = () => {
+  //   props.OnFunc();
+  //   setIsOn(!isOn);
+  // };
+  // const toggleSwitchOff = () => {
+  //   props.OffFunc();
+  //   setIsOn(!isOn);
+  // };
+
+  const isNotification = () => {
+    if (!('Notification' in window)) {
+      alert('이 브라우저는 알림을 지원하지 않습니다.');
+    } else {
+      if (Notification.permission === 'granted') {
+        setIsOn(true);
+        alert('사이트 알람이 허용되어있습니다. 알림을 차단하시려면 브라우저를 확인해주세요!');
+      }
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then((permisson) => {
+          if (permisson === 'granted') {
+            setIsOn(true);
+            alert('알람이 허용되었습니다.');
+          } else {
+            setIsOn(false);
+            alert('알람이 거부되었습니다.');
+          }
+        });
+      }
+      if (Notification.permission === 'denied') {
+        alert('사이트 알람이 차단되어있습니다. 알림을 받으려면 브라우저를 확인해주세요!');
+        setIsOn(false);
+      }
+    }
+  };
+
+  // useEffect(() => {
+  //   if (Notification.permission === 'granted') {
+  //     setIsOn(true);
+  //   }
+  //   if (Notification.permission === 'default') {
+  //     setIsOn(false);
+  //   }
+  //   if (Notification.permission === 'denied') {
+  //     setIsOn(false);
+  //   }
+  // }, [Notification.permission]);
+
+  return (
+    <>
+      <Switch
+        className='switch'
+        data-ison={isOn}
+        onClick={isNotification}
+      >
+        <motion.div className='handle' />
+      </Switch>
+    </>
+  );
+}
