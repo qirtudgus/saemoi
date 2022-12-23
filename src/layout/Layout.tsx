@@ -9,7 +9,7 @@ import { UserCount, UserCountMobile } from '../App';
 import { BasicButton, SolidButton } from '../components/BtnGroup';
 import 햄버거메뉴 from '../img/menu_black.svg';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { logout, UserService } from '../store/userSlice';
+import { UserService } from '../store/userSlice';
 
 const menuList2 = [
   // { name: '홈', link: '/' },

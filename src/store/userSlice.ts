@@ -47,18 +47,11 @@ const user = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout(state: UserStateInterface) {
-      state.isLogin = false;
-      state.id = '비회원';
-      state.nickname = '비회원';
-      cookies.remove('AT');
-      cookies.remove('RT');
-      cookies.remove('id');
-      cookies.remove('nickname');
-      // socket.emit('users.count', { id: '로그아웃' }, (res: any) => {
-      //   console.log('로그인 에밋 후');
-      // });
-    },
+    // logout(state: UserStateInterface) {
+    //   state.isLogin = false;
+    //   state.id = '비회원';
+    //   state.nickname = '비회원';
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -127,6 +120,6 @@ const user = createSlice({
       });
   },
 });
-export let { logout } = user.actions;
+export let {} = user.actions;
 
 export default user.reducer;
